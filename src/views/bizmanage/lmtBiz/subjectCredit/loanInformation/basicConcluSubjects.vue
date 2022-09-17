@@ -1,0 +1,121 @@
+<template>
+  <yu-panel title="总体调查结论" panel-type="simple">
+   <yu-xform label-width="120px" ref="refForm" :form-type="formType" v-model="formdata" :disabled="formDisabled" :rules="formRules">
+      <yu-xform-group :column="1">
+        <yu-xform-item label="调查结论"  placeholder="调查结论" name="indgtResult" ctype="textarea" :rows="3" :colspan="24"></yu-xform-item>
+      </yu-xform-group>
+      <div class="yu-grpButton">
+        <yu-button v-show="saveBtnShow" type="primary" @click="saveFn">保存</yu-button>
+        <yu-button type="primary" @click="cancelFn">返回</yu-button>
+      </div>
+    </yu-xform>
+  </yu-panel>
+</template>
+<script>
+export default {
+  props: {
+    children: Object,
+    dialogId: String,
+    pageParams: Object
+  },
+  data: function () {
+    return {
+      formdata: {},
+      dataParam: {},
+      formDisabled: true,
+      saveBtnShow: false,
+      formRules: {
+        indgtResult: [
+          {
+            type: 'string',
+            required: true,
+            message: '调查结论',
+            trigger: 'blur'
+          },
+          { max: 2000, message: '调查结论不超过2000个字符' }
+        ]
+      }
+    };
+  },
+  created () {
+    if (this.children) {
+      this.dataParam = this.children;
+    } else if (this.pageParams) {
+      this.dataParam = this.pageParams;
+    } else if (this.$route.meta.params) {
+      this.dataParam = this.$route.meta.params;
+    }
+  },
+  mounted: function () {
+    // 初始化参数
+    var _this = this;
+    _this.init();
+  },
+  methods: {
+    /**
+      初始化参数
+     */
+    init: function () {
+      var _this = this;
+      _this.data = this.dataParam;
+      _this.op = this.data.op;
+      _this.pkId = this.data.pkId;
+      _this.basicSerno = this.data.basicSerno;
+      if (_this.op == 'EDIT') {
+        _this.saveBtnShow = true;
+        _this.formDisabled = false;
+      }
+      yufp.service.request({
+        method: 'POST',
+        url: backend.cmisBiz + '/api/lmtsiginvestbasiclimitapp/selectAll',
+        data: { condition: JSON.stringify({ oprType: '01', basicSerno: _this.basicSerno }) },
+        callback: function (code, message, response) {
+          yufp.clone(response.data[0], _this.formdata);
+        }
+      });
+    },
+
+    /**
+      保存
+     */
+    saveFn: function () {
+      var validate = false,
+        _this = this;
+      _this.$refs.refForm.validate(function (valid) {
+        validate = valid;
+      });
+      if (!validate) {
+        _this.$message({
+          message: '数据验证不通过，请修改后重新保存！',
+          type: 'error'
+        });
+        return;
+      }
+
+      var model = {};
+      yufp.clone(_this.formdata, model);
+      // 向后台发送保存请求
+      model.updId = this.$xutils.getDefaultformulaData('$LoginLoginCode');
+      model.updBrId = this.$xutils.getDefaultformulaData('$LoginOrgCode');
+      model.updDate = this.$xutils.getDefaultformulaData('$CURRDATE');
+      model.updateTime = this.$xutils.getDefaultformulaData('$CURRTIME');
+      var updateurl = backend.cmisBiz + '/api/lmtsiginvestbasiclimitapp/update';
+      yufp.service.request({
+        method: 'POST',
+        url: updateurl,
+        data: model,
+        callback: function (code, message, response) {
+          _this.$message('修改成功');
+        }
+      });
+    },
+
+    /**
+      取消
+     */
+    cancelFn () {
+      this.$emit('changed', 'doCancel');
+    }
+  }
+};
+</script>

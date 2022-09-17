@@ -1,0 +1,50 @@
+<template>
+  <div>
+    <yu-panel title="输入查询条件" :hideFilter="false" :collapseHide="false">
+      <yu-xform ref="refForm" form-type="search" v-model="searchFormdata" label-width="120px" :custom-search-fn="customSearch">
+        <yu-xform-group :column="3">
+          <yu-xform-item label="客户名称" ctype="input" placeholder="模糊查询" name="cusName" fuzzy-query="both"></yu-xform-item>
+          <yu-xform-item label="客户编号" ctype="input" placeholder="模糊查询" name="cusId" fuzzy-query="both"></yu-xform-item>
+          <yu-xform-item label="客户状态" ctype="select" data-code="STD_CUS_STATE" placeholder="客户状态" name="cusState"></yu-xform-item>
+          <yu-xform-item label="客户分类" ctype="select" data-code="STD_ZB_CUS_CLS" placeholder="客户分类" name="cusRankCls"></yu-xform-item>
+          <yu-xform-item label="证件号码" ctype="input" placeholder="模糊查询" name="certCode" fuzzy-query="both"></yu-xform-item>
+          <yu-xform-item label="管户客户经理" ctype="input" placeholder="管户客户经理" name="managerId" hidden></yu-xform-item>
+        </yu-xform-group>
+      </yu-xform>
+    </yu-panel>
+    <yu-panel title="对公客户担保列表" :hideFilter="false" :collapseHide="false">
+      <yu-button-drop style="padding: 0;">
+        <yu-button type="primary" ref="btn_doView" @click="customClick('doView')">查看担保关系</yu-button>
+      </yu-button-drop>
+      <yu-xtable ref="refTable" row-number condition-key="condition" selection-type="radio" request-type="POST" :base-params="baseParams" @row-click="onRowClick" @row-dblclick="onRowDBClick" @cell-click="onCellClick" :pageable="true" :data-url="dataUrl" :default-load="true">
+        <yu-xtable-column label="客户编号" prop="cusId" width="160px"></yu-xtable-column>
+        <yu-xtable-column label="客户名称" prop="cusName"></yu-xtable-column>
+        <yu-xtable-column label="证件类型" prop="certType" data-code="STD_ZB_CERT_TYP"></yu-xtable-column>
+        <yu-xtable-column label="证件号码" prop="certCode"></yu-xtable-column>
+        <yu-xtable-column label="客户分类" prop="cusRankCls" data-code="STD_ZB_CUS_CLS"></yu-xtable-column>
+        <yu-xtable-column label="客户类型" prop="cusType" data-code="STD_ZB_CUS_TYP"></yu-xtable-column>
+        <yu-xtable-column label="管户客户经理" prop="managerIdName"></yu-xtable-column>
+        <yu-xtable-column label="所属机构" prop="managerBrIdName" ></yu-xtable-column>
+        <yu-xtable-column label="客户状态" prop="cusState" data-code="STD_CUS_STATE"></yu-xtable-column>
+      </yu-xtable>
+    </yu-panel>
+  </div>
+</template>
+<script>
+import mixinList from '@/utils/mixins/mixin-list';
+export default {
+  name: 'D1BillList',
+  mixins: [mixinList],
+  data: function () {
+    return {
+      pkField: 'cusId',
+      dialogTitle: '新增',
+      dialogVisible: false,
+      formType: 'ADD',
+      dataUrl: this.$backend.cmisCus + '/api/cusbase/baseCropByManageIdForList',
+      baseParams: { condition: { cusCatalog: '2' } },
+      deleteUrl: this.$backend.cmisCus + '/api/cusbase/delete/'
+    };
+  }
+};
+</script>

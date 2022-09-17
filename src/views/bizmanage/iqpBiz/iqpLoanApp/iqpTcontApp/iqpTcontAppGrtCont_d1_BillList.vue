@@ -1,0 +1,60 @@
+<template>
+  <div>
+    <yu-panel title="最高额担保合同">
+      <yu-xform ref="refForm" form-type="search" v-model="searchFormdata" label-width="120px" :custom-search-fn="customSearch">
+        <yu-xform-group :column="4">
+          <yu-xform-item label="担保合同编号" ctype="input" placeholder="担保合同编号" name="guarContNo"></yu-xform-item>
+          <yu-xform-item label="中文合同编号" ctype="input" placeholder="中文合同编号" name="guarContCnNo"></yu-xform-item>
+          <yu-xform-item label="借款人编号" ctype="yu-xcustom" placeholder="借款人编号" name="borrowerId"  @select-fn="commonSelectFn" :mapping="{'cusId':'borrowerId','cusName':'borrowerName'}" width="700" height="480" :parms="{'belgLine':'bl300','oprType':'01','openType':'01'}" ></yu-xform-item>
+          <yu-xform-item label="借款人名称" ctype="input" placeholder="借款人名称" name="borrowerName"></yu-xform-item>
+          <yu-xform-item label="担保方式" ctype="select" data-code="STD_ZB_GUAR_WAY" placeholder="担保方式" name="guarWay" ></yu-xform-item>
+          <yu-xform-item label="担保合同状态" ctype="select" data-code="STD_GUAR_CONT_STATE" placeholder="担保合同状态" name="guarContState" ></yu-xform-item>
+        </yu-xform-group>
+      </yu-xform>
+      <template slot="right">
+        <yu-button-drop>
+          <yu-button ref="btn_onInsert" @click="customClick('onInsert')" >新增</yu-button>
+          <yu-button ref="btn_onUpdate" @click="customClick('onUpdate')" >修改</yu-button>
+          <yu-button ref="btn_onDelete" @click="customClick('onDelete')">删除</yu-button>
+          <yu-button ref="btn_onView" @click="customClick('onView')">查看</yu-button>
+          <yu-button ref="btn_onSign" @click="customClick('onSign')">签订</yu-button>
+          <yu-button ref="btn_onLogout" @click="customClick('onLogout')">注销</yu-button>
+          <yu-button ref="btn_onPrint" @click="customClick('onPrint')">打印</yu-button>
+          <yu-button ref="btn_Insert" @click="customClick('Insert')">多表新增</yu-button>
+          <yu-button ref="btn_update" @click="customClick('update')">多表修改</yu-button>
+        </yu-button-drop>
+      </template>
+      <yu-xtable ref="refTable" row-number condition-key="condition" selection-type="radio" @row-click="onRowClick" @row-dblclick="onRowDBClick" @cell-click="onCellClick" :pageable="true" :data-url="dataUrl" :default-load="true">
+        <yu-xtable-column label="担保合同编号" prop="guarContNo" width="100"></yu-xtable-column>
+        <yu-xtable-column label="中文合同编号" prop="guarContCnNo" width="120"></yu-xtable-column>
+        <yu-xtable-column label="借款人编号" prop="borrowerId" width="120"></yu-xtable-column>
+        <yu-xtable-column label="借款人名称" prop="borrowerName" width="100"></yu-xtable-column>
+        <yu-xtable-column label="担保合同类型" prop="guarContType" width="100" data-code="STD_ZB_GRT_TYP"></yu-xtable-column>
+        <yu-xtable-column label="担保方式" prop="guarWay" width="80" data-code="STD_ZB_GUAR_WAY"></yu-xtable-column>
+        <yu-xtable-column label="担保金额" prop="guarAmt" width="80"></yu-xtable-column>
+        <yu-xtable-column label="担保起始日" prop="guarStartDate" width="80"></yu-xtable-column>
+        <yu-xtable-column label="担保终止日" prop="guarEndDate" width="80"></yu-xtable-column>
+        <yu-xtable-column label="登记日期" prop="inputDate" width="80"></yu-xtable-column>
+        <yu-xtable-column label="担保合同状态" prop="guarContState" width="80" data-code="STD_GUAR_CONT_STATE"></yu-xtable-column>
+      </yu-xtable>
+    </yu-panel>
+  </div>
+</template>
+<script>
+import mixinList from '@/utils/mixins/mixin-list';
+export default{
+  name: 'D1BillList',
+  mixins: [mixinList],
+  data: function () {
+    return {
+      pkField: 'guarPkId',
+      dialogTitle: '新增',
+      dialogVisible: false,
+      formType: 'ADD',
+      dataUrl: this.$backend.cmisBiz + '/api/grtguarcont/',
+      baseParams: {},
+      deleteUrl: this.$backend.cmisBiz + '/api/grtguarcont/delete/'
+    };
+  }
+};
+</script>

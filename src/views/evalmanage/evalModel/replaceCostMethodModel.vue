@@ -1,0 +1,569 @@
+<template>
+  <div>
+    <yu-collapse class="a">
+      <div class="evalModel-content yuxp-d1 yuxp-d1__menu" style="width:100%;height: 90%">
+        <div class="evalModel-content">
+          <div class="el-collapse-item__header">
+            <span class="evalModel-title">重置成本法基本公式</span>
+          </div>
+          <div class="el-collapse-item__content">
+            <p>评估价值 = 重置总成本 - 实体性贬值 - 功能性贬值 - 经济性贬值</p>
+            <p>其中：</p>
+            <p>重置总成本 = 购置价格 × （1 + 运杂费率 + 设备安装费率 + 其它费率）</p>
+            <p>实体性贬值 = 重置总成本 × [1 - （ 年限法成新率 × 年限法成新率权重 + 观察法成新率 × 观察法成新率权重 ） ]</p>
+            <p>经济性贬值 =重置总成本 ×（ 1 – 预计可被利用的产能比率 ^ 0.7 ）</p>
+          </div>
+          <div class="el-collapse-item__header">
+            <span class="evalModel-title">关键字说明</span>
+          </div>
+          <div class="el-collapse-item__content">
+            <p>1. 年限法成新率=尚可使用年限 /规定使用年限：对于明确了出厂设计年限的机器设备类押品及其它交通运输工具（主要为船舶和航空器），根据出厂设计年限确定使用年限；对于未明确了出厂设计年限的机器设备类押品及交通运输工具中的客、货运输车辆类押品根据参考建议人工填写使用年限；</p>
+            <p>2. 观察法成新率：由现场观察、分析结果判定，从实物保养状态、使用现状角度体现待估押品的新旧情况；</p>
+            <p>3. 功能性贬值：主要考虑由于新技术的采用使原有资产功能相对落后造成的原有资产运营成本的增加，以及采用新工艺后原有资产建造成本相对于现行建造成本的增加；</p>
+            <p>4. 经济性贬值：= 重置总成本 ×（ 1 - 预计可被利用的产能比率 ^ 0.7 ） × 100%，其中0.7为功能价值指数的经验值，反应待估押品产能下跌与价值下跌的相关性；</p>
+            <p>5. 预计可被利用的产能比率：反应预计还可被利用的生产能力占原设计生产能力的比值；</p>
+          </div>
+          <div class="el-collapse-item__header">
+            <span class="evalModel-title">关键字参数</span>
+          </div>
+          <div class="el-collapse-item__content">
+            <table>
+              <tr>
+                <th class="yuxp-col-1">参数名称</th>
+                <th class="yuxp-col-3">建议取值范围</th>
+              </tr>
+              <tr>
+                <td>购置价格</td>
+                <td>待估押品的市场价格</td>
+              </tr>
+              <tr>
+                <td>运杂费率</td>
+                <td>根据机械工业部《机械工业建设项目概算编制办法及各项概算指标》确定运杂费率，系统默认为5%，可根据参考建议修改</td>
+              </tr>
+              <tr>
+                <td>设备安装费率</td>
+                <td>根据机械工业部《机械工业建设项目概算编制办法及各项概算指标》确定运杂费率，系统默认为5%，可根据参考建议修改</td>
+              </tr>
+              <tr>
+                <td>其他费率</td>
+                <td>若有则根据实际情况填写</td>
+              </tr>
+              <tr>
+                <td>年限法成新率</td>
+                <td>根据出厂设计年限或参考建议填写</td>
+              </tr>
+              <tr>
+                <td>年限法成新率权重</td>
+                <td>根据出厂设计年限或参考建议填写对于机器设备类押品，权重默认为70%；对于交通运输工具类押品，权重默认为30%</td>
+              </tr>
+              <tr>
+                <td>观察法成新率</td>
+                <td>根据现场观察、分析结果人工判定</td>
+              </tr>
+              <tr>
+                <td>观察法成新率权重</td>
+                <td>根据出厂设计年限或参考建议填写对于机器设备类押品，权重默认为30%；对于交通运输工具类押品，权重默认为70%</td>
+              </tr>
+              <tr>
+                <td>功能性贬值</td>
+                <td>人工判定填写</td>
+              </tr>
+              <tr>
+                <td>经济性贬值</td>
+                <td>根据公式计算</td>
+              </tr>
+              <tr>
+                <td>预计可被利用的产能比率</td>
+                <td>人工判定填写</td>
+              </tr>
+            </table>
+          </div>
+          <div class="el-collapse-item__header">
+            <span class="evalModel-title">运杂费率填写参考</span>
+          </div>
+          <div class="el-collapse-item__content">
+            <table>
+              <tr>
+                <th class="yuxp-col-1">地区类别</th>
+                <th class="yuxp-col-4">建设单位所在地</th>
+                <th class="yuxp-col-1">运杂费率(%)</th>
+              </tr>
+              <tr>
+                <td>一类</td>
+                <td>北京、天津、河北、山西、山东、江苏、上海、浙江、安徽、辽宁</td>
+                <td>5</td>
+              </tr>
+              <tr>
+                <td>二类</td>
+                <td>湖南、湖北、福建、江西、广东、河南、陕西、四川、甘肃、吉林、黑龙江、海南</td>
+                <td>7</td>
+              </tr>
+              <tr>
+                <td>三类</td>
+                <td>广西、贵州、青海、宁夏、内蒙</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <td>四类</td>
+                <td>云南、新疆、西藏</td>
+                <td>10</td>
+              </tr>
+            </table>
+          </div>
+          <div class="el-collapse-item__header">
+            <span class="evalModel-title"> 设备安装费率填写参考</span>
+          </div>
+          <div class="el-collapse-item__content">
+            <table>
+              <tr>
+                <th class="yuxp-col-1">车间类型</th>
+                <th class="yuxp-col-1">设备安装费率(%)</th>
+              </tr>
+              <tr>
+                <td>装配车间</td>
+                <td>2~4</td>
+              </tr>
+              <tr>
+                <td>焊接、冷作车间（金属结构车间）</td>
+                <td>1.3~1.8</td>
+              </tr>
+              <tr>
+                <td>铸铁车间</td>
+                <td>4~6</td>
+              </tr>
+              <tr>
+                <td>铸钢车间</td>
+                <td>3~5</td>
+              </tr>
+              <tr>
+                <td>精密铸造车间</td>
+                <td>2.5~5</td>
+              </tr>
+              <tr>
+                <td>有色铸造车间</td>
+                <td>1.5~4</td>
+              </tr>
+              <tr>
+                <td>锻造车间</td>
+                <td>1.5~9</td>
+              </tr>
+              <tr>
+                <td>热处理车间</td>
+                <td>1.5~2.5</td>
+              </tr>
+              <tr>
+                <td>冲压车间</td>
+                <td>2.2~3.2</td>
+              </tr>
+              <tr>
+                <td>电镀车间</td>
+                <td>7~9</td>
+              </tr>
+              <tr>
+                <td>油漆车间</td>
+                <td>8~10</td>
+              </tr>
+              <tr>
+                <td>TNT生产车间</td>
+                <td>24~67</td>
+              </tr>
+              <tr>
+                <td>硝铵炸药生产车间</td>
+                <td>8~27</td>
+              </tr>
+              <tr>
+                <td>工具车间</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>机修车间</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>材料库</td>
+                <td>2~2.5</td>
+              </tr>
+              <tr>
+                <td>汽车库</td>
+                <td>4~5</td>
+              </tr>
+              <tr>
+                <td>木工车间</td>
+                <td>1.5~3</td>
+              </tr>
+              <tr>
+                <td>中央实验室、计量室</td>
+                <td>0.5~1</td>
+              </tr>
+              <tr>
+                <td>变配电所</td>
+                <td>30~35</td>
+              </tr>
+              <tr>
+                <td>锅炉房</td>
+                <td>28~100</td>
+              </tr>
+              <tr>
+                <td>空压站</td>
+                <td>12~15</td>
+              </tr>
+              <tr>
+                <td>乙炔站</td>
+                <td>26~30</td>
+              </tr>
+              <tr>
+                <td>热煤气站</td>
+                <td>31~35</td>
+              </tr>
+              <tr>
+                <td>氧气站</td>
+                <td>7~8</td>
+              </tr>
+              <tr>
+                <td>氧气汇流排间</td>
+                <td>25~28</td>
+              </tr>
+              <tr>
+                <td>氧气汇流排间</td>
+                <td>7~8</td>
+              </tr>
+            </table>
+          </div>
+          <div class="el-collapse-item__header">
+            <span class="evalModel-title">年限法成新率中交通运输工具中的客、货运输车辆类押品确定使用年限填写参考</span>
+          </div>
+          <div class="el-collapse-item__content">
+            <table>
+              <tr>
+                <th class="yuxp-col-2">车辆类型</th>
+                <th class="yuxp-col-1">使用年限</th>
+              </tr>
+              <tr>
+                <td>微型载货汽车（含越野型）</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <td>轻型载货汽车（含越野型）</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>带拖挂的载货汽车</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <td>矿山作业专用车</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <td>各类出租汽车</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <td>9座（含9座）以下非营动载客汽车（包括轿车、含越野型）</td>
+                <td>15</td>
+              </tr>
+              <tr>
+                <td>旅游载客汽车</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>9座以上非营运载客汽车</td>
+                <td>10</td>
+              </tr>
+            </table>
+          </div>
+          <div class="el-collapse-item__header">
+            <span class="evalModel-title">年限法成新率中未明确出厂设计年限的机器设备类押品填写参考</span>
+          </div>
+          <div class="el-collapse-item__content">
+            <table>
+              <tr>
+                <th class="yuxp-col-1">机器设备分类</th>
+                <th class="yuxp-col-1">机器设备类型</th>
+                <th class="yuxp-col-1">机器设备子类型</th>
+                <th class="yuxp-col-1">使用年限</th>
+              </tr>
+              <tr>
+                <td rowspan="20">通用设备</td>
+                <td>锅炉</td>
+                <td></td>
+                <td>16~20</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>其中：快装锅炉</td>
+                <td>15~18</td>
+              </tr>
+              <tr>
+                <td>普通金属切削机床</td>
+                <td></td>
+                <td>15~20</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>其中：数控机床</td>
+                <td>12~18</td>
+              </tr>
+              <tr>
+                <td>锻压机床</td>
+                <td></td>
+                <td>14~18</td>
+              </tr>
+              <tr>
+                <td>铸造设备</td>
+                <td></td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td>焊接设备</td>
+                <td></td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td>切割设备</td>
+                <td></td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td>起重设备</td>
+                <td></td>
+                <td>16~18</td>
+              </tr>
+              <tr>
+                <td>输送设备</td>
+                <td></td>
+                <td>15~20</td>
+              </tr>
+              <tr>
+                <td>泵</td>
+                <td></td>
+                <td>8~12</td>
+              </tr>
+              <tr>
+                <td>风机</td>
+                <td></td>
+                <td>10~14</td>
+              </tr>
+              <tr>
+                <td>空气压缩设备</td>
+                <td></td>
+                <td>16~20</td>
+              </tr>
+              <tr>
+                <td>空调设备</td>
+                <td></td>
+                <td>14~18</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>其中：小型空调机</td>
+                <td>12~18</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>其中：数控机床</td>
+                <td>6~8</td>
+              </tr>
+              <tr>
+                <td>工业炉窑</td>
+                <td></td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>其中：熔炼炉</td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>热处理炉窑</td>
+                <td>10~13</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>加热、干燥炉、箱</td>
+                <td>14~18</td>
+              </tr>
+              <tr>
+                <td rowspan="20">专用设备</td>
+                <td>矿山工业专用机械</td>
+                <td></td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td>冶金工业专用设备</td>
+                <td></td>
+                <td>12~20</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>其中：热轧机</td>
+                <td>12~18</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>冷轧机</td>
+                <td>14~18</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>冶炼电炉</td>
+                <td>10~15</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>电解设备</td>
+                <td>10~15</td>
+              </tr>
+              <tr>
+                <td>炼油化工工业专用设备</td>
+                <td></td>
+                <td>10~20</td>
+              </tr>
+              <tr>
+                <td>工程机械、建筑施工设备</td>
+                <td></td>
+                <td>12~18</td>
+              </tr>
+              <tr>
+                <td>电力工业发电设备</td>
+                <td></td>
+                <td>20~30</td>
+              </tr>
+              <tr>
+                <td>非金属矿物制品工业专用设备</td>
+                <td></td>
+                <td>10~20</td>
+              </tr>
+              <tr>
+                <td>机械工业专用设备</td>
+                <td></td>
+                <td>15~20</td>
+              </tr>
+              <tr>
+                <td>木工采集和加工设备</td>
+                <td></td>
+                <td>14~18</td>
+              </tr>
+              <tr>
+                <td>造纸和印刷机械</td>
+                <td></td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td>纺织机械</td>
+                <td></td>
+                <td>10~18</td>
+              </tr>
+              <tr>
+                <td>医疗器械</td>
+                <td></td>
+                <td>16~20</td>
+              </tr>
+              <tr>
+                <td>橡胶、塑料加工专用设备</td>
+                <td></td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td>粮油作物和饲料加工设备</td>
+                <td></td>
+                <td>10~18</td>
+              </tr>
+              <tr>
+                <td>化学药品和中成药制炼设备</td>
+                <td></td>
+                <td>10~20</td>
+              </tr>
+              <tr>
+                <td>食品工业专用设备</td>
+                <td></td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td>饮料加工设备</td>
+                <td></td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td rowspan="2">电气设备</td>
+                <td>变配电设备</td>
+                <td></td>
+                <td>16~20</td>
+              </tr>
+              <tr>
+                <td>电子通信设备</td>
+                <td></td>
+                <td>6~15</td>
+              </tr>
+              <tr>
+                <td rowspan="4">仪器仪表及自动化控制设备</td>
+                <td>通用仪器仪表</td>
+                <td></td>
+                <td>8~15</td>
+              </tr>
+              <tr>
+                <td>量具、衡器</td>
+                <td></td>
+                <td>8~15</td>
+              </tr>
+              <tr>
+                <td>检测仪器、设备</td>
+                <td></td>
+                <td>8~12</td>
+              </tr>
+              <tr>
+                <td>自动化控制设备</td>
+                <td></td>
+                <td>8~12</td>
+              </tr>
+              <tr>
+                <td rowspan="3">工矿车辆</td>
+                <td>汽车起重机、叉车</td>
+                <td></td>
+                <td>10~14</td>
+              </tr>
+              <tr>
+                <td>平车、电瓶车、小机动自卸车</td>
+                <td></td>
+                <td>12~16</td>
+              </tr>
+              <tr>
+                <td>矿车</td>
+                <td></td>
+                <td>6~8</td>
+              </tr>
+              <tr>
+                <td rowspan="4">办公及家用电器设备</td>
+                <td>公用设备</td>
+                <td></td>
+                <td>4~8</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>其中：电脑</td>
+                <td>4~6</td>
+              </tr>
+              <tr>
+                <td>家用电器</td>
+                <td></td>
+                <td>5~10</td>
+              </tr>
+              <tr>
+                <td>氧气汇流排间</td>
+                <td></td>
+                <td>25~27</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </yu-collapse>
+  </div>
+</template>
+
+<script>
+import mixinForm from '@/utils/mixins/mixin-form'
+export default {
+};
+</script>

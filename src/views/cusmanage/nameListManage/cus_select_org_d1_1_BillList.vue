@@ -1,0 +1,45 @@
+<template>
+  <div>
+    <yu-panel title="公司客户">
+      <yu-xform ref="refForm" form-type="search" v-model="searchFormdata" label-width="120px" :custom-search-fn="customSearch">
+        <yu-xform-group :column="3">
+          <yu-xform-item label="客户编号" ctype="input" placeholder="客户编号" name="cusId"></yu-xform-item>
+          <yu-xform-item label="客户名称" ctype="input" placeholder="客户名称" name="cusName"></yu-xform-item>
+          <yu-xform-item label="证件号码" ctype="input" placeholder="证件号码" name="certCode"></yu-xform-item>
+        </yu-xform-group>
+      </yu-xform>
+      <template slot="right">
+        <yu-button ref="btn_$insert" @click="customClick('confimBtn')">选择</yu-button>
+      </template>
+      <yu-xtable ref="refTable" row-number condition-key="condition" selection-type="radio" @row-click="onRowClick" @row-dblclick="onRowDBClick" @cell-click="onCellClick" :pageable="true" :data-url="dataUrl" :default-load="true" request-type="POST">
+        <yu-xtable-column label="客户编号" prop="cusId"></yu-xtable-column>
+        <yu-xtable-column label="客户名称" prop="cusName"></yu-xtable-column>
+        <yu-xtable-column label="客户类型" prop="cusType"></yu-xtable-column>
+        <yu-xtable-column label="证件类型" prop="certType" data-code="STD_ZB_CERT_TYP"></yu-xtable-column>
+        <yu-xtable-column label="证件号码" prop="certCode"></yu-xtable-column>
+        <yu-xtable-column label="客户分类" prop="cusRankCls"></yu-xtable-column>
+        <yu-xtable-column label="管户客户经理" prop="managerId"></yu-xtable-column>
+        <yu-xtable-column label="客户状态" prop="cusState"></yu-xtable-column>
+        <yu-xtable-column label="所属机构" prop="mainBrId"></yu-xtable-column>
+      </yu-xtable>
+    </yu-panel>
+  </div>
+</template>
+<script>
+import mixinList from '@/utils/mixins/mixin-list';
+export default{
+  name: 'D11BillList',
+  mixins: [mixinList],
+  data: function () {
+    return {
+      pkField: 'cusId',
+      dialogTitle: '新增',
+      dialogVisible: false,
+      formType: 'ADD',
+      dataUrl: this.$backend.cmisCus + '/api/cusbase/',
+      baseParams: {},
+      deleteUrl: this.$backend.cmisCus + '/api/cusbase/delete/'
+    };
+  }
+};
+</script>

@@ -1,0 +1,201 @@
+<template>
+  <div id="lmtIntBankAppBaseInfo">
+    <div id="lmtIntBankAppBaseInfoContent">
+      <yu-panel title="同业客户授信申报-变更" panel-type="simple">
+        <yu-xform ref="refOldForm" label-width="140px" :form-type="formType" v-model="formdataOld">
+          <yu-panel title="原授信批复信息" panel-type="simple">
+            <yu-xform-group :column="2">
+              <yu-xform-item label="原授信批复流水号" ctype="input" placeholder="原授信批复流水号" name="origiLmtReplySerno" disabled></yu-xform-item>
+            </yu-xform-group>
+            <yu-xform-group :column="2">
+              <yu-xform-item label="客户编号" ctype="input" placeholder="客户编号" name="cusId" disabled></yu-xform-item>
+            </yu-xform-group>
+            <yu-xform-group :column="1">
+              <yu-xform-item label="客户名称" ctype="input" placeholder="客户名称" name="cusName" disabled></yu-xform-item>
+            </yu-xform-group>
+            <yu-xform-group :column="2">
+              <yu-xform-item label="原授信金额(万元)" ctype="yu-num" number-formatter="0,000" placeholder="授信金额(万元)" name="origiLmtAmt" disabled></yu-xform-item>
+            </yu-xform-group>
+          </yu-panel>
+        </yu-xform>
+        <yu-xform ref="refForm" label-width="140px" :form-type="formType" v-model="formdata">
+          <yu-panel title="本次授信息" panel-type="simple">
+            <yu-xform-group :column="2">
+              <yu-xform-item label="申请流水号" ctype="input" placeholder="申请流水号" name="serno" disabled></yu-xform-item>
+              <yu-xform-item label="业务类型" ctype="select" data-code="STD_SX_LMT_TYPE" placeholder="业务类型" name="lmtType" disabled></yu-xform-item>
+            </yu-xform-group>
+            <yu-xform-group :column="2">
+              <yu-xform-item label="授信金额(万元)" ctype="yu-num" number-formatter="0,000" placeholder="授信金额(万元)" name="lmtAmt" disabled></yu-xform-item>
+            </yu-xform-group>
+          </yu-panel>
+
+          <lmtIntBankAppSubInfo :children="children"></lmtIntBankAppSubInfo>
+
+          <yu-panel title="登记信息" panel-type="simple">
+            <yu-xform-group :column="2">
+              <yu-xform-item label="主管机构" ctype="input" placeholder="主管机构" name="managerBrIdName" disabled></yu-xform-item>
+              <yu-xform-item label="主管客户经理" ctype="input" placeholder="主管客户经理" name="managerIdName" disabled></yu-xform-item>
+              <yu-xform-item label="登记人" ctype="input" placeholder="登记人" name="inputId" hidden></yu-xform-item>
+              <yu-xform-item label="登记人" ctype="input" placeholder="登记人" name="inputIdName" disabled></yu-xform-item>
+              <yu-xform-item label="登记机构" ctype="input" placeholder="登记机构" name="inputBrId" hidden></yu-xform-item>
+              <yu-xform-item label="登记机构" ctype="input" placeholder="登记机构" name="inputBrIdName" disabled></yu-xform-item>
+              <yu-xform-item label="登记日期" ctype="datepicker" name="inputDate" value-format="yyyy-MM-dd" disabled placeholder="登记日期"></yu-xform-item>
+              <yu-xform-item label="申请状态" ctype="select" name="appStatus" hidden data-code="STD_ZB_APP_ST" placeholder="申请状态"></yu-xform-item>
+              <yu-xform-item label="最后修改人" ctype="input" placeholder="最后修改人" name="updId" hidden></yu-xform-item>
+              <yu-xform-item label="最后修改机构" ctype="input" placeholder="最后修改机构" name="updBrId" hidden></yu-xform-item>
+              <yu-xform-item label="最后修改日期" ctype="input" placeholder="最后修改日期" name="updDate" hidden></yu-xform-item>
+              <yu-xform-item label="创建时间" ctype="input" placeholder="创建时间" name="createTime" hidden></yu-xform-item>
+              <yu-xform-item label="修改时间" ctype="input" placeholder="修改时间" name="updateTime" hidden></yu-xform-item>
+            </yu-xform-group>
+          </yu-panel>
+        </yu-xform>
+      </yu-panel>
+      <yufp-nwf-init ref="yufpNwfInit" @success-click="forceUpdate"></yufp-nwf-init>
+      <div class="yu-grpButton">
+        <yu-button v-show="dataParam.op=='EDIT'" icon="yx-undo2" type="primary" @click="doSubmit">提交</yu-button>
+        <yu-button icon="yx-undo2" type="primary" @click="cancelFn">返回</yu-button>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import mixinForm from '@/utils/mixins/mixin-form';
+import yufpNwfInit from '@/components/widgets/YufpNwfInit';
+import lmtIntBankAppSubInfo from './lmtIntBankAppSubInfo';
+export default {
+  components: { yufpNwfInit, lmtIntBankAppSubInfo },
+  name: 'LmtIntBankAppBaseInfo',
+  mixins: [mixinForm],
+  props: {
+    children: Object,
+    dialogId: String,
+    pageParams: Object
+  },
+  data: function () {
+    return {
+      updateUrl: this.$backend.cmisBiz + '/api/lmtintbankapp/update',
+      addUrl: this.$backend.cmisBiz + '/api/lmtintbankapp/',
+      formdata: {},
+      formType: 'edit',
+      formRules: {},
+      dataParam: {},
+      imageUrls: {},
+      File: {}
+    };
+  },
+  created () {
+    console.log('===============', this.children);
+    if (this.children) {
+      this.dataParam = this.children;
+    } else if (this.pageParams) {
+      this.dataParam = this.pageParams;
+    } else if (this.$route.meta.params) {
+      this.dataParam = this.$route.meta.params;
+    }
+  },
+  mounted: function () {
+    // 初始化参数
+    var _this = this;
+    _this.init();
+  },
+  methods: {
+    /**
+      初始化参数
+     */
+    init: function () {
+      var _this = this;
+      _this.data = this.dataParam;
+      _this.op = this.data.op;
+      _this.pkId = this.data.pkId;
+      _this.serno = this.data.serno;
+      _this.origiLmtReplySerno = this.data.origiLmtReplySerno;
+      _this.formDisabled = true;
+      _this.saveBtnShow = true;
+      if (_this.op == 'DETAIL') {
+        _this.saveBtnShow = false;
+      }
+      yufp.service.request({
+        method: 'POST',
+        url: backend.cmisBiz + '/api/lmtintbankapp/selectByModel',
+        data: {
+          condition: JSON.stringify({ oprType: '01', serno: _this.serno })
+        },
+        callback: function (code, message, response) {
+          yufp.clone(response.data[0], _this.formdataOld);
+          _this.$emit("changed", response.data[0])
+          _this.formdataOld.lmtAmt = _this.formatterNum(
+            _this.formdataOld.lmtAmt / 10000
+          );
+          _this.formdataOld.origiLmtAmt = _this.formatterNum(
+            _this.formdataOld.origiLmtAmt / 10000
+          );
+        }
+      });
+      yufp.service.request({
+        method: 'POST',
+        url: backend.cmisBiz + '/api/lmtintbankapp/selectByModel',
+        data: {
+          condition: JSON.stringify({ oprType: '01', serno: _this.serno })
+        },
+        callback: function (code, message, response) {
+          yufp.clone(response.data[0], _this.formdata);
+          _this.formdata.lmtAmt = _this.formatterNum(
+            _this.formdata.lmtAmt / 10000
+          );
+          let obj = {
+            origiLmtAmt: _this.formdata.origiLmtAmt,
+            lmtAmt: _this.formdata.lmtAmt,
+            origiLmtTerm: _this.formdata.origiLmtTerm,
+            lmtTerm: _this.formdata.lmtTerm
+          };
+          //_this.$emit('changed', obj);
+        }
+      });
+    },
+
+    // 数字精度
+    formatterNum: function (value) {
+      return parseFloat(parseFloat(value).toFixed());
+    },
+
+    // 提交操作
+    doSubmit () {
+      var obj = this.formdata;
+      const loginUser = this.$xutils.getLoginUserInfo();
+      let dutysArry = []; //  loginUser.dutys
+      for (let i = 0; i < loginUser.dutys.length; i++) {
+        dutysArry.push(loginUser.dutys[i].code);
+      }
+      var startdto = {};
+      startdto.systemId = 'cmis';
+      startdto.orgId = this.$store.state.oauth.org.code;
+      startdto.userId = this.$store.state.oauth.loginCode;
+      startdto.bizType = 'TY005'; // 修改为同业授信申请流程code
+      startdto.bizId = obj.serno; // this.getFactory().contextData.surveySerno;
+      startdto.bizUserName = obj.cusName; // this.d1_A_BillCard.getItemValue('cusName');
+      startdto.bizUserId = obj.cusId; // this.d1_A_BillCard.getItemValue('cusId');
+      startdto.bizPkId = obj.pkId;
+      startdto.param = {
+        'userId': this.$store.state.oauth.loginCode,
+        'BizPkId': obj.pkId,
+        'tableName': 'lmtIntbankApp',
+        'dutyOrgType': loginUser.org.orgType, // 客户经理所属机构类型  分行、支行、小微、非客户经理
+        'dutys': dutysArry.join(','),
+        'lmtType': obj.lmtType,
+      };
+      this.$refs.yufpNwfInit.wfInit(startdto);
+    },
+
+    forceUpdate () {
+      this.cancelFn();
+    },
+
+    // 取消按钮
+    cancelFn () {
+      yufp.globalEventBus.$emit("refreshLmtIntbankTable2")
+
+      this.$emit('changed', false);
+    }
+  }
+};
+</script>

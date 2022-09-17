@@ -1,0 +1,223 @@
+<template>
+  <div>
+    <yu-xform ref="refForm" label-width="100px" v-model="formReport" :rules="rules">
+      <yu-panel title="授信基本信息" panel-type="simple">
+        <yu-xform-group>
+          <yu-xform-item label="业务流水号" name="serno" ctype="input" disabled></yu-xform-item>
+          <yu-xform-item label="业务类型" name="lmtType" ctype="select" data-code="STD_SX_LMT_TYPE" disabled></yu-xform-item>
+          <yu-xform-item label="客户编号" name="cusId" ctype="input" disabled></yu-xform-item>
+          <yu-xform-item label="客户名称" name="cusName" ctype="input" disabled></yu-xform-item>
+          <yu-xform-item label="发起人" name="inputIdName" ctype="input" disabled></yu-xform-item>
+          <yu-xform-item label="投资机构" name="inputBrIdName" ctype="input" disabled></yu-xform-item>
+        </yu-xform-group>
+      </yu-panel>
+      <yu-panel title="授信额度情况" panel-type="simple">
+        <yu-button type="primary" v-show="saveBtnShow" @click="updateApprSubFn">修改</yu-button>
+        <yu-button type="primary" @click="selectApprSubFn">查看</yu-button>
+        <yu-xtable ref="refTable" condition-key="condition" row-number :pageable="false" :data-url="dataUrl" :base-params="dataParam" request-type="POST">
+          <yu-xtable-column label="授信分项流水号" prop="subSerno" align="center"></yu-xtable-column>
+          <yu-xtable-column label="授信品种" prop="lmtBizTypeName" align="center"></yu-xtable-column>
+          <yu-xtable-column label="是否循环额度" prop="isRevolv" align="center" data-code="STD_ZB_YES_NO"></yu-xtable-column>
+          <yu-xtable-column label="授信金额(万元)" prop="lmtAmt" align="center">
+            <template slot-scope="scope">
+              <span>{{ numFn(scope.row.lmtAmt) }}</span>
+            </template>
+          </yu-xtable-column>
+          <!-- <yu-xtable-column label="其中，货币基金额度(万元)" prop="lmtMfAmt" align="center">
+            <template slot-scope="scope">
+              <span>{{ numFn(scope.row.lmtMfAmt) }}</span>
+            </template>
+          </yu-xtable-column>
+          <yu-xtable-column label="其中，单只货币基金额度(万元)" prop="lmtSingleMfAmt" align="center">
+            <template slot-scope="scope">
+              <span>{{ numFn(scope.row.lmtSingleMfAmt) }}</span>
+            </template>
+          </yu-xtable-column> -->
+          <yu-xtable-column label="授信期限（月）" prop="lmtTerm" align="center"></yu-xtable-column>
+        </yu-xtable>
+      </yu-panel>
+      <yu-xdialog title="授信额度详情" :visible.sync="dialogVisible" width="1000px">
+        <yu-xform ref="refFormDialog" label-width="100px" v-model="formdataDialog">
+          <yu-xform-group :column="2">
+            <yu-xform-item label="授信分项流水号" name="subSerno" ctype="input" disabled></yu-xform-item>
+            <yu-xform-item label="授信品种" name="lmtBizTypeName" ctype="input" disabled></yu-xform-item>
+            <yu-xform-item label="是否循环额度" name="isRevolv" ctype="select" data-code="STD_ZB_YES_NO" disabled></yu-xform-item>
+            <yu-xform-item label="授信金额(万元)" name="lmtAmt" ctype="yu-num" number-formatter="0,000" :disabled="formDisabled"></yu-xform-item>
+            <!-- <yu-xform-item label="其中，货币基金额度(万元)" name="lmtMfAmt" ctype="yu-num" number-formatter="0,000" :disabled="formDisabled"></yu-xform-item>
+            <yu-xform-item label="其中，单只货币基金额度(万元)" name="lmtSingleMfAmt" ctype="yu-num" number-formatter="0,000" :disabled="formDisabled"></yu-xform-item> -->
+            <yu-xform-item label="授信期限（月）" ctype="input" rules="number" name="lmtTerm" :disabled="formDisabled"></yu-xform-item>
+          </yu-xform-group>
+          <div class="yu-grpButton">
+            <yu-button v-show="saveBtnShow" type="primary" @click="saveBtn('intBank')">保存</yu-button>
+            <yu-button type="primary" @click="canclFn">返回</yu-button>
+          </div>
+        </yu-xform>
+      </yu-xdialog>
+      <yu-panel title="审批意见" panel-type="simple">
+        <yu-xform-group>
+          <yu-xform-item label-width="200px" label="金融市场总部风险合规部信评岗出具综合分析" name="inteAnaly" ctype="textarea" colspan="15" :autosize="{ minRows: 10}" :disabled="!disabledInteAnaly"></yu-xform-item>
+          <yu-xform-item label-width="200px" label="信贷管理部风险派驻岗出具综合分析" name="inteAnalyZh" ctype="textarea" colspan="15" :autosize="{ minRows: 10}" :disabled="!disabledInteAnalyZH"></yu-xform-item>
+        </yu-xform-group>
+        <yu-panel title="其他要求" panel-type="simple">
+          <yu-button-drop v-show="saveBtnShow" :show-length="8">
+            <yu-button type="primary" @click="addLoanCond">添加</yu-button>
+            <yu-button type="primary" @click="deleteLoanCond">删除</yu-button>
+          </yu-button-drop>
+          <yu-xtable ref="refTable1" condition-key="condition" row-number :pageable="false" :data-url="apprLoanUrl" :base-params="apprLoanParam" request-type="POST">
+            <yu-xtable-column label="具体内容" prop="condDesc" align="left"></yu-xtable-column>
+          </yu-xtable>
+        </yu-panel>
+      </yu-panel>
+    </yu-xform>
+    <yu-xdialog title="其他要求" :visible.sync="dialogLoanCond" width="1000px">
+      <yu-xform ref="refFormLoanCond" label-width="100px" v-model="formdataLoanCond">
+        <yu-xform-group>
+          <yu-xform-item label="具体内容" name="condDesc" rules="required" ctype="textarea" colspan="15" :autosize="{ minRows: 10}" align="left"></yu-xform-item>
+        </yu-xform-group>
+        <div class="yu-grpButton">
+          <yu-button type="primary" @click="saveLoanBtn">保存</yu-button>
+          <yu-button type="primary" @click="canclLoanFn">返回</yu-button>
+        </div>
+      </yu-xform>
+    </yu-xdialog>
+    <div class="yu-grpButton">
+      <!-- 保存时lmtAmt 要乘以1万 -->
+      <yu-button type="primary" v-show="saveBtnShow" @click="saveReportData">保存</yu-button>
+      <yu-button type="primary" @click="doPrint">查看审查报告</yu-button>
+      <yu-button type="primary" @click="goBackFn">返回</yu-button>
+    </div>
+
+  </div>
+</template>
+<script>
+/* eslint vue/no-unused-components:0 */
+import YufpDemoSelector from '@/components/widgets/YufpDemoSelector';
+import {numFn, approveProcess} from '@/utils/unitchange';
+yufp.lookup.reg('STD_SX_LMT_TYPE,STD_ZB_YES_NO');
+export default {
+  components: { YufpDemoSelector },
+  mixins: [approveProcess],
+  props: {
+    pageParams: Object
+  },
+  data: function () {
+    return {
+      numFn
+    };
+  },
+  methods: {
+    saveReportData () {
+      var _this = this;
+      var validate = false;
+      _this.$refs.refForm.validate(function (valid) {
+        validate = valid;
+      });
+      if (!validate) {
+        _this.$message({
+          message: '数据验证不通过，请修改后重新保存！',
+          type: 'error'
+        });
+        return;
+      }
+      yufp.service.request({
+        method: 'POST',
+        url: _this.$backend.cmisBiz + '/api/lmtintbankappr/updateAppr',
+        data: _this.formReport,
+        callback: function (code, message, response) {
+          if (code == 0) {
+            _this.$message({ message: '保存成功', type: 'success' });
+          } else {
+            _this.$message({ message: '保存失败', type: 'error' });
+          }
+        }
+      });
+    },
+    init: function () {
+      var _this = this;
+      yufp.service.request({
+        method: 'POST',
+        url: _this.$backend.cmisBiz + '/api/lmtintbankappr/selectBySerno',
+        data: {
+          condition: JSON.stringify({
+            serno: _this.pageParams.serno,
+            oprType: '01',
+            issueReportType: '01'
+          }),
+          sort: 'createTime desc'
+        },
+        callback: function (code, message, response) {
+          if (code == 0) {
+            let obj = response.data;
+
+            // 反显字段
+            yufp.clone(obj, _this.formReport);
+            _this.approveSerno = obj.approveSerno;
+            // 表格反显
+            _this.dataUrl =
+              _this.$backend.cmisBiz +
+              '/api/lmtintbankapprsub/selectByApproveSerno';
+            _this.dataParam = {
+              condition: JSON.stringify({
+                approveSerno: _this.approveSerno,
+                oprType: '01'
+              })
+            };
+            _this.apprLoanUrl =
+              _this.$backend.cmisBiz +
+              '/api/lmtapprloancond/selectByQueryModel';
+            _this.apprLoanParam = {
+              condition: JSON.stringify({
+                approveSerno: _this.approveSerno,
+                condType: '01'
+              })
+            };
+            return;
+          } else {
+            _this.$message({
+              duration: 4000,
+              message: '系统错误，请联系管理员！',
+              type: 'warning'
+            });
+            return;
+          }
+        }
+      });
+    },
+
+    // 打印
+    onPrint: function () {
+      var _this = this;
+      const params = {};
+      params.serno = _this.formReport.serno;
+      params.cusId = _this.formReport.cusId;
+      let name = 'bizmanage/lmtBiz/lmtIntBankAppr/AppReplyReport';
+      let key = 'report';
+      params.src = _this.$backend.frptRptService +
+        'zjty-scbg17.cpt&serno=' +
+        params.serno;
+      _this.$router.addTab({
+        // 路由名称
+        name: name,
+        // 自定义唯一页签key,请统一使用custom_前缀开头
+        key: key, // 必传
+        // 页签名称
+        title: '帆软打印',
+        // 传递的业务数据，可选配置
+        data: params
+      });
+    },
+    // 打印
+    doPrint: function () {
+      var _this = this;
+      const params = {};
+      params.serno = _this.formReport.serno;
+      params.cusId = _this.formReport.cusId;
+      params.src =
+        _this.$backend.frptRptService +
+        'zjty-scbg17.cpt&serno=' +
+        params.serno;
+      this.$emit('doPrint', params);
+    }
+  }
+};
+</script>

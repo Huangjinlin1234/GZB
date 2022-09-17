@@ -1,0 +1,16 @@
+.financial.formula .el-input__inner {
+  border: 1px solid #aaaaaa;
+}
+.financial.formula .el-button+.el-button {
+  margin-left: 0;
+}
+
+.financial.formula .calc tr td {
+  color: #444444;
+}
+.financial.formula .calc tr td:hover {
+  color: #20a0ff;
+}
+.el-button.el-button--info.is-plain{
+  margin-bottom:5px;
+}

@@ -1,0 +1,192 @@
+/**
+ * @created by jiangcheng 2017-11-15
+ * @updated by wy 2018-05-28
+ * @updated by wy 2019-07-14
+ * @description 登录页
+ */
+ .yu-login{width:100%;height:100%;margin:0;padding:0;overflow:hidden;font-size:12px;color:#666; outline:0;position: relative;background: url(~~assets/common/images/login-bg.png) no-repeat #5557B9 center center;background-size: cover;}
+ .yu-login-box{position: relative;padding: 48px 54px;box-sizing: border-box;position: absolute;top: 50%;text-align: center;transform: translateY(-50%); -ms-transform: translateY(-50%);right: calc(50% - 214px);width: 428px;height: 480px;border-radius: 8px;background-color: #fff;box-shadow:0px 10px 20px 0px rgba(1,1,1,0.1);z-index: 3;}
+ .yu-login-logo{display: block;width: 100%; height: 38px; line-height: 38px;white-space: nowrap; margin-top: 90px; padding-left: 25%;}
+ .yu-login-logo span{font-size: 26px;color: #333333;font-weight: 400;letter-spacing: 1.54px; line-height: 30.75px;float: left; margin-left: 8px; margin-top: 9px;}
+ /* .yu-login-logo>img,.yu-login-logo>span{float: inherit;} */
+ .yu-login-logo>img{width: 247px; height: 70px;}
+ .yu-login-form{width: 320px;margin: 0 auto;margin-top: 80px;}
+ .yu-login-form>li{position: relative;font-size: 14px;color: #656565;margin-top: 32px;}
+ .yu-login-form>li>input,.yu-login-form>li>button{transition: .2s;}
+ .yu-login-form>li>input[type=text],.yu-login-form>li>input[type=password]{border: none;border-bottom: 1px #E0E0E0 solid;height: 42px;padding-left: 44px; font-size: 16px;color: #444;width: calc(100% - 44px); border: 1px solid #EDEDED; border-radius: 5px;}
+ .yu-login-form>li>input[type=checkbox]+label{cursor: pointer;margin-left: 28px;}
+ .yu-login-form>li>i{position: absolute;font-size: 20px;bottom: 12px;left: 16px;color: #949494;}
+ .yu-login-code{float: left;width: 80px;height: 36px;position: absolute;right: 10px;bottom: 5px;cursor: pointer;border: none;}
+ .yu-login-form>li>button{width:320px;height:48px;cursor: pointer;box-shadow:0px 2px 2px 0px rgba(0,0,0,0.16); color: #FFFFFF;font-size: 20px;border: none;font-weight: 400; border-radius: 4px;}
+ .yu-login-msg{font-size: 14px;font-weight:400;}
+ .yu-login-footer{position: absolute; bottom: 48px;font-size: 14px;text-align: center;color:rgba(255,255,255,0.5);right: calc(50% - 100px);font-weight: 400;width: 230px;opacity: 0.5;}
+
+ /*login end*/
+
+ /*login update*/
+ .yu-login-form .checkbox_li{
+   text-align: left;
+   margin-top: 24px;
+   margin-bottom: 20px;
+   height: 18px;
+ }
+ .yu-login-form .checkbox_li .el-checkbox{
+   margin-right: 8px;
+ }
+ .yu-login-form .checkbox_li .el-checkbox ~label{
+   vertical-align: top;
+ }
+ .yu-login-form .msg{
+   text-align: left;
+   margin-top:12px;
+   color: #F52C36;
+ }
+ .yu-login-form>li>input[type=checkbox]{
+   width: 18px;
+   border: 1px solid #E0E0E0;
+   border-radius: 2px;
+   height: 18px;
+   background-color: #fff;
+   line-height: 48px;
+   position: absolute;
+   top: -1px;
+   left: -2px;
+ }
+ .checkbox_li input[type=checkbox]::after{
+   background-color: #fff;
+   display: inline-block;
+   visibility: visible;
+   text-align: center;
+   content: ' ';
+ }
+ .yu-login-form .submit-btn{
+   line-height: 48px;
+ }
+ .yu-login-form .checkbox_li span{
+   float: right;
+   font-weight: 400;
+   color: #656565;
+   font-size: 14px;
+ }
+ .yu-login-form .checkbox_li span:hover{
+   cursor: pointer;
+   color: #5557B9;
+ }
+ .yu-login-form .checkbox_li span:active{
+   color: #4C4EAA;
+ }
+ .yu-login-light{
+   background: url(~~assets/common/images/login-bg.png) no-repeat #F2F2F2 center center;
+   background-size: cover;
+   background-size: 100% 100%;
+ }
+
+ /* 消除浏览器输入框自动填充的背景色 */
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px #fff inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+ /*orange login dark sta*/
+ .orange .yu-login{
+   background: url(~~assets/common/images/login-bg.png) no-repeat #FB8D12 center center;
+   background-size: cover;
+ }
+ .orange .yu-login-form>li>input[type=text]:hover,.orange .yu-login-form>li>input[type=password]:hover,.orange .yu-login-form>li>input[type=text]:focus,.orange .yu-login-form>li>input[type=password]:focus{border-color:#FB8D12;}
+ .orange .yu-login-form>li>input:hover+i,.orange .yu-login-form>li>input:focus+i{
+   color:#FB8D12;
+ }
+ .orange .yu-login-form>li>button{
+   background: #FB8D12;
+ }
+ .orange .yu-login-form>li>button:hover{background-color: #E27C0A; color:#FFFFFF; }
+ .orange .yu-login-form>li>button:active{background-color: #CD720D;}
+ .orange  .yu-login-form .checkbox_li span:hover{color: #FB8D12;}
+ .orange  .yu-login-form .checkbox_li span:active{color: #E27C0A}
+
+ /*blue login light sta*/
+ .orange .yu-login-light{
+   background: url(~~assets/common/images/login-bg.png) no-repeat center center;
+   background-size: cover;
+ }
+ .orange .yu-login-light .yu-login-footer{
+   color:rgba(0,0,0,0.5);
+   opacity: 1;
+ }
+ /*blue login light end*/
+
+ /*orange login dark end*/
+
+ /*blue login dark sta*/
+ .blue .yu-login{
+   background: url(~~assets/common/images/login-bg.png) no-repeat #2877FF center center;
+   background-size: cover;
+ }
+ .blue .yu-login-form>li>input[type=text]:hover,.blue .yu-login-form>li>input[type=password]:hover,.blue .yu-login-form>li>input[type=text]:focus{border-color:#2877FF;}
+ .blue .yu-login-form>li>input:hover+i,.blue .yu-login-form>li>input:focus+i{
+   color:#2877FF;
+ }
+ .blue .yu-login-form>li>button{
+   background: #2877FF;
+ }
+ .blue .yu-login-form>li>button:hover{background-color:#1362EA;color:#FFFFFF; }
+ .blue .yu-login-form>li>button:active{background-color: #175FDB;}
+ .blue  .yu-login-form .checkbox_li span:hover{color: #2877FF;}
+ .blue  .yu-login-form .checkbox_li span:active{color:#1362EA}
+ /*blue login light sta*/
+ .blue .yu-login-light{
+   background: url(~~assets/common/images/login-bg.png) no-repeat center center;
+   background-size: cover;
+ }
+ /*  */
+ .purple .yu-login-form>li>input[type=text]:hover,.orange .yu-login-form>li>input[type=password]:hover,.orange .yu-login-form>li>input[type=text]:focus,.orange .yu-login-form>li>input[type=password]:focus{border-color:#5557B9;}
+ .purple .yu-login-form>li>input:hover+i,.orange .yu-login-form>li>input:focus+i{
+   color:#5557B9;
+ }
+ .purple .yu-login-form>li>button{
+   background: #5557B9;
+ }
+ .purple  .yu-login-form>li>button:hover{background-color: #5557B9; color:#FFFFFF; }
+ .purple  .yu-login-form>li>button:active{background-color: #5557B9;}
+ .purple  .yu-login-form .checkbox_li span:hover{color: #5557B9;}
+ .purple  .yu-login-form .checkbox_li span:active{color: #5557B9}
+
+.yu-bank-logo {
+  position: absolute;
+  top: 20px;
+  left: 75px;
+  width: 420px;
+  height: 45px;
+  /* background: url(~~assets/common/images/login-bank-logo.png) no-repeat; */
+  z-index: 2;
+}
+.yu-new-start-bg {
+  position: absolute;
+  width: 513px;
+  height: 592px;
+  background: url(~~assets/common/images/yu-new-start-bg.png) no-repeat;
+  background-size: 100% 100%;
+  float: left;
+  top: 19%;
+  left: 23%;
+}
+.yu-login-box-new {
+  position: absolute;
+  width: 513px;
+  height: 592px;
+  left: calc(23% + 513px);
+  top: 19%;
+  background: #FFFFFF;
+  border-radius: 0 0 64px 0;
+}
+.welcome_word {
+  opacity: 0.36;
+  font-family: MicrosoftYaHei;
+  font-size: 16px;
+  color: #666666;
+  letter-spacing: 1.07px;
+  float: left;
+  margin-top: 5px;
+  width: 513px;
+  text-align: center;
+}
