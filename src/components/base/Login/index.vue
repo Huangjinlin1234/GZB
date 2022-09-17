@@ -173,7 +173,6 @@ export default {
           });
           this.$store.dispatch('oauth/getAccessInfo').then((resData) => {
             this.redirectToFrame();
-            console.log(222);
           });
         }
         if (response && response.code === '10000002') { // 2、首次登录
