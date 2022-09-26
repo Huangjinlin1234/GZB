@@ -6,8 +6,8 @@
 const demoLookups = {
   USER_STATUS: [
     { key: '01', value: '正常' },
-    { key: '02', value: '冻结' },
-    { key: '03', value: '销户' }
+    { key: '02', value: '待停用' },
+    { key: '03', value: '注销' }
   ],
   CUST_TYPE: [
     { key: '1', value: '零售' },
@@ -44,8 +44,12 @@ const demoLookups = {
     { key: '2', value: '本科' },
     { key: '3', value: '大专' },
     { key: '4', value: '高中及以下' }
+  ],
+  SEX_TYPE: [
+    {KEY: '1', value: '男'},
+    {KEY: '0', value: '女'}
   ]
-}
+};
 
 // 导出所有静态字典数据
-export default demoLookups
+export default demoLookups;

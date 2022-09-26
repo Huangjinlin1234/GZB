@@ -14,7 +14,7 @@ import router from '@/router';
  * @param {*} route
  * @returns
  */
-export function getOpenMenuTab(route) {
+export function getOpenMenuTab (route) {
   if (!route) {
     return '';
   }
@@ -25,7 +25,7 @@ export function getOpenMenuTab(route) {
 }
 
 // 控制点公共方法
-export function checkCtrl(ctrlCode, menuId, isView) {
+export function checkCtrl (ctrlCode, menuId, isView) {
   var ctrls = getContrs();
   menuId = menuId || router.history.current.meta.routeId;
   if (!ctrlCode || !ctrls || !menuId) {
@@ -46,7 +46,7 @@ export function checkCtrl(ctrlCode, menuId, isView) {
  * @param {String} type 显示信息类型 error|warning|info|success
  * @param {Integer} duration 显示信息长度,单位秒,默认5秒
  */
-export function showMessage(msg, type = 'error', duration = 5) {
+export function showMessage (msg, type = 'error', duration = 5) {
   msg && Message({
     message: msg,
     type: type,
@@ -58,7 +58,7 @@ export function showMessage(msg, type = 'error', duration = 5) {
  * @param {string} msg 待显示的信息
  * @param {String} type 显示信息类型 error|waring|info|success
  */
-export function showMessageAlert(msg, type = 'error') {
+export function showMessageAlert (msg, type = 'error') {
   msg && MessageBox({
     message: msg,
     type: type
@@ -66,7 +66,7 @@ export function showMessageAlert(msg, type = 'error') {
 }
 
 // 判断浏览器类型
-export function getBrowserType() {
+export function getBrowserType () {
   var userAgent = navigator.userAgent; // 取得浏览器的userAgent字符串
   if (userAgent.indexOf('OPR') > -1) {
     return 'Opera';
@@ -107,7 +107,7 @@ export function getBrowserType() {
  * @author lvzl
  * @returns {*}
  */
-export function exportExcelByTable(options) {
+export function exportExcelByTable (options) {
   // const {log} = console;
   options.importHidCloum = options.importHidCloum || true;
   var tableRef = options.ref;
@@ -117,7 +117,7 @@ export function exportExcelByTable(options) {
     removeHidCloums(tableColumns);
   }
   // 移除隐藏列
-  function removeHidCloums(arr) {
+  function removeHidCloums (arr) {
     if (!arr || !Array.isArray(arr)) {
       return new Error('参数类型必须是数组');
     }
@@ -136,7 +136,7 @@ export function exportExcelByTable(options) {
   var collectionHtml = tableRef.$el.getElementsByClassName('el-table__header-wrapper')[0].getElementsByTagName('tr');
   /** ----------------------------------> 1.获取表头行列数，给表头每个单元格设置行列合并数rowspan/colspan <------------------------------------------ */
   // 获取表头行数和列数（包含多级表头）
-  function getRowAndCol(list) {
+  function getRowAndCol (list) {
     if (!list || !Array.isArray(list)) {
       return new Error('参数类型必须是数组');
     }
@@ -156,7 +156,7 @@ export function exportExcelByTable(options) {
     return { rowCount: maxRow, colCount: maxColCount(list) };
   }
   // 计算colCount
-  function maxColCount(column) {
+  function maxColCount (column) {
     if (!column || !Array.isArray(column)) {
       return new Error('参数类型必须是数组');
     }
@@ -173,11 +173,11 @@ export function exportExcelByTable(options) {
     return colCount;
   }
   //  计算多表头的rowCount
-  function getMaxFloor(treeData) {
+  function getMaxFloor (treeData) {
     // let floor = 0;
     // let v = this;
     var max = 0;
-    function each(data, floor) {
+    function each (data, floor) {
       data.forEach(function (e) {
         e.floor = floor;
         if (floor > max) {
@@ -216,7 +216,7 @@ export function exportExcelByTable(options) {
       }
     }
   };
-  function getChildColspan(list) {
+  function getChildColspan (list) {
     var listRowCount = getMaxFloor(list); // 获取当前list的占用单元格的行数和列数
     var rowIndex = cellData.rowCount - listRowCount;
     if (list && Array.isArray(list) == true) {
@@ -250,7 +250,7 @@ export function exportExcelByTable(options) {
   var headLabel = []; // 所有表头的label，prop，没有prop就取''.
   var havePropArr = []; // 所有表头字段的prop
   var haveOptions = []; // 所有含有options的prop
-  function getHeadLabel(list) {
+  function getHeadLabel (list) {
     if (!list || !Array.isArray(list)) {
       return new Error('参数类型必须是数组');
     }
@@ -275,7 +275,7 @@ export function exportExcelByTable(options) {
   // log('所有有prop属性的label:', JSON.stringify(havePropArr));
   /** ----------------------------------> 3.设置表头每个表头单元格的行列起始信息 <------------------------------------------ */
   var mergeCellDataList = []; // 存放表头每个单元格的行列起始信息
-  function genCellPlace() {
+  function genCellPlace () {
     return { // 定义单元格的起止行列
       s: { // s为开始
         c: 0, // 开始列
@@ -292,7 +292,7 @@ export function exportExcelByTable(options) {
    * @param {Array} list 表头列组成的数据
    * @param {Number} subLength 当前表头有几个子表头（不含子表头的子表头的标志）
    */
-  function getMerges(list) {
+  function getMerges (list) {
     if (!list || !Array.isArray(list)) {
       return new Error('参数类型必须是数组');
     }
@@ -324,7 +324,7 @@ export function exportExcelByTable(options) {
       }
     }
   }
-  function getChildMerges(list, lastColIndex) {
+  function getChildMerges (list, lastColIndex) {
     var listRowCount = getMaxFloor(list); // 获取当前list的占用单元格的行数和列数
     var rowIndex = cellData.rowCount - listRowCount;
     var lastEc = lastColIndex;
@@ -358,7 +358,7 @@ export function exportExcelByTable(options) {
       }
     }
   }
-  function getCellPlaceSC(prop) {
+  function getCellPlaceSC (prop) {
     if (prop) {
       var index = 0;
       for (var i = 0; i < havePropArr.length; i++) {
@@ -393,7 +393,7 @@ export function exportExcelByTable(options) {
    * 设置所有表头单元格对应excel的单元格位置信息
    * @param {Array} list 表头每个单元格的行列起始信息组成的数据
    */
-  function getHeadcellPosition(list) {
+  function getHeadcellPosition (list) {
     if (!list || !Array.isArray(list)) {
       return new Error('参数类型必须是数组');
     }
@@ -495,7 +495,7 @@ export function exportExcelByTable(options) {
     }
     data.push(o);
   }
-  function getValByKey(key, options) {
+  function getValByKey (key, options) {
     if (!key) {
       return;
     }
@@ -577,7 +577,7 @@ export function exportExcelByTable(options) {
 /**
  * 获取默认皮肤对象
  */
-export function getDefaultTheme() {
+export function getDefaultTheme () {
   const themes = frameConfig.baseFrameOptions.themesList.filter(item => {
     return item.id === theme;
   });
@@ -586,7 +586,7 @@ export function getDefaultTheme() {
 /**
  * 获取默认布局对象
  */
-export function getDefaultMenuModel() {
+export function getDefaultMenuModel () {
   const model = frameConfig.baseFrameOptions.modelList.filter(item => {
     return item.id === menumodel;
   });
@@ -595,7 +595,7 @@ export function getDefaultMenuModel() {
 /**
  * 获取当前选中系统名称
  */
-export function getSystemName() {
+export function getSystemName () {
   var systemName = sessionStore.get('currentApp');
   if (systemName) {
     return systemName['applicationName'];
@@ -607,7 +607,7 @@ export function getSystemName() {
 /**
  * 获取全路径
  */
-export function getUrl(param) {
+export function getUrl (param) {
   let paramUrl = param.url || param.name;
   if (!paramUrl) {
     throw new Error('service.request: 未设置请求URL');
@@ -640,7 +640,7 @@ export function getUrl(param) {
  * @param url
  * @returns {string}
  */
-export function addTokenInfo(path) {
+export function addTokenInfo (path) {
   var token = 'access_token=';
   var _url = '';
   if (path === null || path === '') {
@@ -655,7 +655,7 @@ export function addTokenInfo(path) {
 /**
  * 下载文件
  */
-export function download(path) {
+export function download (path) {
   if (path) {
     if (path.indexOf('http') <= -1) {
       // 当不包含http时拼接gateway地址
@@ -688,7 +688,7 @@ export function download(path) {
  * @param {HTMLElement} element
  * @param {string} className
  */
-export function toggleClass(element, className, oid) {
+export function toggleClass (element, className, oid) {
   if (!element || !className) {
     return;
   }
@@ -711,7 +711,7 @@ export function toggleClass(element, className, oid) {
  * 切换皮肤
  * @param {String} theme 选中皮肤
  */
-export function changeTheme(theme, oid) {
+export function changeTheme (theme, oid) {
   const th = theme.id;
   try {
     require(`@/assets/${th}/dist.min.css`);
@@ -724,7 +724,7 @@ export function changeTheme(theme, oid) {
  * 更新界面是否紧凑模式
  * @param {Boolean} isCompact 是否紧凑模式
  */
-export function changeSizeModel(isCompact) {
+export function changeSizeModel (isCompact) {
   // const target = document.getElementsByTagName('link');
   const dom = document.querySelector('.yu-frame-body'); // dom结构
   const newClas = isCompact ? 'compact' : 'normal'; // 新样式
@@ -735,7 +735,7 @@ export function changeSizeModel(isCompact) {
 /**
  * 格式化时间
  */
-export function parseTime(time, cFormat) {
+export function parseTime (time, cFormat) {
   if (arguments.length === 0) {
     return null;
   }
@@ -773,13 +773,13 @@ export function parseTime(time, cFormat) {
 /**
  * 将时间转成字符串
  */
-export function formatTime(time) {
+export function formatTime (time) {
   return (time.hours < 10 ? '0' + time.hours : time.hours) + ':' + (time.minutes < 10 ? '0' + time.minutes : time.minutes);
 }
 /**
  * 获取基础路径配置信息
  */
-export function getBaseUrl() {
+export function getBaseUrl () {
   const devEnv = process.env.NODE_ENV === 'development'; // 开发环境
   const baseApi = process.env.VUE_APP_BASE_API; // 应用服务前缀URL
   const proxyPrefix = '';// process.env.VUE_APP_PROXY_PREFIX // 代理API前缀
@@ -791,7 +791,7 @@ export function getBaseUrl() {
 /**
  * 获取公钥字符串
  */
-export function getRSAPublicKey() {
+export function getRSAPublicKey () {
   return 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCrDUHc85ADQVxXRP4M90nqttWoZctV6JJVVdPjIle5vd9G2/4kgIhNc78Jd+ENxg+n4Gj9UMwNhJmb2jnMaW3zyGB+qi/ZrMO5dEUhW8salirzRgGg/4Arz4ObPmCWlZsws3Ij/3IEsFD3vMdIZD2j8b33DAbj47PjcCcMbtHYuQIDAQAB';
 }
 /**
@@ -799,7 +799,7 @@ export function getRSAPublicKey() {
   * @updated by 2018/01/14
   * @description 数字金额格式化(千分位)
   */
-export function moneyFormatter(money, num) {
+export function moneyFormatter (money, num) {
   /*
   * 参数说明：
   * money：要格式化的数字
@@ -820,7 +820,7 @@ export function moneyFormatter(money, num) {
 * @updated by 2018/05/03
 * @description 数值百分比显示
 */
-export function toPercent(money, num) {
+export function toPercent (money, num) {
   /*
   * 参数说明：
   * money：要格式化的数字
@@ -836,7 +836,7 @@ export function toPercent(money, num) {
 * @updated by 2018/01/14
 * @description 数字金额转汉字金额
 */
-export function moneyToUpper(money) {
+export function moneyToUpper (money) {
   /*
   * 参数说明：
   * money：要转化的数字
@@ -933,7 +933,7 @@ export function moneyToUpper(money) {
 * @updated by 2018/01/19
 * @description 汉字金额转数字金额
 */
-export function upperToMoney(upper) {
+export function upperToMoney (upper) {
   /*
   * 参数说明：
   * upper：要转化的汉字
@@ -1010,7 +1010,7 @@ export function upperToMoney(upper) {
  * 从路径中解析查询参数
  * @param {String} url 路径
  */
-export function resolveQueryParameters(url) {
+export function resolveQueryParameters (url) {
   if (url) {
     const i = url.indexOf('?');
     if (i > -1) {
@@ -1029,19 +1029,19 @@ export function resolveQueryParameters(url) {
 /**
  * @description 获取机构名称
  */
-export function getOrgName() {
+export function getOrgName () {
 
 }
 /**
  * @description 获取用户名称
  */
-export function getUserName() {
+export function getUserName () {
 
 }
 /**
  * @description 上传按钮日志
  */
-export function logInfo(data) {
+export function logInfo (data) {
   auditlogdata(data).then(res => {
 
   }).catch(e => {
@@ -1054,7 +1054,7 @@ export function logInfo(data) {
 * @param nodeData 当前节点属性信息
 * @param label 当前节点名称
 */
-export function checkBelongToChooseNode(value, node, label) {
+export function checkBelongToChooseNode (value, node, label) {
   var level = node.level;
   // 如果传入的节点本身就是一级节点就不用校验了
   if (level === 1) {
@@ -1080,7 +1080,7 @@ export function checkBelongToChooseNode(value, node, label) {
  * @description 根据菜单 funcUrl 获取菜单数据
  * @param funcUrl 菜单funcUrl
  */
-export function getMenuNode(funcUrl) {
+export function getMenuNode (funcUrl) {
   const menuList = storage.get(MENU_STOREOG_KEY) || [];
   return menuList.find(item => {
     return `/${item.funcUrl}` === funcUrl;
@@ -1091,7 +1091,7 @@ export function getMenuNode(funcUrl) {
  * @description 上传页面访问rizhi
  * @to 路由信息
  */
-export function menuLog(to) {
+export function menuLog (to) {
   if (!to.meta || (!to.meta.title && !to.meta.id)) {
     return;
   }
@@ -1117,3 +1117,4 @@ export function menuLog(to) {
   };
   logInfo(log);
 }
+

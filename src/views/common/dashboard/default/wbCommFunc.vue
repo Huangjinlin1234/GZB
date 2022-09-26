@@ -73,10 +73,11 @@ export default {
   mounted () {
     // 初始化我的常用菜单
     this.initData(this.dealAllitem);
+    console.log(this.myData, 'mmyy');
   },
   methods: {
     initData (dealAllitem) {
-      console.info('-----------initData', JSON.stringify(dealAllitem))
+      console.info('-----------initData', JSON.stringify(dealAllitem));
       let _this = this;
       _this
         .$request({
@@ -140,7 +141,6 @@ export default {
       }
       item.exists = true;
       this.tempData.push(item);
-
     },
     minsMenu (item) {
       for (let i = 0; i < this.tempData.length; i++) {

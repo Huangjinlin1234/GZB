@@ -14,7 +14,7 @@ import menusAndContrls from './data/menus-contrls';
 const getPubkey = config => {
   var returnObj = {
     code: 0,
-    rows: '7DD950AE7C53D140D44981F7A79D0E902DEA2557293506F9F793F0DA9F5B722BF3C301D7CE97BC7FE26186601C9F6FFB660FC401C53E137FD15C73EC6166CA79'
+    rows: '222'
   };
   return returnObj;
 };
@@ -45,7 +45,6 @@ const logoutFn = config => {
  * 模拟获取用户会话信息
  */
 const sessionInfoFn = config => {
-  console.log(config, 'fff');
   var userInfo = {
     userId: '40',
     userName: '小宇',

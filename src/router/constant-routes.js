@@ -158,6 +158,7 @@ if (dynamicRouters) {
     dynamicRoutes[i].component = Layout;
   }
   constantRoutes = [...constantRoutes, ...dynamicRoutes];
+  console.log(dynamicRoutes, 'dynamicRoutes');
 }
 if (SHOW_MORE_ROUTES) {
   constantRoutes = [...constantRoutes, ...constantMoreRoutes];

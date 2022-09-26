@@ -12,12 +12,8 @@ import backend from '@/config/constant/app.data.service';
  */
 export function getPubkey (data) {
   return request({
-    url: backend.uaaService + '/login/pubkey',
+    url: backend.uaaService + '/api/login/pubkey',
     method: 'post',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      'Authorization': 'Basic ZHNjbXM6MTIzNDU2'
-    },
     needToken: false,
     data
   });
@@ -28,11 +24,11 @@ export function getPubkey (data) {
  */
 export function loginFn (data) {
   return request({
-    url: backend.uaaService + '/login/token',
+    url: backend.uaaService + '/api/oauth/token/bak',
     method: 'post',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      'Authorization': 'Basic ZHNjbXM6MTIzNDU2'
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic d2ViX2FwcDo='
     },
     needToken: false,
     data

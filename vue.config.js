@@ -111,7 +111,7 @@ const exportsConfig = {
       errors: true
     },
     proxy: getProxyConfig(),
-    before: mocksServer
+    after: mocksServer
   },
   configureWebpack (config) {
     // provide the app's title in webpack's name field, so that

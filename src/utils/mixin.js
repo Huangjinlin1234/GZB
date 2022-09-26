@@ -125,7 +125,7 @@ export const vueMixinButton = {
         'logTypeId': '4',
         'content': lang.accessMenu + tab.meta.title + ',' + lang.path + tab.meta.routeUrl + ',' + lang.buttonName + buttonName
       };
-      logInfo(log);
+      // logInfo(log);
     },
     checkCtrl: function (ctrlCode, menuId) {
       // 检查是否有控制点权限，有权限返回false，无权限返回true

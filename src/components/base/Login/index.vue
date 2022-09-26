@@ -60,6 +60,7 @@ import {
   resetPwd,
   getPubkey
 } from '@/api/common/oauth';
+// import {sm2Encrypt} '@/utils/sm2'
 import { getLanguage } from '@/utils/i18n';
 import { genUUID } from '@/utils';
 import { putToken, removeToken } from '@/utils/oauth';
@@ -108,7 +109,8 @@ export default {
         confirmPassWord: null
       },
       dialogVisible: false,
-      firstLoginRes: {} // 首次登录返回对象
+      firstLoginRes: {}, // 首次登录返回对象
+      clientId: ''
     };
   },
   computed: {
@@ -116,14 +118,47 @@ export default {
       return this.username;
     }
   },
+  created () {
+    this.clientId = genUUID(16, 16);
+  },
   mounted: function () {
     this.freshImageCodeFn();
   },
   destroyed: function () {
   },
   methods: {
+    genUUID (len, radix) {
+      var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+      var uuid = [], i;
+      radix = radix || chars.length;
+
+      if (len) {
+      // Compact form
+        for (i = 0; i < len; i++) {
+          uuid[i] = chars[0 | Math.random() * radix];
+        }
+      } else {
+      // rfc4122, version 4 form
+        var r;
+
+        // rfc4122 requires these characters
+        uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+        uuid[14] = '4';
+
+        // Fill in random data. At i==19 set the high bits of clock sequence as
+        // per rfc4122, sec. 4.1.5
+        for (i = 0; i < 36; i++) {
+          if (!uuid[i]) {
+            r = 0 | Math.random() * 16;
+            uuid[i] = chars[i == 19 ? (r & 0x3) | 0x8 : r];
+          }
+        }
+      }
+      return uuid.join('');
+    },
     freshImageCodeFn: function () {
-      this.imageCodePicture = backend.uaaService + '/api/codeimage/' + this.imageUUID + '?t=' + new Date().getTime();
+      // var clientId = genUUID(16, 16);
+      this.imageCodePicture = backend.uaaService + '/api/codeImage?clientId=' + this.clientId + '&t=' + (new Date()).getTime();
       this.imageCode = '';
       return this.imageCodePicture;
     },
@@ -151,12 +186,19 @@ export default {
       var pubkeyHex;
       this.btnLoginLoading.show = true;
       this.borderColor = 'lightgreen';
+      // //RSA加密
+      var getRSAPublicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDAYwQ81rc1KW8tTYpxrLS3ArVxB40otmbWyXwgDQRkLsCuQKiq6KZgAM/8sJuI12S1JVOXnMu5d420vKFFS/+Ibz4TxqjhLmgownaguMTbAGBzIPvfN5lL52mDmm/CvKu2YPCFvZV8YulNTCexvuj7OiWRUXpAbaQqu5tPOjGytQIDAQAB';
+      var encrypt = new JSEncrypt();
+      encrypt.setPublicKey(getRSAPublicKey);
       getPubkey().then(response => {
-        if (response.code === 0) {
+        if (response.code === '0') {
           pubkeyHex = response.rows;
           var data = {
-            username: _this.username,
-            password: _this.password
+            userCode: _this.username,
+            password: encrypt.encrypt(_this.password),
+            imageCode: _this.imageCode,
+            clientId: _this.clientId,
+            grant_type: 'password'
           };
           this.handleLogin(data);
         }

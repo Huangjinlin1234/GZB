@@ -177,64 +177,63 @@ export default {
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/jxxt',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {
-          window.open(data + '/pas', '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            window.open(data + '/pas', '_blank');
+          }
+        });
     },
     /** 风险预警系统 */
     doDel () {
       var currentuserid = this.loginCode;
       // currentuserid = 'admin';
       let _this = this;
-      var fxyjUrl = "";
+      var fxyjUrl = '';
       _this.$request({
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/fxyjxt',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {  
-          var url = data + '/cms/userSignOnYJD.do?currentuserid=' + currentuserid;
-          window.open(url, '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            var url = data + '/cms/userSignOnYJD.do?currentuserid=' + currentuserid;
+            window.open(url, '_blank');
+          }
+        });
     },
     /** 智能审批系统 */
-    sysApproval () {
-      var currentuserid = this.loginCode;
-      // currentuserid = '00102002';
-      let _this = this;
-      var url0 = "";
-      _this.$request({
-        url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/znsp',
-        method: 'post'
-      })
-      .then(({ code, message, data }) => {
-        if (data) {
-          var url = `${data}/imceasys/in/loginWithoutPwd?loginName=${currentuserid}`;
-           window.open(url, '_blank');
-        }
-      }); 
-    },
+    // sysApproval () {
+    //   var currentuserid = this.loginCode;
+    //   // currentu''rid = '00102002';
+    //   let _this = this;
+    //   var url0 = '';
+    //   _this.$request({
+    //     url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/znsp',
+    //     method: 'post'
+    //   }).then(({ code, message, data }) => {
+    //       if (data) {
+    //       v ar url = `${data}/imceasys/in/loginWithoutPwd?loginName=${currentuserid}`;
+    //         window.open(url, '_blank');
+    //       }
+    //     });
+    // },
     /** 新微贷系统 */
     doXWD () {
       var currentuserid = this.loginCode;
       var orgCode = this.org.code; // 机构
-      // currentuserid = 'admin';
+      // currentu''rid = 'admin';
       // orgCode = '123';
       let _this = this;
-      var url0 = "";
+      var url0 = '';
       _this.$request({
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/xwdxt',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {
-          var url = `${data}/#/loginzjg/${currentuserid}/${orgCode}/CMIS`;
-          window.open(url, '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            var url = `${data}/#/loginzjg/${currentuserid}/${orgCode}/CMIS`;
+            window.open(url, '_blank');
+          }
+        });
     },
     /** 不动产登记 */
     doHLWYP () {
@@ -243,55 +242,55 @@ export default {
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/bdcdj',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {
-          window.open(data + '/pas', '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            window.open(data + '/pas', '_blank');
+          }
+        });
     },
-    /** 非零售内部评级系统 */
+    /** 非零售内部评级系统 ''
     enterNPSystem () {
       var managerId = this.loginCode; // 客户经理的Id 90011219
       // managerId = '90011219';
       let _this = this;
-      var flsnp = "";
+      var flsnp = '';
       _this.$request({
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/irs',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {
-          var url = data + '/SNB_IRS/LoanClient/IRSInterface.html?userid=' + managerId;
-          window.open(url, '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            var url = data + '/SNB_IRS/LoanClient/IRSInterface.html?userid=' + managerId;
+            window.open(url, '_blank');
+          }
+        });
     },
     /** 押品管理系统 */
-    openGuar () {
-      var currentuserid = this.loginCode;
-      var orgCode = this.org.code; // 机构
-      // 用户不存在 暂时先默认
-      // currentuserid = 'admin';
-      // orgCode = '990000';
-      var org = '';
-      if (orgCode != '016000') {
-        org = '01';
-      } else {
-        org = '02';
-      }
-      let _this = this;
-      var yphsxt = "";
-      _this.$request({
-        url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/ypxt',
-        method: 'post'
-      })
-      .then(({ code, message, data }) => {
-        if (data) {
-          var url = data + `/cms/callPage.do?parameter=tWelCome|URLUSER|BB2C3CB8A662BFA3D3EB7335F99F59B1|${org}|${currentuserid}|${orgCode}|01`;
-          window.open(url, '_blank');
-        }
-      });
-    },
+    // openGuar () {
+    //   var currentuserid = this.loginCode;
+    //   var orgCode = this.org.code; // 机构
+    //   // 用户不存在 暂时先默认
+    //   // currentuserid = 'admin';
+    //   // orgCode = '990000';
+    //   var org = '';
+    //   if (orgCode !'''016000') {
+    //     org = '01';
+    //   } else {
+    //     org = '02';
+    //   }
+    //   let _this = this;
+    //   var yphsxt = '';
+    //   _this.$request({
+    //     url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/ypxt',
+    //     method: 'post'
+    //   })
+    //     .then(({ code, message, data }) => {
+    //       if (data) {
+    //         var url = data + `/cms/callPage.do?parameter=tWelCome|URLUSER|BB2C3CB8A662BFA3D3EB7335F99F59B1|${org}|${currentuserid}|${orgCode}|01`;
+    //         window.open(url, '_blank');
+    //       }
+    //     });
+    // },
     /** 打开知识库页面 */
     openRepobaseFn () {
       this.$router.addTab({
@@ -461,31 +460,31 @@ export default {
       });
     },
     // 查询催收任务待办事项数量
-    queryViewData4 () {
-      return new Promise((resolve, reject) => {
-        let _this = this;
-        let model = {};
-        // model.inputId = _this.loginCode;
-        _this
-          .$request({
-            url: backend.cmisPsp + '/api/psptasklist/selectNumByInputId',
-            method: 'post',
-            data: JSON.stringify({ condition: JSON.stringify(model) })
-          })
-          .then(({ code, message, data }) => {
-            if (data) {
-              _this.Data4 = data[0];
-              resolve(data);
-            }
-          });
-      });
-    },
+    // queryViewData4 () {
+    //   return new Promise((resolve, reject) => {
+    //     let _this = this;
+    //     let model = {};
+    //     // model.inputId = _this.loginCode;
+    //     _this
+    //       .$request({
+    //         url: backend.cmisPsp + '/api/psptasklist/selectNumByInputId',
+    //         method: 'post',
+    //         data: JSON.stringify({ condition: JSON.stringify(model) })
+    //       })
+    //       .then(({ code, message, data }) => {
+    //         if (data) {
+    //           _this.Data4 = data[0];
+    //           resolve(data);
+    //         }
+    //      });+
+    //  })
+    // },
     // 设置待处理事项的数量
     setTodoNums () {
       let _this = this;
       Promise.all([_this.queryViewData1(), _this.queryViewData2(), _this.queryViewData3(), _this.queryViewData4()]).then(res => {
-         _this.nums = (_this.Data1.num0 ? _this.Data1.num0 : 0) + (_this.Data2.num1 ? _this.Data2.num1 : 0) + (_this.Data2.num2 ? _this.Data2.num2 : 0) 
-        + (_this.Data2.num3 ? _this.Data2.num3 : 0) + (_this.Data4.num4 ? _this.Data4.num4 : 0) + (_this.Data3.num5 ? _this.Data3.num5 : 0);
+        _this.nums = (_this.Data1.num0 ? _this.Data1.num0 : 0) + (_this.Data2.num1 ? _this.Data2.num1 : 0) + (_this.Data2.num2 ? _this.Data2.num2 : 0) +
+        (_this.Data2.num3 ? _this.Data2.num3 : 0) + (_this.Data4.num4 ? _this.Data4.num4 : 0) + (_this.Data3.num5 ? _this.Data3.num5 : 0);
       });
     }
   }
