@@ -9,9 +9,9 @@
 // { menuId: 'dm-22010', menuName: 'iframeLink', upMenuId: 'dm-22000', menuIcon: '', funcId: 'iframeLink', funcUrl: 'iframelink=http%3A%2F%2Fwww.yusys.com.cn' },
 // 菜单数据网信
 const menus = [
-  { mIcon: 'el-icon-yx-books', mId: 'lp-90000', mPid: '0', mText: '系统管理', routeId: '', routeUrl: '' },
-  { mIcon: 'el-icon-yx-books', mId: 'lp-92000', mPid: 'lp-90000', mText: '系统配置', routeId: '', routeUrl: '' },
-  { mIcon: 'el-icon-yx-books', mId: 'lp-92010', mPid: 'lp-92000', mText: '用户管理', routeId: 'user', routeUrl: '/sysConfig/user'}
+  // { mIcon: 'el-icon-yx-books', mId: 'lp-90000', mPid: '0', mText: '系统管理', routeId: '', routeUrl: '' },
+  // { mIcon: 'el-icon-yx-books', mId: 'lp-92000', mPid: 'lp-90000', mText: '系统配置', routeId: '', routeUrl: '' },
+  // { mIcon: 'el-icon-yx-books', mId: 'lp-92010', mPid: 'lp-92000', mText: '用户管理', routeId: 'user', routeUrl: '/sysConfig/user'}
 ];
 // 菜单数据
 const menus1 = [

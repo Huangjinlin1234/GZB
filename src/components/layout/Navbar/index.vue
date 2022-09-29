@@ -297,27 +297,26 @@ export default {
 
   computed: {},
   created () {
-    console.log('0000');
     // let socket = new SockJS('http://localhost:6002/message');
     // let stomClient
     let _this = this;
-    let baseApi = process.env.VUE_APP_BASE_API.replace('http://', 'ws://');
-    var ws = new window.WebSocket(baseApi + backend.cmisCfg + '/message/' + yufp.session.userCode);
-    ws.onopen = function (evt) {
-      console.log('onopen ' + evt);
-    };
-    ws.onmessage = function (evt) {
-      _this.showMessage(evt.data);
-    };
-    ws.onclose = function (evt) {
-      console.log('onclose ' + new Date());
-      ws = new window.WebSocket(baseApi + backend.cmisCfg + '/message/' + yufp.session.userCode);
-    };
-    window.onbeforeunload = function () {
-      ws.close();
-      clearInterval(this.timer);
-      clearInterval(this.msgTimer);
-    };
+    // let baseApi = process.env.VUE_APP_BASE_API.replace('http://', 'ws://');
+    // var ws = new window.WebSocket(baseApi + backend.cmisCfg + '/message/' + yufp.session.userCode);
+    // ws.onopen = function (evt) {
+    //   console.log('onopen ' + evt);
+    // };
+    // ws.onmessage = function (evt) {
+    //   _this.showMessage(evt.data);
+    // };
+    // ws.onclose = function (evt) {
+    //   console.log('onclose ' + new Date());
+    //   ws = new window.WebSocket(baseApi + backend.cmisCfg + '/message/' + yufp.session.userCode);
+    // };
+    // window.onbeforeunload = function () {
+    //   ws.close();
+    //   clearInterval(this.timer);
+    //   clearInterval(this.msgTimer);
+    // };
 
     let datestr = yufp.util.dateFormat(yufp.util.dateFormat(new Date()), '{y}-{m}-{d}');
     let model = {
@@ -341,54 +340,54 @@ export default {
       });
     }, 50000);
 
-    if (_this.msgTimer) {
-      _this.msgTimer = setInterval(() => {
-        _this.$request({
-          method: 'GET',
-          url: backend.appOcaService + '/api/adminsmnotice/view/list',
-          data: {
-            page: 1,
-            size: 20,
-            readSts: '0'
-          }
-        }).then(({code, message, data}) => {
-          if (code === '0') {
-            for (let i = 0; i < data.length; i++) {
-              setTimeout(() => {
-                _this.showMsgNotice(data[i]);
-              }, 200);
-            }
-          }
-        });
-      }, 60 * 60 * 1000);
-    } else {
-      _this.$request({
-        method: 'GET',
-        url: backend.appOcaService + '/api/adminsmnotice/view/list',
-        data: {
-          page: 1,
-          size: 20,
-          readSts: '0'
-        }
-      }).then(({code, message, data}) => {
-        if (code === '0') {
-          for (let i = 0; i < data.length; i++) {
-            setTimeout(() => {
-              _this.showMsgNotice(data[i]);
-            }, 200);
-          }
-        }
-      });
-    }
+    // if (_this.msgTimer) {
+    //   _this.msgTimer = setInterval(() => {
+    //     _this.$request({
+    //       method: 'GET',
+    //       url: backend.appOcaService + '/api/adminsmnotice/view/list',
+    //       data: {
+    //         page: 1,
+    //         size: 20,
+    //         readSts: '0'
+    //       }
+    //     }).then(({code, message, data}) => {
+    //       if (code === '0') {
+    //         for (let i = 0; i < data.length; i++) {
+    //           setTimeout(() => {
+    //             _this.showMsgNotice(data[i]);
+    //           }, 200);
+    //         }
+    //       }
+    //     });
+    //   }, 60 * 60 * 1000);
+    // } else {
+    //   _this.$request({
+    //     method: 'GET',
+    //     url: backend.appOcaService + '/api/adminsmnotice/view/list',
+    //     data: {
+    //       page: 1,
+    //       size: 20,
+    //       readSts: '0'
+    //     }
+    //   }).then(({code, message, data}) => {
+    //     if (code === '0') {
+    //       for (let i = 0; i < data.length; i++) {
+    //         setTimeout(() => {
+    //           _this.showMsgNotice(data[i]);
+    //         }, 200);
+    //       }
+    //     }
+    //   });
+    // }
   },
 
-  beforeMount () {
-    let arr = [];
-    for (let i = 0; i < yufp.session.dutys.length; i++) {
-      arr.push(yufp.session.dutys[i].name);
-    }
-    this.dutys = arr.join(',');
-  },
+  // beforeMount () {
+  //   let arr = [];
+  //   for (let i = 0; i < yufp.session.dutys.length; i++) {
+  //     arr.push(yufp.session.dutys[i].name);
+  //   }
+  //   this.dutys = arr.join(',');
+  // },
 
   methods: {
     showMessage (message) {

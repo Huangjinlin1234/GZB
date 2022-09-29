@@ -33,10 +33,6 @@ const state = {
   selectedRoles: {}, // 选中角色
   org: null, // 机构Object
   orgCode: null, // 当前机构ID
-  dpt: null, // 部门Object
-  instu: null, // 金融机构Object
-  upOrg: null, // 上级机构Object
-  upDpt: null, // 上级部门Object
   loginCode: '', // 登录代码
 
   otherInfo: null, // 其它用户信息
@@ -163,56 +159,42 @@ const actions = {
       var resData;
       // step 1
 
-      await getSessionInfoFn().then(response => {
+      await getSessionInfoFn({}).then(response => {
         if (!response.rows) {
           reject('Verification failed, please Login again.');
         }
-        const resLoginCode = response.rows.loginCode; // toMappingFn 中不包含此对象的存储 故单独定义
-        const userInfo = toMappingFn(response.rows, USER_MAPPING);
+        const resLoginCode = response.rows.userId; // toMappingFn 中不包含此对象的存储 故单独定义
+        const userInfo = response.rows;
+        // const userInfo = toMappingFn(response.rows, USER_MAPPING);
         // 如果从返回的登录用户信息里拿不到longicSys.id,使用后台管理系统默认初始化的系统id
-        if (!userInfo.logicSys.id) {
-          userInfo.logicSys.id = '1cab27def8fb4c0f9486dcf844b783c0';
-        }
-
         const {
           userId,
           userName,
           userCode,
-          userAvatar,
-          logicSys,
-          roles,
-          dutys,
-          org,
-          dpt,
-          instu,
-          upOrg,
+          userRoles,
+          orgInfo,
           upDpt,
           ...otherInfo
         } = userInfo;
         yufp.session.userId = userId;
         yufp.session.userName = userName;
         yufp.session.userCode = userCode;
-        yufp.session.org = org;
-        yufp.session.dutys = dutys;
+        yufp.session.org = orgInfo;
+        // yufp.session.dutys = dutys;
 
         // roles must be a non-empty array
         // if (!roles || roles.length <= 0) {
         //   reject('getSessionInfo: roles must be a non-null array!')
         // }
         // ;
-        const role = roles && roles.length > 0 ? roles[0] : {};
+        const role = userRoles && userRoles.length > 0 ? userRoles[0] : {};
         commit('SET_USER_ID', userId);
         commit('SET_LOGIN_CODE', resLoginCode);
         commit('SET_USER_NAME', userName);
         commit('SET_USER_CODE', userCode);
-        commit('SET_USER_AVATAR', userAvatar);
-        commit('SET_LOGIC_SYS', logicSys);
-        commit('SET_ROLES', roles);
+        commit('SET_ROLES', userRoles);
         commit('SET_SELECTED_ROLES', role);
-        commit('SET_ORG', org);
-        commit('SET_DPT', dpt);
-        commit('SET_INSTU', instu);
-        commit('SET_UP_ORG', upOrg);
+        commit('SET_ORG', orgInfo);
         commit('SET_UP_DPT', upDpt);
         commit('SET_OTHER_INFO', otherInfo);
         sessionStore.set(USER_STORE_KEY, userInfo);
@@ -224,7 +206,7 @@ const actions = {
       // step 2
       await getMenuandcontrFn().then(response => {
         // 处理数据，将路径调整到对应的路由上，仅供测试使用
-        if (response.code == '0') {
+        if (response.rows && response.rows.code == '0') {
           // response.rows.menus.forEach(m => {
           //   if (m.funcUrl) {
           //     m.funcUrl = m.funcUrl.replace('pages/', '');

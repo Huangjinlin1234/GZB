@@ -61,10 +61,11 @@ export function logoutFn (data) {
 /**
  * 用户会话信息获取API
  */
-export function getSessionInfoFn () {
+export function getSessionInfoFn (data) {
   return request({
-    url: backend.appOcaService + '/api/session/info',
-    method: 'get'
+    url: backend.uaaService + '/api/session/info',
+    method: 'POST',
+    data
   });
 }
 
@@ -84,11 +85,7 @@ export function getOpenDayFn () {
  */
 export function getMenuandcontrFn (params) {
   return request({
-    url: backend.appOcaService + '/api/account/menuandcontr',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      'Authorization': 'Basic ZHNjbXM6MTIzNDU2'
-    },
+    url: backend.uaaService + '/api/account/menuandcontr',
     method: 'post',
     params
   });

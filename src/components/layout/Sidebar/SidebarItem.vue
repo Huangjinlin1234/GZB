@@ -11,7 +11,7 @@
           <item
             v-if="menuModel.id==='topTile' || menuModel.id==='topTree'"
             :level="!isNest ? 1 : -1"
-            :title="generateTitle(onlyOneChild.meta.title)"
+            :title="'4444'"
           />
           <item
             v-else
@@ -23,81 +23,9 @@
         </el-menu-item>
       </app-link>
     </template>
-    <el-submenu
-      v-else-if="menuModel.id === 'topTile'"
-      ref="subMenu"
-      class="yu-root-level"
-      :index="resolvePath(item.path)"
-      popper-append-to-body
-    >
-      <template slot="title">
-        <item
-          v-if="item.meta"
-          :icon="item.meta && item.meta.icon"
-          :title="generateTitle(item.meta.title)"
-        />
-      </template>
-      <template>
-        <yu-base-menu-tile-item v-for="tileMenuData in item.children" :key="tileMenuData.path">
-          <span slot="title" class="no-children">
-            <template
-              v-if="tileMenuData.children && tileMenuData.children.length>0"
-            >{{ generateTitle(tileMenuData.meta.title) }}</template>
-            <template v-else>
-              <app-link v-if="tileMenuData.meta" :to="resolvePath(tileMenuData.path)">
-                <span :index="resolvePath(tileMenuData.path)" class="title-menu">
-                  <item
-                    :icon="tileMenuData.meta.icon||(tileMenuData.meta&&tileMenuData.meta.icon)"
-                    :title="generateTitle(tileMenuData.meta.title)"
-                  />
-                </span>
-              </app-link>
-            </template>
-          </span>
-          <li
-            :class="['tile-item']"
-            v-for="(it, idx) in getChildrenFilter(tileMenuData)"
-            :key="'li-' + idx"
-          >
-            <app-link v-if="it.meta" :to="resolvePath(it.path)">
-              <span :index="resolvePath(it.path)" class="title-menu">
-                <item
-                  :icon="it.meta.icon||(it.meta&&it.meta.icon)"
-                  :title="generateTitle(it.meta.title)"
-                />
-              </span>
-            </app-link>
-          </li>
-        </yu-base-menu-tile-item>
-      </template>
-    </el-submenu>
-    <el-submenu
-      v-else-if="menuModel.id === 'topTree'"
-      ref="subMenu"
-      :index="resolvePath(item.path)"
-      :class="{'has-child':hasChild(item)}"
-      popper-append-to-body
-    >
-      <template slot="title">
-        <item
-          v-if="item.meta"
-          :icon="item.meta && item.meta.icon"
-          :title="generateTitle(item.meta.title)"
-        />
-      </template>
-      <div :style="{maxHeight:submenuMaxheight}">
-        <sidebar-item
-          v-for="child in item.children"
-          :key="child.name"
-          :is-nest="true"
-          :item="child"
-          :base-path="resolvePath(child.path)"
-          class="tree-menu"
-        />
-      </div>
-    </el-submenu>
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
+
         <item
           v-if="item.meta"
           :icon="item.meta && item.meta.icon"
@@ -164,6 +92,10 @@ export default {
       });
     }
   },
+  mounted () {
+    console.log(this.onlyOneChild, 'onlyOneChild===');
+    console.log(this.onlyOneChild.meta.title, 'ytttt');
+  },
   methods: {
     hasChild (item) {
       return item.children.some(function (child) {
@@ -218,7 +150,6 @@ export default {
           return true;
         }
       });
-
       // When there is only one child router, the child router is displayed by default
       if (showingChildren.length === 1) {
         return true;

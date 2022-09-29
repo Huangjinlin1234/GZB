@@ -38,12 +38,12 @@ export const USER_MAPPING = { // 用户后端数据模型映射
 };
 
 export const MENU_MAPPING = { // 菜单后端数据模型映射
-  mId: 'mId', // 菜单ID
-  mText: 'mText', // 菜单名称
-  mPid: 'mPid', // 上级菜单ID
-  mIcon: 'mIcon', // 菜单图标
-  routeId: 'routeId', // 菜单功能ID
-  routeUrl: 'routeUrl', // 菜单功能URL
+  mId: 'menuId', // 菜单ID
+  mText: 'menuName', // 菜单名称
+  mPid: 'upMenuId', // 上级菜单ID
+  mIcon: 'menuIcon', // 菜单图标
+  routeId: 'funcId', // 菜单功能ID
+  routeUrl: 'funcUrl', // 菜单功能URL
   mType: 'mType' // 菜单类型
 };
 

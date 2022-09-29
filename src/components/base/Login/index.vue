@@ -64,7 +64,8 @@ import {
 import { getLanguage } from '@/utils/i18n';
 import { genUUID } from '@/utils';
 import { putToken, removeToken } from '@/utils/oauth';
-import { JSEncrypt } from 'jsencrypt';
+// import { JSEncrypt } from 'jsencrypt';
+import JSEncrypt from 'jsencrypt';
 import { getRSAPublicKey, getSystemName } from '@/utils/util';
 import YufpPasswordModify from '@/components/widgets/YufpPasswordModify';
 const isSingleServer = process.env.VUE_APP_SINGLE_SERVER === 'true';
@@ -183,28 +184,25 @@ export default {
         return;
       }
       var _this = this;
-      var pubkeyHex;
       this.btnLoginLoading.show = true;
       this.borderColor = 'lightgreen';
-      // //RSA加密
-      var getRSAPublicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDAYwQ81rc1KW8tTYpxrLS3ArVxB40otmbWyXwgDQRkLsCuQKiq6KZgAM/8sJuI12S1JVOXnMu5d420vKFFS/+Ibz4TxqjhLmgownaguMTbAGBzIPvfN5lL52mDmm/CvKu2YPCFvZV8YulNTCexvuj7OiWRUXpAbaQqu5tPOjGytQIDAQAB';
-      var encrypt = new JSEncrypt();
-      encrypt.setPublicKey(getRSAPublicKey);
       getPubkey().then(response => {
         if (response.code === '0') {
-          pubkeyHex = response.rows;
           var data = {
-            userCode: _this.username,
-            password: encrypt.encrypt(_this.password),
+            usercode: _this.username,
+            password: 'ueKCzcrEJ/xuHT8k+Yzw9O2qGheeAGZO/YgU+7UzxFsfgfX2GQKa42eec11Lry+dOy1fp1ix5zHIoTXELwC1+LWmS6qS4a95AR2krV4s9wyxRoQOu4cNYEAMGcP9mKlFmeTTNI/R2HpNRGtvlOeteeeUUVpSHrZZcAEczYQaNuU=',
+            // password: _this.encryptPassword(_this.password),
             imageCode: _this.imageCode,
             clientId: _this.clientId,
             grant_type: 'password'
           };
+          // data = {'usercode': 'admin', 'password': 'NIasITc4CRiFyH+0S+JHGIU8GKzJOGJQjOwt4YpcY7xpMLhBQYtf5qNbdRJRb/mFML3nzvNzGtJuxqQQrEL8twkCIc+taBubDIB40fBR0SO76oGD0ZWKmk8MeZ6/tRSJ2VAc/lM8m3o2QGFtgSCOfyQD/jjwNLCt/J0C3ocZB1g=', 'imageCode': '71x7', 'clientId': '3118D683EC6E064E', 'grant_type': 'password'};
           this.handleLogin(data);
         }
       });
     },
     handleLogin (data) {
+      console.log(data, 'ddd');
       loginFn(data).then(response => {
         this.btnLoginLoading.show = false;
         if (response && response.rows && response.code === '0') { // 1、登录成功
@@ -216,6 +214,8 @@ export default {
           this.$store.dispatch('oauth/getAccessInfo').then((resData) => {
             this.redirectToFrame();
           });
+        } else {
+          this.freshImageCodeFn();
         }
         if (response && response.code === '10000002') { // 2、首次登录
           var _this = this;

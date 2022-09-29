@@ -8,17 +8,5 @@
 import Layout from '@/components/layout';
 
 const permissionsRoutes = [
-  {
-    path: '/',
-    component: Layout,
-    meta: { title: '系统管理', icon: 'component' },
-    children: [
-      {
-        path: '/sysConfig/user',
-        component: () => import('@/views/permissions/sysConfig/user'),
-        name: 'user',
-        meta: { title: '用户管理' }
-      }]
-  }
 ];
 export default permissionsRoutes;

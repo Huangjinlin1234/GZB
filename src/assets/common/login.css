@@ -174,7 +174,7 @@ input:-webkit-autofill {
   position: absolute;
   width: 513px;
   height: 592px;
-  left: calc(23% + 513px);
+  /* left: calc(23% + 513px); */
   top: 19%;
   background: #FFFFFF;
   border-radius: 0 0 64px 0;

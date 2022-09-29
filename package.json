@@ -5,9 +5,9 @@
   "author": "YUFP <yufp@yusys.com.cn>",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn build:theme && vue-cli-service serve --open",
+    "dev": "yarn build:theme && node --max_old_space_size=6144 ./node_modules/@vue/cli-service/bin/vue-cli-service.js serve --open",
     "dev:ie": "vue-cli-service serve --open",
-    "build": "yarn build:theme && vue-cli-service build",
+    "build": "yarn build:theme && node --max_old_space_size=6144 ./node_modules/@vue/cli-service/bin/vue-cli-service.js build",
     "build:theme": "gulp",
     "build:prod": "vue-cli-service build",
     "build:dev": "vue-cli-service build --mode tencent",

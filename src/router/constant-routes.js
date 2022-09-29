@@ -76,74 +76,9 @@ let constantRoutes = [
         meta: { title: 'dashboard', icon: 'yu-icon-home1', noCache: true, affix: true }
       }
     ]
-  },
-  {
-    path: '/scheduleLog', // 定时任务-日志列表
-    component: Layout,
-    redirect: '/systemManager/schedule/log/log',
-    children: [
-      {
-        path: '/systemManager/schedule/log/log',
-        component: () => import('@/views/content/systemManager/schedule/log/log')
-      }
-    ]
-  },
-  {
-    path: '/guide',
-    component: Layout,
-    hidden: true,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/common/guide/index'),
-        name: 'Guide',
-        meta: { title: 'guide', icon: 'guide', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/templetfactory',
-    component: Layout,
-    hidden: true,
-    redirect: '/templetfactory/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/cfgmanage/productconfig/templetfactory/tempetfactorypreviewIndex'),
-        name: 'templetfactory',
-        meta: { title: '模版工厂', icon: 'guide', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/callback',
-    component: Layout,
-    hidden: true,
-    redirect: '/callback/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/workflow/bench/callback/callback.vue'),
-        name: 'callback',
-        meta: { title: '我的退回', icon: 'guide', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/meetingIndex',
-    component: Layout,
-    hidden: true,
-    redirect: '/meetingIndex/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/workflow/bench/metting/meetingIndex.vue'),
-        name: 'meetingIndex',
-        meta: { title: '待投票', icon: 'guide', noCache: true }
-      }
-    ]
   }
+
+
 ];
 
 // 合并动态路由数据

@@ -185,7 +185,7 @@ export function requestSuccessFunc (config) {
       });
       return new Promise((resolve) => {
         _requests.push((access_token) => {
-          config.headers[X_AUTHORIZATION] = 'Bearer ' + access_token;
+          config.headers[X_AUTHORIZATION] = access_token;
           resolve(config);
         });
       });
@@ -193,7 +193,7 @@ export function requestSuccessFunc (config) {
 
     const token = getToken();
     if (token) {
-      config.headers[X_AUTHORIZATION] = 'Bearer ' + token.access_token;
+      config.headers[X_AUTHORIZATION] = token.access_token;
     } else {
       // 若token不存在，表示会话过期，终止请求
       logger.warn('Session expiration request termination');

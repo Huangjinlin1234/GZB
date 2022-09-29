@@ -169,14 +169,14 @@ export function generateRoutes (nodes) {
   const len = nodes.length;
   const rootMenus = [];
   const tmpNodesObj = {};
-  // if (mapping) {
-  //   // 去除无用转换配置（如：userId: 'userId'），提升转换效率
-  //   for (const key in mapping) {
-  //     if (key === mapping[key]) {
-  //       delete mapping[key];
-  //     }
-  //   }
-  // }
+  if (mapping) {
+    // 去除无用转换配置（如：userId: 'userId'），提升转换效率
+    for (const key in mapping) {
+      if (key === mapping[key]) {
+        delete mapping[key];
+      }
+    }
+  }
   for (let i = 0; i < len; i++) {
     let node = nodes[i];
     if (mapping) {
@@ -204,6 +204,6 @@ export function generateRoutes (nodes) {
     tmpNodesObj[idValue] = route;
   }
   dealRootFuns(rootMenus);
-
+  console.log(JSON.stringify(rootMenus), 'rootMenus');
   return rootMenus;
 }

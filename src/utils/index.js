@@ -9,7 +9,7 @@ import { requestConfig, requestSuccessFunc, requestFailFunc, responseSuccessFunc
 import XyUtils from 'xy-utils';
 import backend from '@/config/constant/app.data.service';
 import * as filters from '@/utils/filters'; // global filters
-import service from '@/utils/yufp.ajax'
+import service from '@/utils/yufp.ajax';
 import Dialog from '@/utils/dialog';
 import * as xutils from '@/utils/xutils';
 
@@ -43,11 +43,11 @@ Vue.prototype.$backend = backend;
 Vue.prototype.$request = (param) => {
   // 为兼容旧组件同步方法使用 #TODO 其他方式禁止使用该方式，如果需要实现同步，可使用async/await
   if (param.async === false) {
-    return service.request(param)
+    return service.request(param);
   } else {
     return XyUtils.request(param);
   }
-}
+};
 
 // 全局注入一个date json格式化方法 // TODO 临时存放
 /**
@@ -98,19 +98,24 @@ Vue.prototype.$broadcase = function (eventName, data) {
  */
 Vue.prototype.genUUID = function (len, radix) {
   var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-  var uuid = [],
-    i;
+  var uuid = [], i;
   radix = radix || chars.length;
+
   if (len) {
+    // Compact form
     for (i = 0; i < len; i++) {
       uuid[i] = chars[0 | Math.random() * radix];
     }
   } else {
+    // rfc4122, version 4 form
     var r;
 
+    // rfc4122 requires these characters
     uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
     uuid[14] = '4';
 
+    // Fill in random data. At i==19 set the high bits of clock sequence as
+    // per rfc4122, sec. 4.1.5
     for (i = 0; i < 36; i++) {
       if (!uuid[i]) {
         r = 0 | Math.random() * 16;
@@ -118,7 +123,6 @@ Vue.prototype.genUUID = function (len, radix) {
       }
     }
   }
-
   return uuid.join('');
 };
 
