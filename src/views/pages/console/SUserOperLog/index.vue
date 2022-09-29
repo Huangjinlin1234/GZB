@@ -14,13 +14,11 @@
 
         </yu-xform-group>
       </yu-xform>
-      <template>
         <yu-button type="primary" ref="btn_insertFn" v-if="checkCtrl('add')"  @click="customClick('insertFn')">新增</yu-button>
         <yu-button type="primary" ref="btn_updateFn" v-if="checkCtrl('edit')"  @click="customClick('updateFn')">修改</yu-button>
         <yu-button type="primary" ref="btn_deleteFn" v-if="checkCtrl('delete')"  @click="customClick('deleteFn')">删除</yu-button>
         <yu-button type="primary" ref="btn_viewFn" v-if="checkCtrl('view')"  @click="customClick('viewFn')">查看</yu-button>
         <yu-button type="primary" ref="btn_updateFn" @click="submitBeforeFn" hidden>提交</yu-button>
-      </template>
       <yu-xtable ref="refTable" row-number condition-key="condition" request-type="post" selection-type="radio" @row-click="onRowClick" @row-dblclick="onRowDBClick" @cell-click="onCellClick" :pageable="true" :data="tableData" >
         <yu-xtable-column label="用户账户" prop="userId"></yu-xtable-column>
         <yu-xtable-column label="用户名称" prop="userOrgCode"></yu-xtable-column>
@@ -202,9 +200,8 @@ export default {
           data: {condition: JSON.stringify({serno: rowData.serno})},
           url: this.$backend.cmisBiz + '/api/coopplanproinfo/query',
           callback: function (code, message, response) {
-            debugger;
             if (response.code == '0') {
-              var coopPlanProArray = response.data;
+              let coopPlanProArray = response.data;
               if (coopPlanProArray != null && coopPlanProArray.length > 0) {
                 proType = coopPlanProArray[0].proType;
               }
