@@ -344,7 +344,7 @@ export function responseFailFunc (error) {
     return Promise.reject(error, res);
   } else {
     return Promise.reject(error, res).catch(err => {
-      console.log(err, err.response);
+      console.log(err,);
       // 关闭loading
       res && res.config && res.config.loadingUi && res.config.loadingUi.option.loadingInstance.close();
     });

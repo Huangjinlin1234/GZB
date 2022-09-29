@@ -6,7 +6,7 @@
 
 <script>
 import DefaultDashboard from './default';
-import OtherDashboard from './other/indexTest.vue';
+import OtherDashboard from './other/index.vue';
 import staticPage from './static';
 import { mapGetters } from 'vuex';
 export default {
@@ -14,7 +14,7 @@ export default {
   components: { DefaultDashboard, OtherDashboard, staticPage, mapGetters },
   data () {
     return {
-      currentRole: 'OtherDashboard'
+      currentRole: 'DefaultDashboard'
     };
   },
   computed: {
@@ -22,7 +22,7 @@ export default {
   },
   created () {
     // 此处，可根据用户角色信息，动态绑定对应的组件
-    // this.currentRole = 'DefaultDashboard'
+    // this.currentRole = 'DefaultDashboard';
     // for (let i = 0; i < this.roles.length; i++) {
     //   // 判断是否包含客户经理角色
     //   if (this.roles[i].code == 'R0010' || this.roles[i].code == 'R0020' || this.roles[i].code == 'R0030' || this.roles[i].code == 'R00 ||

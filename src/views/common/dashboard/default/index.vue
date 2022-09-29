@@ -143,7 +143,7 @@ export default {
       calendardialogVisible: false,
       // 贷款计算器
       loanCalcdialogVisible: false,
-      riskNum: 0, //风险预警数量
+      riskNum: 0 // 风险预警数量
     };
   },
   computed: {
@@ -177,45 +177,45 @@ export default {
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/jxxt',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {
-          window.open(data + '/pas', '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            window.open(data + '/pas', '_blank');
+          }
+        });
     },
     /** 风险预警系统 */
     doDel () {
       var currentuserid = this.loginCode;
       // currentuserid = 'admin';
       let _this = this;
-      var fxyjUrl = "";
+      var fxyjUrl = '';
       _this.$request({
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/fxyjxt',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {  
-          var url = data + '/cms/userSignOnYJD.do?currentuserid=' + currentuserid;
-          window.open(url, '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            var url = data + '/cms/userSignOnYJD.do?currentuserid=' + currentuserid;
+            window.open(url, '_blank');
+          }
+        });
     },
     /** 智能审批系统 */
     sysApproval () {
       var currentuserid = this.loginCode;
       // currentuserid = '00102002';
       let _this = this;
-      var url0 = "";
+      var url0 = '';
       _this.$request({
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/znsp',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {
-          var url = `${data}/imceasys/in/loginWithoutPwd?loginName=${currentuserid}`;
-           window.open(url, '_blank');
-        }
-      }); 
+        .then(({ code, message, data }) => {
+          if (data) {
+            var url = `${data}/imceasys/in/loginWithoutPwd?loginName=${currentuserid}`;
+            window.open(url, '_blank');
+          }
+        });
     },
     /** 新微贷系统 */
     doXWD () {
@@ -224,17 +224,17 @@ export default {
       // currentuserid = 'admin';
       // orgCode = '123';
       let _this = this;
-      var url0 = "";
+      var url0 = '';
       _this.$request({
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/xwdxt',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {
-          var url = `${data}/#/loginzjg/${currentuserid}/${orgCode}/CMIS`;
-          window.open(url, '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            var url = `${data}/#/loginzjg/${currentuserid}/${orgCode}/CMIS`;
+            window.open(url, '_blank');
+          }
+        });
     },
     /** 不动产登记 */
     doHLWYP () {
@@ -243,28 +243,28 @@ export default {
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/bdcdj',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {
-          window.open(data + '/pas', '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            window.open(data + '/pas', '_blank');
+          }
+        });
     },
     /** 非零售内部评级系统 */
     enterNPSystem () {
       var managerId = this.loginCode; // 客户经理的Id 90011219
       // managerId = '90011219';
       let _this = this;
-      var flsnp = "";
+      var flsnp = '';
       _this.$request({
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/irs',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {
-          var url = data + '/SNB_IRS/LoanClient/IRSInterface.html?userid=' + managerId;
-          window.open(url, '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            var url = data + '/SNB_IRS/LoanClient/IRSInterface.html?userid=' + managerId;
+            window.open(url, '_blank');
+          }
+        });
     },
     /** 押品管理系统 */
     openGuar () {
@@ -280,18 +280,18 @@ export default {
         org = '02';
       }
       let _this = this;
-      var yphsxt = "";
+      var yphsxt = '';
       _this.$request({
         url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/ypxt',
         method: 'post'
       })
-      .then(({ code, message, data }) => {
-        if (data) {
-        //  var url = data + `/cms/callPage.do?parameter=tWelCome|URLUSER|BB2C3CB8A662BFA3D3EB7335F99F59B1|${org}|${currentuserid}|${orgCode}|01`;
-         var url = 'http://20.0.39.113:8080/cms/userSignOn.do?OutSys=' + orgCode + '&OperUser=' + currentuserid;
-          window.open(url, '_blank');
-        }
-      });
+        .then(({ code, message, data }) => {
+          if (data) {
+            //  var url = data + `/cms/callPage.do?parameter=tWelCome|URLUSER|BB2C3CB8A662BFA3D3EB7335F99F59B1|${org}|${currentuserid}|${orgCode}|01`;
+            var url = 'http://20.0.39.113:8080/cms/userSignOn.do?OutSys=' + orgCode + '&OperUser=' + currentuserid;
+            window.open(url, '_blank');
+          }
+        });
     },
     /** 打开知识库页面 */
     openRepobaseFn () {
@@ -497,51 +497,51 @@ export default {
     setTodoNums () {
       let _this = this;
       Promise.all([_this.queryViewData1(), _this.queryViewData2(), _this.queryViewData3(), _this.queryViewData4()]).then(res => {
-        _this.nums = (_this.Data1.num0 ? _this.Data1.num0 : 0) + (_this.Data2.num1 ? _this.Data2.num1 : 0) + (_this.Data2.num2 ? _this.Data2.num2 : 0) 
-        + (_this.Data2.num3 ? _this.Data2.num3 : 0) + (_this.Data4.num4 ? _this.Data4.num4 : 0) + (_this.Data3.num5 ? _this.Data3.num5 : 0);
+        _this.nums = (_this.Data1.num0 ? _this.Data1.num0 : 0) + (_this.Data2.num1 ? _this.Data2.num1 : 0) + (_this.Data2.num2 ? _this.Data2.num2 : 0) +
+        (_this.Data2.num3 ? _this.Data2.num3 : 0) + (_this.Data4.num4 ? _this.Data4.num4 : 0) + (_this.Data3.num5 ? _this.Data3.num5 : 0);
       });
     },
-    //查询贷款逾期数
-    queryLoanNum() {
+    // 查询贷款逾期数
+    queryLoanNum () {
       return new Promise((resolve, reject) => {
-              let _this = this;
-              let model = {
-                accStatus: '2'
-              };
-              _this
-                .$request({
-                  url: backend.cmisBiz + '/api/accloan/querymodelByCondition',
-                  method: 'post',
-                  data: JSON.stringify({ condition: JSON.stringify(model) })
-                })
-                .then(({ code, message, data, total }) => {
-                  if (data) {
-                    _this.loanNum = total;
-                    resolve(data);
-                  }
-                });
-            });
+        let _this = this;
+        let model = {
+          accStatus: '2'
+        };
+        _this
+          .$request({
+            url: backend.cmisBiz + '/api/accloan/querymodelByCondition',
+            method: 'post',
+            data: JSON.stringify({ condition: JSON.stringify(model) })
+          })
+          .then(({ code, message, data, total }) => {
+            if (data) {
+              _this.loanNum = total;
+              resolve(data);
+            }
+          });
+      });
     },
-    //查询风险预警数
-    queryRiskNum() {
+    // 查询风险预警数
+    queryRiskNum () {
       return new Promise((resolve, reject) => {
-              let _this = this;
-              let model = {
-                inputId: _this.loginCode
-              };
-              _this
-                .$request({
-                  url: backend.cmisBiz + '/api/batbizrisksign/',
-                  method: 'post',
-                  data: JSON.stringify({ condition: JSON.stringify(model) })
-                })
-                .then(({ code, message, data, total }) => {
-                  if (data) {
-                    _this.riskNum = total;
-                    resolve(data);
-                  }
-                });
-            });
+        let _this = this;
+        let model = {
+          inputId: _this.loginCode
+        };
+        _this
+          .$request({
+            url: backend.cmisBiz + '/api/batbizrisksign/',
+            method: 'post',
+            data: JSON.stringify({ condition: JSON.stringify(model) })
+          })
+          .then(({ code, message, data, total }) => {
+            if (data) {
+              _this.riskNum = total;
+              resolve(data);
+            }
+          });
+      });
     }
   }
 };

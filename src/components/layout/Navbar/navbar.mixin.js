@@ -336,7 +336,7 @@ export default {
     /**
      * 查询通知数据
      */
-     queryWbMsgNotice () {
+    queryWbMsgNotice () {
       this.$request({
         method: 'GET',
         url: backend.appOcaService + '/api/adminsmnotice/view/list',
@@ -346,10 +346,10 @@ export default {
           readSts: '0'
         }
       }).then(({code, message, data}) => {
-        if (code === '0') {
-          this.userMessages = data;
-        } else {
-        }
+        // if (code === '0') {
+        //   this.userMessages = data;
+        // } else {
+        // }
       });
     },
     /**
@@ -900,12 +900,11 @@ export default {
       // } else {
       //   _this.signInFn(type)
       // }
-      //直接跳转集中作业签到签退页面
+      // 直接跳转集中作业签到签退页面
       let path = '/zrcbank/biz/central/user/empCheckInfo/empCheckInfo';
       if (this.$router.currentRoute.path != path) {
         this.$router.push({ path: path});
       }
-      
     },
     signInFn (type) {
       let _this = this;
@@ -921,7 +920,7 @@ export default {
         url: `${backend.appOcaService}/api/empcheckinfo/`,
         data: model,
         callback: function (code, message, response) {
-          console.info('----------------', JSON.stringify(response))
+          console.info('----------------', JSON.stringify(response));
           if (type == '01') {
             _this.$message('签到成功！签到时间：' + response.data.optTime);
           } else {
@@ -945,7 +944,7 @@ export default {
     empAttendInfoAddFn (param) {
       this.$nextTick(function () {
         let path = '/zrcbank/biz/central/user/empAttendInfo/empAttendInfo';
-        if(param === 'xj') {
+        if (param === 'xj') {
           if (this.$router.currentRoute.path != path) {
             this.$router.push({ path: path, query: {param: 'toDeal'}});
           }
@@ -975,7 +974,7 @@ export default {
       var startTimeStamp = Date.parse(new Date(model.startDate));
       var endTimeStamp = Date.parse(new Date(model.endDate));
       var curDate = Date.parse(new Date(_this.getDate()));
-      
+
       if (startTimeStamp > endTimeStamp) {
         _this.$message({
           message: '起始日期需要小于等于到期日期',
@@ -1029,6 +1028,6 @@ export default {
       var month2 = month > 9 ? month : '0' + month;
       var day2 = day > 9 ? day : '0' + day;
       return year + '/' + month2 + '/' + day2;
-    },
+    }
   }
 };
