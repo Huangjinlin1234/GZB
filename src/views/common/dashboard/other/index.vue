@@ -59,15 +59,29 @@
           </div>
           <div class="out-url-link" style="padding:0px 0px 16px;">
             <div>
-              <span class="zrcbk-icon-xitonglianjie-yapinguanlixitong" v-if="checkCtrl('ypglxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="openGuar">押品管理系统</span>
-              <span class="zrcbk-icon-xitonglianjie-feilingneiping" v-if="checkCtrl('flsnpxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="enterNPSystem">非零内评系统</span>
-              <span class="zrcbk-icon-xitonglianjie-fengxian" v-if="checkCtrl('fxyjxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="doDel">风险预警系统</span>
-              <span class="zrcbk-icon-xitonglianjie-zhinengshenpi" v-if="checkCtrl('znspxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="sysApproval">智能审批系统</span>
-              <span class="zrcbk-icon-xitonglianjie-jixiaoxitong" v-if="checkCtrl('jxxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="sysPas">绩效系统</span>
+              <span class="zrcbk-icon-xitonglianjie-yapinguanlixitong"  v-if="checkCtrl('ypglxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="openGuar">
+                <span class="yu-commfunc-title el-tooltip" title="押品管理系统"> 押品管理系统</span>
+              </span>
+              <span class="zrcbk-icon-xitonglianjie-feilingneiping" v-if="checkCtrl('flsnpxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="enterNPSystem">
+                <span class="yu-commfunc-title el-tooltip" title="非零内评系统"> 非零内评系统</span>
+              </span>
+              <span class="zrcbk-icon-xitonglianjie-fengxian" v-if="checkCtrl('fxyjxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="doDel">
+                <span class="yu-commfunc-title el-tooltip" title="风险预警系统">风险预警系统</span>
+              </span>
+              <span class="zrcbk-icon-xitonglianjie-zhinengshenpi" v-if="checkCtrl('znspxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="sysApproval">
+                <span class="yu-commfunc-title el-tooltip">智能审批系统</span>
+              </span>
+              <span class="zrcbk-icon-xitonglianjie-jixiaoxitong" v-if="checkCtrl('jxxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="sysPas">
+                <span class="yu-commfunc-title el-tooltip">绩效系统</span>
+              </span>
             </div>
             <div>
-              <span class="zrcbk-icon-xitonglianjie-budongchandengji" v-if="checkCtrl('bdcdj', '7A6A7D0581FD452A9224942D49909CD8')" @click="doHLWYP" plain>不动产登记</span>
-              <span class="zrcbk-icon-xitonglianjie-xinweidai" v-if="checkCtrl('xwdxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="doXWD" plain>新微贷系统</span>
+              <span class="zrcbk-icon-xitonglianjie-budongchandengji" v-if="checkCtrl('bdcdj', '7A6A7D0581FD452A9224942D49909CD8')" @click="doHLWYP" plain>
+                <span class="yu-commfunc-title el-tooltip">不动产登记</span>
+              </span>
+              <span class="zrcbk-icon-xitonglianjie-xinweidai" v-if="checkCtrl('xwdxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="doXWD" plain>
+                <span class="yu-commfunc-title el-tooltip">新微贷系统</span>
+              </span>
             </div>
           </div>
         </div>
@@ -201,26 +215,27 @@ export default {
         });
     },
     /** 智能审批系统 */
-    // sysApproval () {
-    //   var currentuserid = this.loginCode;
-    //   // currentu''rid = '00102002';
-    //   let _this = this;
-    //   var url0 = '';
-    //   _this.$request({
-    //     url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/znsp',
-    //     method: 'post'
-    //   }).then(({ code, message, data }) => {
-    //       if (data) {
-    //       v ar url = `${data}/imceasys/in/loginWithoutPwd?loginName=${currentuserid}`;
-    //         window.open(url, '_blank');
-    //       }
-    //     });
-    // },
+    sysApproval () {
+      var currentuserid = this.loginCode;
+      // currentuserid = '00102002';
+      let _this = this;
+      var url0 = '';
+      _this.$request({
+        url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/znsp',
+        method: 'post'
+      })
+        .then(({ code, message, data }) => {
+          if (data) {
+            var url = `${data}/imceasys/in/loginWithoutPwd?loginName=${currentuserid}`;
+            window.open(url, '_blank');
+          }
+        });
+    },
     /** 新微贷系统 */
     doXWD () {
       var currentuserid = this.loginCode;
       var orgCode = this.org.code; // 机构
-      // currentu''rid = 'admin';
+      // currentuserid = 'admin';
       // orgCode = '123';
       let _this = this;
       var url0 = '';
@@ -248,7 +263,7 @@ export default {
           }
         });
     },
-    /** 非零售内部评级系统 ''
+    /** 非零售内部评级系统 */
     enterNPSystem () {
       var managerId = this.loginCode; // 客户经理的Id 90011219
       // managerId = '90011219';
@@ -266,31 +281,31 @@ export default {
         });
     },
     /** 押品管理系统 */
-    // openGuar () {
-    //   var currentuserid = this.loginCode;
-    //   var orgCode = this.org.code; // 机构
-    //   // 用户不存在 暂时先默认
-    //   // currentuserid = 'admin';
-    //   // orgCode = '990000';
-    //   var org = '';
-    //   if (orgCode !'''016000') {
-    //     org = '01';
-    //   } else {
-    //     org = '02';
-    //   }
-    //   let _this = this;
-    //   var yphsxt = '';
-    //   _this.$request({
-    //     url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/ypxt',
-    //     method: 'post'
-    //   })
-    //     .then(({ code, message, data }) => {
-    //       if (data) {
-    //         var url = data + `/cms/callPage.do?parameter=tWelCome|URLUSER|BB2C3CB8A662BFA3D3EB7335F99F59B1|${org}|${currentuserid}|${orgCode}|01`;
-    //         window.open(url, '_blank');
-    //       }
-    //     });
-    // },
+    openGuar () {
+      var currentuserid = this.loginCode;
+      var orgCode = this.org.code; // 机构
+      // 用户不存在 暂时先默认
+      // currentuserid = 'admin';
+      // orgCode = '990000';
+      var org = '';
+      if (orgCode != '016000') {
+        org = '01';
+      } else {
+        org = '02';
+      }
+      let _this = this;
+      var yphsxt = '';
+      _this.$request({
+        url: backend.cmisBiz + '/api/cmishomepage/getprefixurl/ypxt',
+        method: 'post'
+      })
+        .then(({ code, message, data }) => {
+          if (data) {
+            var url = data + `/cms/callPage.do?parameter=tWelCome|URLUSER|BB2C3CB8A662BFA3D3EB7335F99F59B1|${org}|${currentuserid}|${orgCode}|01`;
+            window.open(url, '_blank');
+          }
+        });
+    },
     /** 打开知识库页面 */
     openRepobaseFn () {
       this.$router.addTab({
@@ -460,25 +475,25 @@ export default {
       });
     },
     // 查询催收任务待办事项数量
-    // queryViewData4 () {
-    //   return new Promise((resolve, reject) => {
-    //     let _this = this;
-    //     let model = {};
-    //     // model.inputId = _this.loginCode;
-    //     _this
-    //       .$request({
-    //         url: backend.cmisPsp + '/api/psptasklist/selectNumByInputId',
-    //         method: 'post',
-    //         data: JSON.stringify({ condition: JSON.stringify(model) })
-    //       })
-    //       .then(({ code, message, data }) => {
-    //         if (data) {
-    //           _this.Data4 = data[0];
-    //           resolve(data);
-    //         }
-    //      });+
-    //  })
-    // },
+    queryViewData4 () {
+      return new Promise((resolve, reject) => {
+        let _this = this;
+        let model = {};
+        // model.inputId = _this.loginCode;
+        _this
+          .$request({
+            url: backend.cmisPsp + '/api/psptasklist/selectNumByInputId',
+            method: 'post',
+            data: JSON.stringify({ condition: JSON.stringify(model) })
+          })
+          .then(({ code, message, data }) => {
+            if (data) {
+              _this.Data4 = data[0];
+              resolve(data);
+            }
+          });
+      });
+    },
     // 设置待处理事项的数量
     setTodoNums () {
       let _this = this;
@@ -494,5 +509,12 @@ export default {
 <style lang="scss" scoped>
 .out-url-link .el-button {
   width: calc(100% / 3 - 11px);
+}
+.yu-commfunc-title{
+  width: 100%;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+  display: inline-block;
+  overflow: hidden;
 }
 </style>

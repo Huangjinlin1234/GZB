@@ -33,7 +33,7 @@
 <script>
 import { lookup } from '@/utils';
 import YuSingleUpload from '@/components/widgets/YuSingleUpload';
-lookup.reg('STD_WB_PRB_MESSAGE_TYPE,STD_WB_PRB_STATUS');
+// lookup.reg('STD_WB_PRB_MESSAGE_TYPE,STD_WB_PRB_STATUS');
 export default {
   components: { YuSingleUpload },
   props: {
@@ -43,7 +43,7 @@ export default {
   data: function () {
     return {
       pages: 10,
-      dataUrl: backend.cmisCfg + '/api/wbprbcomm/',
+      dataUrl: backend.mock + '/api/wbprbcomm/',
       addUrl: backend.cmisCfg + '/api/wbprbcomm/create',
       form: [],
       dialogData: [],

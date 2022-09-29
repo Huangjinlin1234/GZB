@@ -71,7 +71,7 @@
   </div>
 </template>
 <script>
-yufp.lookup.reg('STD_WB_RISK_MESSAGE_TYPE,STD_WB_NOTICE_TYPE,STD_WB_PRB_MESSAGE_TYPE,STD_WB_PRB_STATUS');
+// yufp.lookup.reg('STD_WB_RISK_MESSAGE_TYPE,STD_WB_NOTICE_TYPE,STD_WB_PRB_MESSAGE_TYPE,STD_WB_PRB_STATUS');
 import { mapGetters } from 'vuex';
 export default {
   components: { mapGetters },
@@ -84,7 +84,7 @@ export default {
       url: {
         riskNotice: `${backend.cmisCfg}/api/wbrisknotice/`,
         msgNotice: `${backend.cmisCfg}/api/wbmsgnotice/`,
-        prbcomm: `${backend.cmisCfg}/api/wbprbcomm/`
+        prbcomm: `${backend.mock}/api/wbprbcomm/`
       },
       riskParam: {},
       riskData: [],
@@ -102,26 +102,26 @@ export default {
   mounted () {
     this.riskParam = { condition: JSON.stringify({ inputId: this.loginCode }), size: 8, sort: 'endDate desc' };
     this.otherParam = { condition: JSON.stringify({ inputId: this.loginCode }), size: 4, sort: 'pubTime desc' };
-    this.init();
+    // this.init();
   },
   methods: {
     init () {
       let _this = this;
       // 风险提示
       if (!this.hiddenRisk) {
-        yufp.service.request({
-          method: 'POST',
-          url: _this.url.riskNotice,
-          data: JSON.stringify(this.riskParam),
-          callback: function (code, message, response) {
-            if (response.code == '0') {
-              _this.risknum = response.total;
-              _this.riskData = response.data;
-            } else {
-              _this.$message({ message: '数据查询失败！', type: 'error' });
-            }
-          }
-        });
+        // yufp.service.request({
+        //   method: 'POST',
+        //   url: _this.url.riskNotice,
+        //   data: JSON.stringify(this.riskParam),
+        //   callback: function (code, message, response) {
+        //     if (response.code == '0') {
+        //       _this.risknum = response.total;
+        //       _this.riskData = response.data;
+        //     } else {
+        //       _this.$message({ message: '数据查询失败！', type: 'error' });
+        //     }
+        //   }
+        // });
       }
       // 问题交流
       yufp.service.request({

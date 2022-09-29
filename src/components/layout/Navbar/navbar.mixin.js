@@ -330,7 +330,7 @@ export default {
     // 查询配置信息
     this.queryConfig();
     this.initCurrentSizeModeId();
-    this.queryWbMsgNotice();
+    // this.queryWbMsgNotice();
   },
   methods: {
     /**

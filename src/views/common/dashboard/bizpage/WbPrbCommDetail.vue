@@ -58,7 +58,7 @@ export default {
   data: function () {
     return {
       pages: 10,
-      queryUrl: backend.cmisCfg + '/api/wbprbcomm/',
+      queryUrl: backend.mock + '/api/wbprbcomm/',
       updateUrl: backend.cmisCfg + '/api/wbprbcomm/update',
       form: [],
       Data: [],
@@ -79,7 +79,7 @@ export default {
   },
   mounted () {
     let _this = this;
-    _this.getFormdata();
+    // _this.getFormdata();
     var option = _this.pageParams.option;
     if (option == '1') {
       _this.saveBtnShow2 = true;

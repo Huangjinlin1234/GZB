@@ -53,15 +53,29 @@
           </div>
           <div class="out-url-link" style="padding:0px 0px 16px;">
             <div>
-              <span class="zrcbk-icon-xitonglianjie-yapinguanlixitong" v-if="checkCtrl('ypglxt', '7A6A7D0581FD452A9224942D49909CD8')"  @click="openGuar">押品管理系统</span>
-              <span class="zrcbk-icon-xitonglianjie-feilingneiping" v-if="checkCtrl('flsnpxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="enterNPSystem">非零内评系统</span>
-              <span class="zrcbk-icon-xitonglianjie-fengxian" v-if="checkCtrl('fxyjxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="doDel">风险预警系统</span>
-              <span class="zrcbk-icon-xitonglianjie-zhinengshenpi" v-if="checkCtrl('znspxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="sysApproval">智能审批系统</span>
-              <span class="zrcbk-icon-xitonglianjie-jixiaoxitong" v-if="checkCtrl('jxxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="sysPas" >绩效系统</span>
+              <span class="zrcbk-icon-xitonglianjie-yapinguanlixitong"  v-if="checkCtrl('ypglxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="openGuar">
+                <span class="yu-commfunc-title el-tooltip" title="押品管理系统"> 押品管理系统</span>
+              </span>
+              <span class="zrcbk-icon-xitonglianjie-feilingneiping" v-if="checkCtrl('flsnpxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="enterNPSystem">
+                <span class="yu-commfunc-title el-tooltip" title="非零内评系统"> 非零内评系统</span>
+              </span>
+              <span class="zrcbk-icon-xitonglianjie-fengxian" v-if="checkCtrl('fxyjxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="doDel">
+                <span class="yu-commfunc-title el-tooltip" title="风险预警系统">风险预警系统</span>
+              </span>
+              <span class="zrcbk-icon-xitonglianjie-zhinengshenpi" v-if="checkCtrl('znspxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="sysApproval">
+                <span class="yu-commfunc-title el-tooltip">智能审批系统</span>
+              </span>
+              <span class="zrcbk-icon-xitonglianjie-jixiaoxitong" v-if="checkCtrl('jxxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="sysPas">
+                <span class="yu-commfunc-title el-tooltip">绩效系统</span>
+              </span>
             </div>
             <div>
-              <span class="zrcbk-icon-xitonglianjie-budongchandengji" v-if="checkCtrl('bdcdj', '7A6A7D0581FD452A9224942D49909CD8')"  @click="doHLWYP" plain>不动产登记</span>
-              <span class="zrcbk-icon-xitonglianjie-xinweidai" v-if="checkCtrl('xwdxt', '7A6A7D0581FD452A9224942D49909CD8')"  @click="doXWD" plain>新微贷系统</span>
+              <span class="zrcbk-icon-xitonglianjie-budongchandengji" v-if="checkCtrl('bdcdj', '7A6A7D0581FD452A9224942D49909CD8')" @click="doHLWYP" plain>
+                <span class="yu-commfunc-title el-tooltip">不动产登记</span>
+              </span>
+              <span class="zrcbk-icon-xitonglianjie-xinweidai" v-if="checkCtrl('xwdxt', '7A6A7D0581FD452A9224942D49909CD8')" @click="doXWD" plain>
+                <span class="yu-commfunc-title el-tooltip">新微贷系统</span>
+              </span>
             </div>
           </div>
         </div>
@@ -130,12 +144,12 @@ export default {
       rolesStr: '',
       timeTemp: '',
       usertitle: '',
-      tipsData: { back: 0, done: 0 },
+      tipsData: { back: 131, done: 33 },
       Data1: {},
       Data2: {},
       Data3: {},
       Data4: {},
-      nums: 0,
+      nums: 60,
       loanNum: 0,
       /** 用户信息 */
       prmIndex: 1,
@@ -143,7 +157,7 @@ export default {
       calendardialogVisible: false,
       // 贷款计算器
       loanCalcdialogVisible: false,
-      riskNum: 0 // 风险预警数量
+      riskNum: 66 // 风险预警数量
     };
   },
   computed: {
@@ -159,15 +173,15 @@ export default {
     // 初始化数据
     this.init();
     // 我的工作台
-    this.queryWorkbench();
-    // 设置待处理事项的数量
-    this.setTodoNums();
-    // 设置主题色
-    this.setThemeColor();
-    // 查询贷款逾期数量
-    this.queryLoanNum();
-    // 查询风险预警数量
-    this.queryRiskNum();
+    // this.queryWorkbench();
+    // // 设置待处理事项的数量
+    // this.setTodoNums();
+    // // 设置主题色
+    // this.setThemeColor();
+    // // 查询贷款逾期数量
+    // this.queryLoanNum();
+    // // 查询风险预警数量
+    // this.queryRiskNum();
   },
   methods: {
     /** 绩效系统 */
@@ -354,18 +368,17 @@ export default {
       let _this = this;
       let model = {};
       model.userId = _this.loginCode;
-      _this
-        .$request({
-          url: backend.workflowService + '/api/custom/bench/count',
-          method: 'post',
-          data: JSON.stringify({ condition: JSON.stringify(model) })
-        })
-        .then(({ code, message, data }) => {
-          if (data) {
-            // yufp.clone(data, _this.formdata);
-            _this.tipsData = data;
-          }
-        });
+      // _this.$request({
+      //   url: backend.workflowService + '/api/custom/bench/count',
+      //   method: 'post',
+      //   data: JSON.stringify({ condition: JSON.stringify(model) })
+      // })
+      //   .then(({ code, message, data }) => {
+      //     if (data) {
+      //       // yufp.clone(data, _this.formdata);
+      //       _this.tipsData = data;
+      //     }
+      //   });
     },
     tableToggle (index) {
       this.prmIndex = index;
@@ -419,18 +432,16 @@ export default {
         let _this = this;
         let model = {};
         model.inputId = _this.loginCode;
-        _this
-          .$request({
-            url: backend.cmisCus + '/api/cusmanatask/selectNumByInputId',
-            method: 'post',
-            data: JSON.stringify({ condition: JSON.stringify(model) })
-          })
-          .then(({ code, message, data }) => {
-            if (data) {
-              _this.Data1 = data[0];
-              resolve(data);
-            }
-          });
+        // _this.$request({
+        //   url: backend.cmisCus + '/api/cusmanatask/selectNumByInputId',
+        //   method: 'post',
+        //   data: JSON.stringify({ condition: JSON.stringify(model) })
+        // }).then(({ code, message, data }) => {
+        //   if (data) {
+        //     _this.Data1 = data[0];
+        //     resolve(data);
+        //   }
+        // });
       });
     },
     // 查询业务管理待办事项数量（授信、合同、出账通知）
@@ -439,18 +450,16 @@ export default {
         let _this = this;
         let model = {};
         model.inputId = _this.loginCode;
-        _this
-          .$request({
-            url: backend.cmisBiz + '/api/ctrloancont/selectNumByInputId',
-            method: 'post',
-            data: JSON.stringify({ condition: JSON.stringify(model) })
-          })
-          .then(({ code, message, data }) => {
-            if (data) {
-              _this.Data2 = data[0];
-              resolve(data);
-            }
-          });
+        // _this.$request({
+        //   url: backend.cmisBiz + '/api/ctrloancont/selectNumByInputId',
+        //   method: 'post',
+        //   data: JSON.stringify({ condition: JSON.stringify(model) })
+        // }).then(({ code, message, data }) => {
+        //   if (data) {
+        //     _this.Data2 = data[0];
+        //     resolve(data);
+        //   }
+        // });
       });
     },
     // 查询催收任务待办事项数量
@@ -550,5 +559,12 @@ export default {
 <style lang="scss" scoped>
 .out-url-link .el-button {
   width: calc(100% / 3 - 11px);
+}
+.yu-commfunc-title{
+  width: 100%;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+  display: inline-block;
+  overflow: hidden;
 }
 </style>

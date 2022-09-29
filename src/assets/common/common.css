@@ -465,7 +465,7 @@ textarea {  border: 1px solid #e0e0e0;  border-radius: 4px;}
 
 .out-url-link{font-size: 14px;}
 .out-url-link>div{margin-top:16px}
-.out-url-link>div>span{ cursor: pointer; width: calc(100% / 5 - 32px);  height: 32px;  display: inline-block;  margin-left: 22px;  line-height: 32px;  background-color: #FAFAFA;  border-radius: 5px;  color: #333333;}
+.out-url-link>div>span{ cursor: pointer; width: calc(100% / 5 - 32px);  height: 32px;  display: inline-flex;  margin-left: 22px;  line-height: 32px;  background-color: #FAFAFA;  border-radius: 5px;  color: #333333;}
 .out-url-link>div>span::before{padding-left: 10px;font-size: 18px;padding-right: 8px;color: #183075;}
 .out-url-link>div>span:hover{background-color: #f2f5ff;}
 .yu-dashboard-box .yu-toolkit-box{margin-top:16px}

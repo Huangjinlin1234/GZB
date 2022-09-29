@@ -18,7 +18,7 @@
         <yu-button v-if="checkCtrl('viewproblem')" @click="infoFn">查看问题</yu-button>
         <yu-button v-if="checkCtrl('replyproblem')" @click="modifyFn" :hidden="modifyDisable">回复问题</yu-button>
       </yu-button-drop>
-      <yu-xtable index selection-type="radio" ref="refTable" condition-key="condition" row-number :data-url="dataUrl" :base-params="params" :default-load="false" request-type="POST">
+      <yu-xtable index selection-type="radio" ref="refTable" condition-key="condition" row-number :data="tableData" :base-params="params" :default-load="false" request-type="POST">
         <!--<yu-xtable-column label="流水号" prop="serno" width="" />-->
         <yu-xtable-column label="问题类型" prop="messageType" data-code="STD_WB_PRB_MESSAGE_TYPE" />
         <yu-xtable-column label="问题和意见" prop="content" width="300">
@@ -41,13 +41,14 @@ import { mapGetters } from 'vuex';
 export default {
   data: function () {
     return {
-      dataUrl: backend.cmisCfg + '/api/wbprbcomm/',
+      dataUrl: backend.mock + '/api/wbprbcomm/',
       activeName: '1',
       searchFormdata: {}, // 查询条件框
       params: {},
       pages: 10,
       addDisable: null,
-      modifyDisable: null
+      modifyDisable: null,
+      tableData: []
     };
   },
   computed: {

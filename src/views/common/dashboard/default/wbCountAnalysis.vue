@@ -8,7 +8,7 @@
   <div>
     <yu-tabs v-model="activeName">
       <yu-tab-pane label="客户数量统计表" name="first"  v-if="checkCtrl('khstj','7A6A7D0581FD452A9224942D49909CD8')">
-        <yu-xtable ref="refTable" request-type="POST" condition-key="condition" selection-type="radio" row-number :data-url="url.bizCusCountUrl">
+        <yu-xtable ref="refTable" request-type="POST" condition-key="condition" selection-type="radio" row-number :data="tableData1">
           <yu-xtable-column label="主管客户经理" prop="managerIdName"></yu-xtable-column>
           <yu-xtable-column label="主管机构" prop="managerBrIdName"></yu-xtable-column>
           <yu-xtable-column label="当前管户融资户数" prop="totalCusCount" width="140"></yu-xtable-column>
@@ -18,8 +18,8 @@
           <yu-xtable-column label="非贷款客户数" prop="ohterLoanCount"></yu-xtable-column>
         </yu-xtable>
       </yu-tab-pane>
-      <yu-tab-pane label="信贷客户核心业绩统计表" name="second" v-if="checkCtrl('xdkhhxyj','7A6A7D0581FD452A9224942D49909CD8')">
-        <yu-xtable ref="refTable" selection-type="radio" row-number request-type="POST" condition-key="condition" :data-url="url.xdhxTotalUrl">
+      <yu-tab-pane label="信贷客户核心业绩统计表" name="second" v-if="checkCtrl('xdkhhxyj','7A6A7D0581FD452A9224942D49909CD8')" >
+        <yu-xtable ref="refTable" selection-type="radio" row-number request-type="POST" condition-key="condition" :data="tableData1">
           <yu-xtable-column label="客户经理" prop="cusManagerName"></yu-xtable-column>
           <yu-xtable-column label="所属机构" prop="orgIdName"></yu-xtable-column>
           <yu-xtable-column label="客户编号" prop="cusId"></yu-xtable-column>
@@ -33,7 +33,7 @@
         </yu-xtable>
       </yu-tab-pane>
       <yu-tab-pane label="管理资产统计表" name="third" v-if="checkCtrl('glzctjb','7A6A7D0581FD452A9224942D49909CD8')">
-        <yu-xtable ref="refTable" selection-type="radio" row-number request-type="POST" condition-key="condition" :data-url="url.assetsAnalyse">
+        <yu-xtable ref="refTable" selection-type="radio" row-number request-type="POST" condition-key="condition"  :data="tableData1">
           <yu-xtable-column label="主管客户经理" prop="managerId"></yu-xtable-column>
           <yu-xtable-column label="主管机构" prop="managerBrId"></yu-xtable-column>
           <yu-xtable-column label="管理资产户数" prop="normalCusCount"></yu-xtable-column>
@@ -48,7 +48,7 @@
         </yu-xtable>
       </yu-tab-pane>
       <yu-tab-pane label="不良资产统计表" name="fourth"  v-if="checkCtrl('blzctjb','7A6A7D0581FD452A9224942D49909CD8')">
-        <yu-xtable ref="refTable" selection-type="radio" row-number request-type="POST" condition-key="condition" :data-url="url.badassetsUrl">
+        <yu-xtable ref="refTable" selection-type="radio" row-number request-type="POST" condition-key="condition" :data="tableData1">
           <yu-xtable-column label="主管客户经理" prop="managerId"></yu-xtable-column>
           <yu-xtable-column label="主管机构" prop="managerBrId"></yu-xtable-column>
           <yu-xtable-column label="本月新增不良资产户数" prop="monthAddBadcusCount"></yu-xtable-column>
@@ -74,7 +74,8 @@ export default {
         assetsAnalyse: `${backend.cmisBiz}/api/batbizassetsanalyse/`,
         xdhxTotalUrl: `${backend.cmisBiz}/api/accloan/dscms2sjzt/xdhxQueryTotalList/`
       },
-      activeName: 'first'
+      activeName: 'first',
+      tableData1: []
     };
   },
   methods: {}

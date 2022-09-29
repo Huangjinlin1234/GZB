@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-yufp.lookup.reg('STD_WB_RISK_MESSAGE_TYPE,STD_WB_NOTICE_TYPE,STD_WB_PRB_MESSAGE_TYPE,STD_WB_PRB_STATUS');
+// yufp.lookup.reg('STD_WB_RISK_MESSAGE_TYPE,STD_WB_NOTICE_TYPE,STD_WB_PRB_MESSAGE_TYPE,STD_WB_PRB_STATUS');
 import { mapGetters } from 'vuex';
 export default {
   components: { mapGetters },
@@ -72,12 +72,10 @@ export default {
   },
   mounted () {
     // 初始化我的常用菜单
-    this.initData(this.dealAllitem);
-    console.log(this.myData, 'mmyy');
+    // this.initData(this.dealAllitem);
   },
   methods: {
     initData (dealAllitem) {
-      console.info('-----------initData', JSON.stringify(dealAllitem));
       let _this = this;
       _this
         .$request({
