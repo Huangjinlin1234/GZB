@@ -47,14 +47,13 @@
 
 <script>
 import path from 'path';
-import { generateTitle, getLanguage } from '@/utils/i18n';
+import { generateTitle} from '@/utils/i18n';
 import { isExternal } from '@/utils/validate';
 import { mapGetters } from 'vuex';
 import Item from './Item';
 import AppLink from './Link';
 import FixiOSBug from './FixiOSBug';
 import YuBaseMenuTileItem from './YuBaseMenuTileItem';
-import { logInfo } from '@/utils/util';
 
 export default {
   name: 'SidebarItem',
@@ -91,10 +90,6 @@ export default {
         return !item.hidden;
       });
     }
-  },
-  mounted () {
-    console.log(this.onlyOneChild, 'onlyOneChild===');
-    console.log(this.onlyOneChild.meta.title, 'ytttt');
   },
   methods: {
     hasChild (item) {

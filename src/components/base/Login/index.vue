@@ -57,18 +57,13 @@
 /* eslint no-inner-declarations:0 */
 import {
   loginFn,
-  resetPwd,
   getPubkey
 } from '@/api/common/oauth';
 // import {sm2Encrypt} '@/utils/sm2'
-import { getLanguage } from '@/utils/i18n';
 import { genUUID } from '@/utils';
-import { putToken, removeToken } from '@/utils/oauth';
 // import { JSEncrypt } from 'jsencrypt';
 import JSEncrypt from 'jsencrypt';
 import { getRSAPublicKey, getSystemName } from '@/utils/util';
-import YufpPasswordModify from '@/components/widgets/YufpPasswordModify';
-const isSingleServer = process.env.VUE_APP_SINGLE_SERVER === 'true';
 const isIdentifingCode = process.env.VUE_APP_IDENTIFING_CODE === 'true';
 
 export default {
@@ -202,7 +197,6 @@ export default {
       });
     },
     handleLogin (data) {
-      console.log(data, 'ddd');
       loginFn(data).then(response => {
         this.btnLoginLoading.show = false;
         if (response && response.rows && response.code === '0') { // 1、登录成功

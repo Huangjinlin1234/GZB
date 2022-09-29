@@ -1,11 +1,11 @@
 import { MessageBox, Message } from 'yuwp-ui';
 import { sessionStore, request, lookup, storage } from '@/utils';
 import XLSX from 'xlsx';
-import { theme, menumodel, ssl, url, basePath } from '@/config';
+import { theme, menumodel, ssl, url } from '@/config';
 import { getToken, getContrs } from '@/utils/oauth';
 import frameConfig from '@/config/frame';
 import { auditlogdata } from '@/api/common/monitor';
-import { MENU_STOREOG_KEY, ROUTER_STORE_KEY } from '@/config/constant/app.data.common';
+import { MENU_STOREOG_KEY } from '@/config/constant/app.data.common';
 import { getLanguage } from '@/utils/i18n';
 import router from '@/router';
 
@@ -18,7 +18,7 @@ export function getOpenMenuTab (route) {
   if (!route) {
     return '';
   }
-  var router = yufp.router.getRoute(route);
+  let router = yufp.router.getRoute(route);
   if (router) {
     return [router];
   }
@@ -26,12 +26,12 @@ export function getOpenMenuTab (route) {
 
 // 控制点公共方法
 export function checkCtrl (ctrlCode, menuId, isView) {
-  var ctrls = getContrs();
+  let ctrls = getContrs();
   menuId = menuId || router.history.current.meta.routeId;
   if (!ctrlCode || !ctrls || !menuId) {
     return false;
   }
-  var ctrlItem = ctrls.filter(item => {
+  let ctrlItem = ctrls.filter(item => {
     return item.funcId === menuId && item.contrCode === ctrlCode;
   });
   if (ctrls && menuId && !ctrlItem.length) {
@@ -67,7 +67,7 @@ export function showMessageAlert (msg, type = 'error') {
 
 // 判断浏览器类型
 export function getBrowserType () {
-  var userAgent = navigator.userAgent; // 取得浏览器的userAgent字符串
+  let userAgent = navigator.userAgent; // 取得浏览器的userAgent字符串
   if (userAgent.indexOf('OPR') > -1) {
     return 'Opera';
   }; // 判断是否Opera浏览器 OPR/43.0.2442.991
@@ -110,9 +110,9 @@ export function getBrowserType () {
 export function exportExcelByTable (options) {
   // const {log} = console;
   options.importHidCloum = options.importHidCloum || true;
-  var tableRef = options.ref;
-  var colums = tableRef.tableColumns;
-  var tableColumns = colums.concat([]);
+  let tableRef = options.ref;
+  let colums = tableRef.tableColumns;
+  let tableColumns = colums.concat([]);
   if (!options.importHidCloum) {
     removeHidCloums(tableColumns);
   }
@@ -121,8 +121,8 @@ export function exportExcelByTable (options) {
     if (!arr || !Array.isArray(arr)) {
       return new Error('参数类型必须是数组');
     }
-    for (var i = 0; i < arr.length; i++) {
-      var element = arr[i];
+    for (let i = 0; i < arr.length; i++) {
+      let element = arr[i];
       if (element.hideColumn) {
         arr.splice(i, 1);
       }
@@ -133,21 +133,21 @@ export function exportExcelByTable (options) {
   }
   /** 输出计算的结果 */
   // log('初始状态的tableColumns', JSON.stringify(tableColumns));
-  var collectionHtml = tableRef.$el.getElementsByClassName('el-table__header-wrapper')[0].getElementsByTagName('tr');
+  let collectionHtml = tableRef.$el.getElementsByClassName('el-table__header-wrapper')[0].getElementsByTagName('tr');
   /** ----------------------------------> 1.获取表头行列数，给表头每个单元格设置行列合并数rowspan/colspan <------------------------------------------ */
   // 获取表头行数和列数（包含多级表头）
   function getRowAndCol (list) {
     if (!list || !Array.isArray(list)) {
       return new Error('参数类型必须是数组');
     }
-    var haveSubCellList = []; // 存储每个多级表头整体的行列数信息
-    for (var i = 0; i < list.length; i++) {
+    let haveSubCellList = []; // 存储每个多级表头整体的行列数信息
+    for (let i = 0; i < list.length; i++) {
       if (list[i].children) {
         haveSubCellList.push(getMaxFloor(list[i].children));
       }
     }
     // 含有多个多级表头时获取最大的行数
-    var maxRow;
+    let maxRow;
     if (haveSubCellList.length > 0) {
       maxRow = Math.max.apply(null, haveSubCellList) + 1;
     } else {
@@ -160,11 +160,11 @@ export function exportExcelByTable (options) {
     if (!column || !Array.isArray(column)) {
       return new Error('参数类型必须是数组');
     }
-    var colCount = 0; // colCount: 横向最底层单元格列数
-    for (var i = 0; i < column.length; i++) {
-      var element = column[i];
+    let colCount = 0; // colCount: 横向最底层单元格列数
+    for (let i = 0; i < column.length; i++) {
+      let element = column[i];
       if (element.children && Array.isArray(element.children) && element.children.length > 0) {
-        var childrenColCount = maxColCount(element.children);
+        let childrenColCount = maxColCount(element.children);
         colCount += childrenColCount; // 横向叠加计算总列数
       } else {
         colCount++;
@@ -176,7 +176,7 @@ export function exportExcelByTable (options) {
   function getMaxFloor (treeData) {
     // let floor = 0;
     // let v = this;
-    var max = 0;
+    let max = 0;
     function each (data, floor) {
       data.forEach(function (e) {
         e.floor = floor;
@@ -192,16 +192,16 @@ export function exportExcelByTable (options) {
     return max;
   }
   // 获取整个完整表头的行列数
-  var cellData = getRowAndCol(tableColumns);
+  let cellData = getRowAndCol(tableColumns);
   /** 输出计算的结果 */
   // log('整个表头的行列数:', JSON.stringify(cellData));
   // 给表头每个单元格设置行列合并数量信息rowspan行 colspan列
-  var maxcolspan = function (list) {
+  let maxcolspan = function (list) {
     if (list && Array.isArray(list) == true) {
-      for (var i = 0; i < list.length; i++) {
-        var element = list[i];
-        var children = element.children;
-        var childrenColCount;
+      for (let i = 0; i < list.length; i++) {
+        let element = list[i];
+        let children = element.children;
+        let childrenColCount;
         if (children) {
           childrenColCount = maxColCount(children); // 获取当前单元格的子单元格行列数
         }
@@ -217,13 +217,13 @@ export function exportExcelByTable (options) {
     }
   };
   function getChildColspan (list) {
-    var listRowCount = getMaxFloor(list); // 获取当前list的占用单元格的行数和列数
-    var rowIndex = cellData.rowCount - listRowCount;
+    let listRowCount = getMaxFloor(list); // 获取当前list的占用单元格的行数和列数
+    let rowIndex = cellData.rowCount - listRowCount;
     if (list && Array.isArray(list) == true) {
-      for (var i = 0; i < list.length; i++) {
-        var element = list[i];
-        var children = element.children;
-        var childrenColCount;
+      for (let i = 0; i < list.length; i++) {
+        let element = list[i];
+        let children = element.children;
+        let childrenColCount;
         if (children) {
           childrenColCount = maxColCount(children); // 获取当前单元格的子单元格行列数
         }
@@ -240,21 +240,21 @@ export function exportExcelByTable (options) {
   }
   maxcolspan(tableColumns);
   /** 输出计算的结果 */
-  // var arr = [];
-  // for (var i = 0; i < tableColumns.length; i++) {
+  // let arr = [];
+  // for (let i = 0; i < tableColumns.length; i++) {
   //   arr.push({label: tableColumns[i].label, colspan: tableColumns[i].colspan, rowspan: tableColumns[i].rowspan});
   // }
   // log('每个单元格的colspan&rowspan:', JSON.stringify(arr));
   /** ----------------------------------> 2.获取所有表头字段名label <------------------------------------------ */
   // 存储所有表头字段名
-  var headLabel = []; // 所有表头的label，prop，没有prop就取''.
-  var havePropArr = []; // 所有表头字段的prop
-  var haveOptions = []; // 所有含有options的prop
+  let headLabel = []; // 所有表头的label，prop，没有prop就取''.
+  let havePropArr = []; // 所有表头字段的prop
+  let haveOptions = []; // 所有含有options的prop
   function getHeadLabel (list) {
     if (!list || !Array.isArray(list)) {
       return new Error('参数类型必须是数组');
     }
-    for (var i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
       if (list[i].label) {
         headLabel.push({ label: list[i].label, prop: list[i].prop || '' });
         if (list[i].prop) {
@@ -274,7 +274,7 @@ export function exportExcelByTable (options) {
   // log('所有label:', JSON.stringify(headLabel));
   // log('所有有prop属性的label:', JSON.stringify(havePropArr));
   /** ----------------------------------> 3.设置表头每个表头单元格的行列起始信息 <------------------------------------------ */
-  var mergeCellDataList = []; // 存放表头每个单元格的行列起始信息
+  let mergeCellDataList = []; // 存放表头每个单元格的行列起始信息
   function genCellPlace () {
     return { // 定义单元格的起止行列
       s: { // s为开始
@@ -296,11 +296,11 @@ export function exportExcelByTable (options) {
     if (!list || !Array.isArray(list)) {
       return new Error('参数类型必须是数组');
     }
-    var lastEc = 0;
-    for (var i = 0; i < list.length; i++) {
-      var element = list[i];
-      var cellPlace = genCellPlace();
-      var children = element.children;
+    let lastEc = 0;
+    for (let i = 0; i < list.length; i++) {
+      let element = list[i];
+      let cellPlace = genCellPlace();
+      let children = element.children;
       if (children && Array.isArray(children) && children.length > 0) { // 存在子节点
         if (i == 0) { // 第一列就是多表头的处理
           cellPlace.s.c = lastEc > i ? lastEc : i;
@@ -325,13 +325,13 @@ export function exportExcelByTable (options) {
     }
   }
   function getChildMerges (list, lastColIndex) {
-    var listRowCount = getMaxFloor(list); // 获取当前list的占用单元格的行数和列数
-    var rowIndex = cellData.rowCount - listRowCount;
-    var lastEc = lastColIndex;
-    for (var i = 0; i < list.length; i++) {
-      var element = list[i];
-      var cellPlace = genCellPlace();
-      var children = element.children;
+    let listRowCount = getMaxFloor(list); // 获取当前list的占用单元格的行数和列数
+    let rowIndex = cellData.rowCount - listRowCount;
+    let lastEc = lastColIndex;
+    for (let i = 0; i < list.length; i++) {
+      let element = list[i];
+      let cellPlace = genCellPlace();
+      let children = element.children;
       if (children && Array.isArray(children) && children.length > 0) { // 存在子节点
         if (i < 1) {
           cellPlace.s.c = lastEc > lastColIndex ? lastEc + 1 : lastEc;
@@ -359,10 +359,10 @@ export function exportExcelByTable (options) {
     }
   }
   function getCellPlaceSC (prop) {
+    let index = 0;
     if (prop) {
-      var index = 0;
-      for (var i = 0; i < havePropArr.length; i++) {
-        var element = havePropArr[i];
+      for (let i = 0; i < havePropArr.length; i++) {
+        let element = havePropArr[i];
         if (element.prop === prop) {
           index = i;
           break;
@@ -376,19 +376,19 @@ export function exportExcelByTable (options) {
   getMerges(tableColumns);
   // log('每个表头单元格的行列起始信息:', JSON.stringify(mergeCellDataList));
   /** ----------------------------------> 4.表头单元格对应到excel中的位置排列(包括列数超出26处理)，比如A1 B1...AA1 AB1 AC1 <------------------------------------- */
-  var l = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  var letter = l.split('');
+  let l = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let letter = l.split('');
   // 表头数量超过26个
   if (cellData.colCount > l.length) {
-    for (var len = cellData.colCount - l.length, ln = parseInt(len / l.length), k = 0; k <= ln; k++) {
-      for (var i = 0; i < Math.min(len, l.length);) {
+    for (let len = cellData.colCount - l.length, ln = parseInt(len / l.length), k = 0; k <= ln; k++) {
+      for (let i = 0; i < Math.min(len, l.length);) {
         letter.push(letter[k] + '' + letter[i++]);
       }
     }
   }
   /** ----------------------------------> 5.设置所有表头单元格对应excel的单元格位置信息 <------------------------------------- */
   // 表头单元格对应excel的位置 ，比如 A1 B1 C1 ...
-  var headSheel = [];
+  let headSheel = [];
   /**
    * 设置所有表头单元格对应excel的单元格位置信息
    * @param {Array} list 表头每个单元格的行列起始信息组成的数据
@@ -397,16 +397,16 @@ export function exportExcelByTable (options) {
     if (!list || !Array.isArray(list)) {
       return new Error('参数类型必须是数组');
     }
-    for (var i = 0; i < list.length; i++) {
-      var obj = list[i];
+    for (let i = 0; i < list.length; i++) {
+      let obj = list[i];
       headSheel.push(letter[obj.s.c] + (obj.s.r + 1)); // 根据单元格的起始行和起始列来对应excel的位置
     }
   }
   getHeadcellPosition(mergeCellDataList);
   // log('表头单元格对应excel的位置:', JSON.stringify(headSheel));
   /** ----------------------------------> 6.获取要导出的数据 <------------------------------------- */
-  var data = [];
-  var tableData = [];
+  let data = [];
+  let tableData = [];
   // 导出方式
   if (options.importType == 'page') {
     // updated by taoting1 on 20200211
@@ -423,9 +423,9 @@ export function exportExcelByTable (options) {
     }).then((code, message, response) => {
       // 处理请求成功的情况
       if (options.jsonData) {
-        var tmp = options.jsonData.split('.');
-        var obj = response;
-        for (var z = 0; z < tmp.length; z++) {
+        let tmp = options.jsonData.split('.');
+        let obj = response;
+        for (let z = 0; z < tmp.length; z++) {
           if (!obj) {
             break;
           }
@@ -444,10 +444,10 @@ export function exportExcelByTable (options) {
    * @return {String} 某一列的label属性对应的prop英文字段
    */
   // 存放表头最底层实际对应数据的列字段prop 比如['id','title','username'...]
-  var headList_ = [];
+  let headList_ = [];
   // 循环获取表头最底层实际对应数据的列字段prop存储于headList数组
-  for (var j = 0; j < havePropArr.length; j++) {
-    var key = havePropArr[j].prop;
+  for (let j = 0; j < havePropArr.length; j++) {
+    let key = havePropArr[j].prop;
     headList_[headList_.length] = key;
   }
 
@@ -457,9 +457,9 @@ export function exportExcelByTable (options) {
    * @param {Array} tableColumns 表头列数组
    * @return {String} 数据字典dataCode
    */
-  var getColumnsDataCode = function (column, tableColumns) {
-    var code;
-    for (var i = 0; i < tableColumns.length; i++) {
+  let getColumnsDataCode = function (column, tableColumns) {
+    let code;
+    for (let i = 0; i < tableColumns.length; i++) {
       if (tableColumns[i].children && tableColumns[i].children instanceof Array == true) {
         code = getColumnsDataCode(column, tableColumns[i].children);
         if (code != undefined && code != null) {
@@ -475,22 +475,22 @@ export function exportExcelByTable (options) {
     return code;
   };
   // 翻译数据字典字段
-  for (var i = 0; i < tableData.length; i++) {
-    var o = {};
-    var rowData = tableData[i];
-    for (var j = 0; j < headList_.length; j++) {
-      var k = headList_[j];
-      var code = getColumnsDataCode(k, tableColumns);
+  for (let i = 0; i < tableData.length; i++) {
+    let o = {};
+    let rowData = tableData[i];
+    for (let j = 0; j < headList_.length; j++) {
+      let k = headList_[j];
+      let code = getColumnsDataCode(k, tableColumns);
       if (code) {
-        var val = lookup.convertKey(code, rowData[k]);
+        let val = lookup.convertKey(code, rowData[k]);
         o['' + k + ''] = val; // 如果配置了字典项则为翻译后的值
       } else {
         o['' + k + ''] = rowData[k]; // 没配置字典项为原始值
       }
     }
-    for (var index = 0; index < haveOptions.length; index++) {
-      var element = haveOptions[index];
-      var value = getValByKey(rowData[element.prop], element.options);
+    for (let index = 0; index < haveOptions.length; index++) {
+      let element = haveOptions[index];
+      let value = getValByKey(rowData[element.prop], element.options);
       o[element.prop] = value;
     }
     data.push(o);
@@ -502,9 +502,9 @@ export function exportExcelByTable (options) {
     if (!options || !Array.isArray(options)) {
       return key;
     }
-    var val;
-    for (var i = 0; i < options.length; i++) {
-      var element = options[i];
+    let val;
+    for (let i = 0; i < options.length; i++) {
+      let element = options[i];
       if (element.key === key) {
         val = element.value;
         break;
@@ -513,12 +513,12 @@ export function exportExcelByTable (options) {
     return val;
   }
   // TODO 有待了解插入空对象原因，但是如果删掉会导致导出数据的前两条丢失
-  for (var i = 1; i < collectionHtml.length; i++) {
+  for (let i = 1; i < collectionHtml.length; i++) {
     data.unshift({});
   }
   /** ----------------------------------> 8.导出相关数据构造 <------------------------------------- */
-  var saveAs = function (obj, fileName) { // 当然可以自定义简单的下载文件实现方式
-    var tmpa = document.createElement('a');
+  let saveAs = function (obj, fileName) { // 当然可以自定义简单的下载文件实现方式
+    let tmpa = document.createElement('a');
     tmpa.download = fileName || '下载';
     tmpa.href = URL.createObjectURL(obj); // 绑定a标签
     tmpa.click(); // 模拟点击实现下载
@@ -527,25 +527,25 @@ export function exportExcelByTable (options) {
     }, 100);
   };
   // 字符串转字符流
-  var s2ab = function (s) {
+  let s2ab = function (s) {
     if (typeof ArrayBuffer !== 'undefined') {
-      var buf = new ArrayBuffer(s.length);
-      var view = new Uint8Array(buf);
-      for (var i = 0; i != s.length; ++i) {
+      let buf = new ArrayBuffer(s.length);
+      let view = new Uint8Array(buf);
+      for (let i = 0; i != s.length; ++i) {
         view[i] = s.charCodeAt(i) & 0xFF;
       }
       return buf;
     } else {
-      var buf = new Array(s.length);
-      for (var i = 0; i != s.length; ++i) {
+      let buf = new Array(s.length);
+      for (let i = 0; i != s.length; ++i) {
         buf[i] = s.charCodeAt(i) & 0xFF;
       }
       return buf;
     }
   };
-  var wb = { SheetNames: ['Sheet1'], Sheets: {}, Props: {} };
+  let wb = { SheetNames: ['Sheet1'], Sheets: {}, Props: {} };
   data = XLSX.utils.json_to_sheet(data);
-  for (var i = 0; i < headSheel.length; i++) {
+  for (let i = 0; i < headSheel.length; i++) {
     data[headSheel[i]] = { t: 's', v: headLabel[i].label };
   }
   // 如果单元格是数字，将数字转换成字符串，防止导出后成为科学计数显示格式
@@ -561,10 +561,10 @@ export function exportExcelByTable (options) {
 
   data['!merges'] = mergeCellDataList;
   wb.Sheets['Sheet1'] = data;
-  var wopts = { bookType: 'xlsx', bookSST: true, type: 'binary' };// 这里的数据是用来定义导出的格式类型
-  var blob = new window.Blob([s2ab(XLSX.write(wb, wopts))], { type: 'application/octet-stream' });
-  var filename = options.fileName + '.' + (wopts.bookType == 'biff2' ? 'xls' : wopts.bookType);
-  var browser = getBrowserType();
+  let wopts = { bookType: 'xlsx', bookSST: true, type: 'binary' };// 这里的数据是用来定义导出的格式类型
+  let blob = new window.Blob([s2ab(XLSX.write(wb, wopts))], { type: 'application/octet-stream' });
+  let filename = options.fileName + '.' + (wopts.bookType == 'biff2' ? 'xls' : wopts.bookType);
+  let browser = getBrowserType();
   if (browser == 'IE') {
     window.navigator.msSaveBlob(blob, filename);
   } else {
@@ -596,7 +596,7 @@ export function getDefaultMenuModel () {
  * 获取当前选中系统名称
  */
 export function getSystemName () {
-  var systemName = sessionStore.get('currentApp');
+  let systemName = sessionStore.get('currentApp');
   if (systemName) {
     return systemName['applicationName'];
   } else if (frameConfig.baseFrameOptions.appOptions.length > 1) {
@@ -641,8 +641,8 @@ export function getUrl (param) {
  * @returns {string}
  */
 export function addTokenInfo (path) {
-  var token = 'access_token=';
-  var _url = '';
+  let token = 'access_token=';
+  let _url = '';
   if (path === null || path === '') {
     return _url;
   }
@@ -677,7 +677,7 @@ export function download (path) {
     window.open(a.href);
   } else {
     // ie 浏览器createElement创建的是一个对象，需要添加到一个元素后面，去掉原a.click() liujie1 20191106
-    var body = document.body;
+    let body = document.body;
     body.appendChild(a).click();
     // 然后移除
     body.removeChild(a);
@@ -842,27 +842,27 @@ export function moneyToUpper (money) {
   * money：要转化的数字
   */
   // 汉字的数字
-  var cnNums = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+  let cnNums = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
   // 基本单位
-  var cnIntRadice = ['', '拾', '佰', '仟'];
+  let cnIntRadice = ['', '拾', '佰', '仟'];
   // 对应整数部分扩展单位
-  var cnIntUnits = ['', '万', '亿', '兆'];
+  let cnIntUnits = ['', '万', '亿', '兆'];
   // 对应小数部分单位
-  var cnDecUnits = ['角', '分', '毫', '厘'];
+  let cnDecUnits = ['角', '分', '毫', '厘'];
   // 整数金额时后面跟的字符
-  var cnInteger = '整';
+  let cnInteger = '整';
   // 整型完以后的单位
-  var cnIntLast = '元';
+  let cnIntLast = '元';
   // 最大处理的数字
-  var maxNum = 999999999999999.9999;
+  let maxNum = 999999999999999.9999;
   // 金额整数部分
-  var integerNum;
+  let integerNum;
   // 金额小数部分
-  var decimalNum;
+  let decimalNum;
   // 输出的中文金额字符串
-  var chineseStr = '';
+  let chineseStr = '';
   // 分离金额后用的数组，预定义
-  var parts;
+  let parts;
   if (money === '') {
     return '';
   }
@@ -947,7 +947,7 @@ export function upperToMoney (upper) {
   // 基本单位
   const cnIntRadice = ['拾', '佰', '仟'];
   // 对应整数部分扩展单位
-  // var cnIntUnits = ['万', '亿', '兆'];
+  // let cnIntUnits = ['万', '亿', '兆'];
   // 对应小数部分单位乘积
   const cnDecMap = [0.1, 0.01];
   // 对应小数部分单位
@@ -1055,15 +1055,15 @@ export function logInfo (data) {
 * @param label 当前节点名称
 */
 export function checkBelongToChooseNode (value, node, label) {
-  var level = node.level;
+  let level = node.level;
   // 如果传入的节点本身就是一级节点就不用校验了
   if (level === 1) {
     return false;
   }
   // 先取当前节点的父节点
-  var parentData = node.parent;
+  let parentData = node.parent;
   // 遍历当前节点的父节点
-  var index = 0;
+  let index = 0;
   while (index < level - 1) {
     // 如果匹配到直接返回
     if (parentData.data[label] && parentData.data[label].indexOf(value) !== -1) {
@@ -1095,20 +1095,20 @@ export function menuLog (to) {
   if (!to.meta || (!to.meta.title && !to.meta.id)) {
     return;
   }
-  var zhCn = {
+  let zhCn = {
     button: '按钮',
     access: '访问：',
     path: '路径：',
     buttonName: '按钮名称：'
   };
-  var en = {
+  let en = {
     button: '',
     access: 'Access:',
     path: 'Path:',
     buttonName: 'Button name:'
   };
-  var lang = getLanguage() === 'en' ? en : zhCn;
-  var log = {
+  let lang = getLanguage() === 'en' ? en : zhCn;
+  let log = {
     'menuId': to.meta.id ? to.meta.id : '',
     'operFlag': lang.access,
     'operObjId': to.meta.title ? to.meta.title : '',

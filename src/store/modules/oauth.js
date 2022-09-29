@@ -5,7 +5,7 @@
  */
 /* eslint camelcase:0 */
 
-import { loginFn, refreshTokenFn, getSessionInfoFn, getMenuandcontrFn, logoutFn, getOpenDayFn} from '@/api/common/oauth';
+import { loginFn, refreshTokenFn, getSessionInfoFn, getMenuandcontrFn, logoutFn} from '@/api/common/oauth';
 import router, { resetRouter } from '@/router';
 import constantRoutes from '@/router/constant-routes';
 
@@ -13,8 +13,8 @@ import { setToken, removeToken, generateRoutes, cleanSession } from '@/utils/oau
 import { USER_MAPPING, MENU_JSON_ROOT, CTRL_JSON_ROOT, USER_STORE_KEY, MENU_STOREOG_KEY, MENU_STORE_KEY, CURRENT_TOP_MENU_STORE_KEY, CTRL_STOREOG_KEY, CTRL_STORE_KEY, ROUTER_STORE_KEY } from '@/config/constant/app.data.common';
 import { extend, toMappingFn, sessionStore } from 'xy-utils';
 
-import menusAndContrls from '@/api/common/menus-contrls'; // #TODO临时菜单处理
-const { demoMenus, demoContrls } = menusAndContrls;
+// import menusAndContrls from '@/api/common/menus-contrls'; // #TODO临时菜单处理
+// const { demoMenus, demoContrls } = menusAndContrls;
 
 // debugger;
 const state = {
@@ -155,7 +155,6 @@ const actions = {
       return; // todo 存储当前applicationId 由于当前四系统未实现多系统切换，故直接返回
     }
     return new Promise(async (resolve, reject) => {
-      console.log('Promise');
       var resData;
       // step 1
 
@@ -226,7 +225,7 @@ const actions = {
         commit('SET_ORIGINAL_CTRLS', response.rows[CTRL_JSON_ROOT]);
 
         const copyData = extend({}, response.rows, true);
-        let menus = copyData.[MENU_JSON_ROOT];
+        let menus = copyData[MENU_JSON_ROOT];
         menus = menus.filter(item => {
           return item.menuName !== '首页' && item.menuName !== 'Home';
         });
@@ -308,7 +307,7 @@ const actions = {
           reject('Verification failed, please Login again.');
         }
         const userInfo = toMappingFn(response.rows, USER_MAPPING);
-        const { userId, userName, userCode, userAvatar, logicSys, loginCode,
+        const { userId, userName, userCode, userAvatar, logicSys,
           roles, org, dpt, instu, upOrg, upDpt, ...otherInfo } = userInfo;
 
         // roles must be a non-empty array

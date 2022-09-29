@@ -10,7 +10,6 @@ import Layout from '@/components/layout';
 import { refreshTokenFn } from '@/api/common/oauth';
 import { sessionStore, looseEqual, toMappingFn } from '@/utils';
 import { MENU_MAPPING, XIAO_YU_TOKEN, DYNAMIC_ROUTES_PARAMS, DYNAMIC_ROUTES, CTRL_JSON_ROOT, MENU_JSON_ROOT, ROUTER_STORE_KEY, CURRENT_TOP_MENU_STORE_KEY, USER_STORE_KEY, MENU_ROOT_PID, MENU_STOREOG_KEY, MENU_STORE_KEY, CTRL_STOREOG_KEY, CTRL_STORE_KEY } from '@/config/constant/app.data.common';
-import { getI18nMessage } from '@/locale';
 
 export const refreshToken = async function () {
   const _refreshToken = isRefreshToken();
@@ -79,7 +78,7 @@ export function getAccessToken () {
 export function setToken (token) {
   // 记录 access_token 时间（相对于浏览器客户端来说），默认减去1min中
   if (typeof token == 'object') {
-    var currentTime = new Date().getTime(); // 当前时间
+    let currentTime = new Date().getTime(); // 当前时间
     // 记录 access_token 时间（相对于浏览器客户端来说），默认减去1min中
     // token.buildTime = currentTime - 60000; // 单位：毫秒
     token.buildTime = currentTime; // 配合后端认证策略提前过期获取到的token和之前一样 故不能提前失效token
@@ -204,6 +203,5 @@ export function generateRoutes (nodes) {
     tmpNodesObj[idValue] = route;
   }
   dealRootFuns(rootMenus);
-  console.log(JSON.stringify(rootMenus), 'rootMenus');
   return rootMenus;
 }

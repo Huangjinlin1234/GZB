@@ -25,7 +25,6 @@ import Logo from './Logo.vue';
 import SidebarItem from './SidebarItem';
 import variables from '@/assets/styles/variables.scss';
 import Hamburger from '@/components/base/Hamburger';
-import { clone } from '@/utils';
 
 export default {
   components: { SidebarItem, Logo, Hamburger },
@@ -251,21 +250,21 @@ export default {
       this.listW = 0;
       if (val.id === 'topTile' || val.id === 'topTree') {
         // 水平状态下的
-        this.$nextTick(function () {
-          var menuRootList = document.querySelectorAll('.el-menu.el-menu--horizontal.tree-menu > .menu-wrapper > a > li,.el-menu.el-menu--horizontal.tree-menu > .menu-wrapper > li');
-          this.menuScrollW = this.$refs.menuScrollarea.clientWidth - 24 * 2; // #TODO 此处需要根据是否紧凑模式调整值
-          for (var i = 0, len = menuRootList.length; i < len; i++) {
-            var domLi = menuRootList[i];
-            this.listW += domLi.clientWidth;
-          }
-        });
+        // this.$nextTick(function () {
+        //   var menuRootList = document.querySelectorAll('.el-menu.el-menu--horizontal.tree-menu > .menu-wrapper > a > li,.el-menu.el-menu--horizontal.tree-menu > .menu-wrapper > li');
+        //   this.menuScrollW = this.$refs.menuScrollarea.clientWidth - 24 * 2; // #TODO 此处需要根据是否紧凑模式调整值
+        //   for (let i = 0, len = menuRootList.length; i < len; i++) {
+        //     let domLi = menuRootList[i];
+        //     this.listW += domLi.clientWidth;
+        //   }
+        // });
       }
     },
     calMenuSize: function (menuMode) {
       if (menuMode === 'topTile' || menuMode === 'topTree') {
         // 需要减掉左右两侧得边距
-        this.menuSize.menuWidth = window.innerWidth - 24 * 2 + 'px'; // #TODO 此处需要根据是否紧凑模式调整值
-        this.menuSize.menuHeight = '100%';
+        // this.menuSize.menuWidth = window.innerWidth - 24 * 2 + 'px'; // #TODO 此处需要根据是否紧凑模式调整值
+        // this.menuSize.menuHeight = '100%';
       } else {
         this.menuSize.menuWidth = '100%';
         this.menuSize.menuHeight = window.innerHeight + 'px';

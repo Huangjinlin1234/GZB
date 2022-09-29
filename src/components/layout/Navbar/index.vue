@@ -268,8 +268,6 @@
 <script>
 
 import navbarMixin from './navbar.mixin';
-import SockJS from 'sockjs-client';
-import YufpPasswordModify from '@/components/widgets/YufpPasswordModify';
 
 
 export default {
@@ -318,7 +316,7 @@ export default {
     //   clearInterval(this.msgTimer);
     // };
 
-    let datestr = yufp.util.dateFormat(yufp.util.dateFormat(new Date()), '{y}-{m}-{d}');
+    // let datestr = yufp.util.dateFormat(yufp.util.dateFormat(new Date()), '{y}-{m}-{d}');
     let model = {
       inputId: this.loginCode
     };
