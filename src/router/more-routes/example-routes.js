@@ -5,8 +5,8 @@
  * 路由参数配置，详见@/router/constant-routes 文件头注释
  */
 /* Layout */
-import Layout from '@/components/layout'
-import NestedMenu from '@/components/layout/NestedMenu'
+import Layout from '@/components/layout';
+import NestedMenu from '@/components/layout/NestedMenu';
 
 const exampleRoutes = [
   // {
@@ -23,9 +23,9 @@ const exampleRoutes = [
   //     //   name: 'ComponentsDemo',
   //     //   meta: { title: '系统管理', icon: 'component' },
   //     //   children: [
-  //     //     { 
-  //     //       path: 'pages/shch/settleResult', 
-  //     //       name: '74d47cbb74d64263b5b2da4f18bfdd2d', 
+  //     //     {
+  //     //       path: 'pages/shch/settleResult',
+  //     //       name: '74d47cbb74d64263b5b2da4f18bfdd2d',
   //     //       meta: { title: '权限管理' },
   //     //       children: [{
   //     //         path: 'fincalOrgManager',
@@ -117,6 +117,6 @@ const exampleRoutes = [
   //     }
   //   ]
   // }
-]
+];
 
-export default exampleRoutes
+export default exampleRoutes;

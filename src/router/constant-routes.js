@@ -58,6 +58,7 @@ let constantRoutes = [
     component: () => import('@/views/common/error-page/404'),
     hidden: true
   },
+
   {
     path: '/401',
     name: '401',
@@ -77,8 +78,30 @@ let constantRoutes = [
       }
     ]
   }
-
-
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: '/pages/console/SUserOperLog',
+  //       component: () => import('@/views/userLog/index'),
+  //       name: 'SUserOperLog',
+  //       meta: { title: '用户日志', icon: 'yu-icon-home1', noCache: true, affix: true }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/org',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'components',
+  //       meta: { title: '机构撤并管理', icon: 'yu-icon-home1' },
+  //       component: () => import('@/views/orgBack/index'),
+  //       name: 'OrgBack'
+  //     }
+  //   ]
+  // }
 ];
 
 // 合并动态路由数据
@@ -93,7 +116,6 @@ if (dynamicRouters) {
     dynamicRoutes[i].component = Layout;
   }
   constantRoutes = [...constantRoutes, ...dynamicRoutes];
-  console.log(dynamicRoutes, 'dynamicRoutes');
 }
 if (SHOW_MORE_ROUTES) {
   constantRoutes = [...constantRoutes, ...constantMoreRoutes];
