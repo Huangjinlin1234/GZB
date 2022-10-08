@@ -157,8 +157,7 @@ export default {
         if (response.code === '0') {
           var data = {
             usercode: _this.username,
-            password: 'ueKCzcrEJ/xuHT8k+Yzw9O2qGheeAGZO/YgU+7UzxFsfgfX2GQKa42eec11Lry+dOy1fp1ix5zHIoTXELwC1+LWmS6qS4a95AR2krV4s9wyxRoQOu4cNYEAMGcP9mKlFmeTTNI/R2HpNRGtvlOeteeeUUVpSHrZZcAEczYQaNuU=',
-            // password: _this.encryptPassword(_this.password),
+            password: _this.encryptPassword(_this.password),
             imageCode: _this.imageCode,
             clientId: _this.clientId,
             grant_type: 'password'
@@ -223,11 +222,9 @@ export default {
     },
     // 匹配密码加密
     encryptPassword: function (pwd) {
-      var encrypt = new JSEncrypt();
-      encrypt.setPublicKey(getRSAPublicKey());
-      var encryptPwd = encrypt.encrypt(pwd);
-      return encryptPwd;
-      // return pwd;
+      var encryptor = new JSEncrypt();
+      encryptor.setPublicKey(getRSAPublicKey());
+      return encryptor.encrypt(pwd);
     }
   }
 };
