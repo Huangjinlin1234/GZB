@@ -23,9 +23,6 @@ package-lock.json
 src/assets/blue/dist.min.css
 src/assets/orange/dist.min.css
 src/assets/purple/dist.min.css
-.env.development
-src/config/constant/app.data.service.js
-.eslintignore
 .setting/build/index.tpl
 .setting/build/main.tpl
 /node_modules.7z
