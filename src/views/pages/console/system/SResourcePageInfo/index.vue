@@ -9,7 +9,7 @@
         </el-button-group>
         <div class="tree-content">
           <yu-tree
-            ref="rescTree"
+             ref="rescTree"
             :data="treeData"
             :props="defaultProps"
             node-key="rescCode"

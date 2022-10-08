@@ -1,0 +1,13 @@
+build/*.js
+src/assets
+public
+dist
+src/locale
+src/components/widgets/YuTinymce
+src/views/zrcbank/biz/bizchg
+src/components/pubsub/*.js
+src/views/yuspmall/productsystem/*.vue
+src/views/bizmanage/chgBiz/*.vue
+src/views/cfgmanage/iqpExtBiz/ctrLoanExt/*.vue
+src/views/bizmanage/chgBiz/iqpInterestChg/*.vue
+src/views/cusmanage/cusIntbank/*
