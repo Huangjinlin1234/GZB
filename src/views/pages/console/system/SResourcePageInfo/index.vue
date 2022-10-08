@@ -9,6 +9,7 @@
         </el-button-group>
         <div class="tree-content">
           <yu-tree
+            ref="rescTree"
             :data="treeData"
             :props="defaultProps"
             node-key="rescCode"
@@ -33,6 +34,7 @@ import {getTreeData} from '@/api/systemManage/resource.js';
 export default {
   data () {
     return {
+      expandAll: false,
       treeData: [{
         id: 1,
         label: '一级 1',
@@ -85,6 +87,26 @@ export default {
     this.getTreeDataFn();
   },
   methods: {
+    transExpand () {
+      this.expandAll = !this.expandAll;
+      let _this = this;
+      let closeFn = function (obj) {
+        var data = obj.childNodes;
+        if (data && data.length > 0) {
+          for (let i = 0; i < data.length; i++) {
+            data[i].expanded = _this.expandAll;
+            closeFn(data[i]);
+          }
+        }
+      };
+      let data = this.$refs.rescTree.root.childNodes;
+      if (data && data.length > 0) {
+        for (let i = 0; i < data.length; i++) {
+          data[i].expanded = this.expandAll;
+          closeFn(data[i]);
+        }
+      }
+    },
     transTree (list, rootValue) {
       let treeData = [];
       list.forEach(item => {

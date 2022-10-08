@@ -133,11 +133,11 @@ export default {
       }
       this.$emit('count-valid', content.length);
       if (!this.hasChange && this.hasInit) {
-        if (!tinyMCE.editors[this.id]) {
+        if (!tinymce.editors[this.id]) {
           this.init();
         }
         this.$nextTick(function () {
-          tinyMCE.editors[this.id] && tinyMCE.editors[this.id].setContent(val || '');
+          tinymce.editors[this.id] && tinymce.editors[this.id].setContent(val || '');
         });
       }
     },
@@ -156,7 +156,7 @@ export default {
     this.init();
   },
   activated() {
-    !tinyMCE.editors[this.id] && this.init();
+    !tinymce.editors[this.id] && this.init();
   },
   deactivated() {
     this.destroy();
@@ -178,7 +178,7 @@ export default {
       });
     },
     destroy() {
-      tinyMCE.editors[this.id] && tinyMCE.editors[this.id].destroy();
+      tinymce.editors[this.id] && tinymce.editors[this.id].destroy();
     },
     init() {
       const _this = this;
