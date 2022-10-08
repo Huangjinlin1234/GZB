@@ -320,23 +320,23 @@ export default {
     let model = {
       inputId: this.loginCode
     };
-    _this.timer = setInterval(() => {
-      _this.$request({
-        url: backend.cmisCfg + '/api/wbworkcal/timer/notice',
-        data: JSON.stringify({condition: JSON.stringify(model)}),
-        method: 'post'
-      }).then(({ code, message, data }) => {
-        if (data) {
-          for (let i = 0; i < data.length; i++) {
-            var h = _this.$createElement;
-            _this.$notify({
-              title: '日历提醒',
-              message: h('i', { style: 'color: #2647A7;font-style:normal' }, data[i].content)
-            });
-          }
-        }
-      });
-    }, 50000);
+    // _this.timer = setInterval(() => {
+    //   _this.$request({
+    //     url: backend.cmisCfg + '/api/wbworkcal/timer/notice',
+    //     data: JSON.stringify({condition: JSON.stringify(model)}),
+    //     method: 'post'
+    //   }).then(({ code, message, data }) => {
+    //     if (data) {
+    //       for (let i = 0; i < data.length; i++) {
+    //         var h = _this.$createElement;
+    //         _this.$notify({
+    //           title: '日历提醒',
+    //           message: h('i', { style: 'color: #2647A7;font-style:normal' }, data[i].content)
+    //         });
+    //       }
+    //     }
+    //   });
+    // }, 50000);
 
     // if (_this.msgTimer) {
     //   _this.msgTimer = setInterval(() => {
