@@ -4,7 +4,7 @@
       <yu-xform ref="refForm" form-type="search" v-model="searchFormdata" label-width="120px" related-table-name="refTable"  :custom-search-fn="customSearch">
         <yu-xform-group :column="3">
           <yu-xform-item label="用户账户" ctype="input" placeholder="合作方名称" name="partnerName" fuzzy-query="both"></yu-xform-item>
-          <yu-xform-item label="机构" ctype="select" data-code="STD_PARTNER_TYPE" placeholder="合作方类型" name="partnerType"></yu-xform-item>
+          <yu-xform-item label="机构" ctype="select"   placeholder="合作方类型" name="partnerType"></yu-xform-item>
           <yu-xform-item label="操作类型" ctype="select" data-code="STD_ZB_APPR_STATUS" placeholder="审批状态" name="apprStatus"></yu-xform-item>
           <yu-xform-item label="日志时间" ctype="datepicker" placeholder="登记日期" name="inputDate"></yu-xform-item>
           <!--<yu-xform-item label="登记人" ctype="input" placeholder="登记人"  name="inputId"></yu-xform-item>
@@ -19,7 +19,7 @@
         <yu-button type="primary" ref="btn_deleteFn" v-if="checkCtrl('delete')"  @click="customClick('deleteFn')">删除</yu-button>
         <yu-button type="primary" ref="btn_viewFn" v-if="checkCtrl('view')"  @click="customClick('viewFn')">查看</yu-button>
         <yu-button type="primary" ref="btn_updateFn" @click="submitBeforeFn" hidden>提交</yu-button>
-      <yu-xtable ref="refTable" row-number condition-key="condition" request-type="post" selection-type="radio" @row-click="onRowClick" @row-dblclick="onRowDBClick" @cell-click="onCellClick" :pageable="true" :data="tableData" >
+      <yu-xtable ref="refTable" row-number condition-key="condition" request-type="post" selection-type="radio"  json-data="rows" :dataUrl="dataUrl"  >
         <yu-xtable-column label="撤并申请流水号" prop="applySeq"></yu-xtable-column>
         <yu-xtable-column label="撤销机构号" prop="userOrgCode"></yu-xtable-column>
         <yu-xtable-column label="撤销机构名称" prop="newOrgName"></yu-xtable-column>
@@ -35,14 +35,11 @@
 </template>
 <script>
 import yufpNwfInit from '@/components/widgets/YufpNwfInit';
-import mixinList from '@/utils/mixins/mixin-list';
-import mixin from '@/utils/mixin';
 import { request } from 'xy-utils';
 // yufp.lookup.reg('STD_PARTNER_TYPE,STD_COOP_PLAN_OPR_TYPE,STD_ZB_APPR_STATUS');
 export default {
   components: { yufpNwfInit },
   name: 'OrgBack',
-  mixins: [mixinList, mixin],
   data: function () {
     return {
       pkField: 'serno',
@@ -56,18 +53,8 @@ export default {
     };
   },
   created () {
-    this.getTableData();
   },
   methods: {
-    getTableData () {
-      this.$request({
-        url: this.dataUrl,
-        method: 'POST',
-        data: {}
-      }).then(res => {
-        this.tableData = res.rows;
-      });
-    },
     submitBeforeFn () {
       let _this = this;
       let selections = _this.$refs.refTable.selections;

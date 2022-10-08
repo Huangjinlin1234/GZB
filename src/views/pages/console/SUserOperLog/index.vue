@@ -7,7 +7,6 @@
           <yu-xform-item label="机构" ctype="select" data-code="STD_PARTNER_TYPE" placeholder="合作方类型" name="partnerType"></yu-xform-item>
           <yu-xform-item label="操作类型" ctype="select" data-code="STD_ZB_APPR_STATUS" placeholder="审批状态" name="apprStatus"></yu-xform-item>
           <yu-xform-item label="日志时间" ctype="datepicker" placeholder="登记日期" name="inputDate"></yu-xform-item>
-          <!--<yu-xform-item label="登记人" ctype="input" placeholder="登记人"  name="inputId"></yu-xform-item>
           <yu-xform-item label="登记机构" ctype="input" placeholder="登记机构"  name="inputBrId"></yu-xform-item>-->
           <yu-xform-item label="日志等级" ctype="yu-xuser" placeholder="登记人" @select-fn="commonSelectFn" :mapping="{ loginCode: 'inputId' }" name="inputId"></yu-xform-item>
           <yu-xform-item label="登记机构" ctype="yu-xorg" placeholder="登记机构" @select-fn="commonSelectFn" :mapping="{ orgCode: 'inputBrId' }" name="inputBrId"></yu-xform-item>
@@ -19,7 +18,7 @@
         <yu-button type="primary" ref="btn_deleteFn" v-if="checkCtrl('delete')"  @click="customClick('deleteFn')">删除</yu-button>
         <yu-button type="primary" ref="btn_viewFn" v-if="checkCtrl('view')"  @click="customClick('viewFn')">查看</yu-button>
         <yu-button type="primary" ref="btn_updateFn" @click="submitBeforeFn" hidden>提交</yu-button>
-      <yu-xtable ref="refTable" row-number condition-key="condition" request-type="post" selection-type="radio" @row-click="onRowClick" @row-dblclick="onRowDBClick" @cell-click="onCellClick" :pageable="true" :data="tableData" >
+      <yu-xtable ref="refTable" row-number json-data="rows" request-type="POST"  selection-type="radio"  :dataUrl="dataUrl" :baseParams="baseParams" >
         <yu-xtable-column label="用户账户" prop="userId"></yu-xtable-column>
         <yu-xtable-column label="用户名称" prop="userOrgCode"></yu-xtable-column>
         <yu-xtable-column label="操作类型" prop="operType"></yu-xtable-column>
@@ -54,18 +53,8 @@ export default {
     };
   },
   created () {
-    this.getTableData();
   },
   methods: {
-    getTableData () {
-      this.$request({
-        url: this.dataUrl,
-        method: 'POST',
-        data: {}
-      }).then(res => {
-        this.tableData = res.rows;
-      });
-    },
     submitBeforeFn () {
       let _this = this;
       let selections = _this.$refs.refTable.selections;
