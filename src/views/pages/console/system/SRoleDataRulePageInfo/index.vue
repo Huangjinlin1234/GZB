@@ -17,7 +17,7 @@
       </el-col>
       <el-col :span="18">
       <div class="formTable-content">
-        <yu-xform ref="refForm" form-type="search" v-model="searchFormdata" label-width="120px" related-table-name="reftable"  :custom-search-fn="getTableData">
+        <yu-xform ref="refForm" form-type="search" v-model="searchFormdata" label-width="120px" related-table-name="reftable" :custom-search-fn="customSearch">
         <yu-xform-group :column="3">
           <yu-xform-item v-for="(item,index) in formFileds" :key="index" :label="item.label" :ctype="item.ctype" :placeholder="item.label" :name="item.name"></yu-xform-item>
         </yu-xform-group>
@@ -39,6 +39,7 @@ export default {
       treeData: [],
       dataUrl: getTableData(),
       baseParams: {},
+      searchFormdata: {},
       selectRoel: null,
       defaultProps: {
         children: 'children',
@@ -67,6 +68,13 @@ export default {
     this.getTreeDataFn();
   },
   methods: {
+    customSearch () {
+      let params = {
+        ...this.searchFormdata,
+        roleCode: this.selectRoel.roleCode
+      };
+      this.$refs.reftable.remoteData(params);
+    },
     filterRoleNode (value, data) {
       if (!value) { return true }
       return data.roleName.indexOf(value) !== -1;
