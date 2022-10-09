@@ -40,9 +40,9 @@ export default {
     { 'key': 'kx', 'value': '行业快讯' }
   ],
   USER_STATUS: [
-    { 'key': '01', 'value': '生效' },
-    { 'key': '03', 'value': '待生效' },
-    { 'key': '02', 'value': '失效' }
+    { 'key': '1', 'value': '正常' },
+    { 'key': '3', 'value': '注销' },
+    { 'key': '2', 'value': '停用' }
   ],
   DEPARTMENT: [
     { key: 't01', value: '技术一部' },
@@ -141,7 +141,7 @@ export default {
     {'key': 'H', 'value': '境内企业名称核准号'},
     {'key': 'B', 'value': '境外机构代码'},
     {'key': 'C', 'value': '境内居民身份证'},
-    {'key': 'E', 'value': '港澳居民身份证'},
+    {'key': 'E', 'value': '港澳居民身份证'}
   ],
   HIGHEST_EDU: [
     {'key': '1', 'value': '博士后'},
@@ -155,18 +155,18 @@ export default {
     {'key': '9', 'value': '高中'},
     {'key': '10', 'value': '小学'},
     {'key': '11', 'value': '文盲或半文盲'},
-    {'key': '99', 'value': '其他'},
+    {'key': '99', 'value': '其他'}
   ],
   MESSAGE_LEVEL: [
     {'key': 'info', 'value': '信息'},
     {'key': 'M001', 'value': '未知错误'},
     {'key': 'success', 'value': '成功'},
-    {'key': 'error', 'value': '错误'},
+    {'key': 'error', 'value': '错误'}
   ],
   MESSAGE_TYPE: [
     {'key': 'MODULEINFO', 'value': '模块提示'},
     {'key': 'COMINFO', 'value': '系统级通用提示'},
-    {'key': 'DBERR', 'value': '数据库错误提示'},
+    {'key': 'DBERR', 'value': '数据库错误提示'}
   ],
   LOG_TYPE: [
     {'key': '2', 'value': '查询数据日志'},
@@ -182,12 +182,12 @@ export default {
   ],
   READ_STS: [
     {'key': '1', 'value': '已读'},
-    {'key': '0', 'value': '未读'},
+    {'key': '0', 'value': '未读'}
   ],
   PASSWD_COMPLEX_RULE: [
     {'key': 'number', 'value': '数字'},
     {'key': 'uppercase', 'value': '大写字母'},
     {'key': 'lowercase', 'value': '小写字母'},
-    {'key': 'specialCharacters', 'value': '特殊字符'},
+    {'key': 'specialCharacters', 'value': '特殊字符'}
   ]
-}
+};

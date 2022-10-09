@@ -1,18 +1,27 @@
 <template>
   <div>
-    <formTable :pageOptions="pageOptions">
-      <yu-button type="primary" ref="btn_insertFn" v-if="checkCtrl('add')"  @click="customClick('insertFn')">新增</yu-button>
-        <yu-button type="primary" ref="btn_updateFn" v-if="checkCtrl('edit')"  @click="customClick('updateFn')">修改</yu-button>
-        <yu-button type="primary" ref="btn_deleteFn" v-if="checkCtrl('delete')"  @click="customClick('deleteFn')">删除</yu-button>
-        <yu-button type="primary" ref="btn_viewFn" v-if="checkCtrl('view')"  @click="customClick('viewFn')">查看</yu-button>
-        <yu-button type="primary" ref="btn_updateFn" @click="submitBeforeFn" hidden>提交</yu-button>
+    <formTable  :pageOptions="pageOptions" @emitSelection="selectionFn" >
+      <yu-button type="primary" ref="btn_insertFn"   @click="openDialog('ADD')">新增</yu-button>
+      <yu-button type="primary" ref="btn_insertFn"   @click="openDialog('EDIT')">修改</yu-button>
+      <yu-button type="primary" ref="btn_deleteFn" @click="openDialog('DETAIL')">查看</yu-button>
+      <yu-button type="primary" ref="btn_viewFn"   @click="cancelUser('user')">注销</yu-button>
+      <yu-button type="primary" ref="btn_updateFn" @click="submitBeforeFn">提交</yu-button>
     </formTable>
+    <userEdit
+      ref="refUserEdit"
+      :dialogVisible.sync="showDialog"
+      :dialogTitle="dialogTitle"
+      :pageType="pageType"
+      :userInfo="userInfo"></userEdit>
   </div>
 </template>
 <script>
 import formTable from '@/views/pages/console/common/formTable.vue';
+import minxinDiaFn from '@/views/pages/console/common/minxin.js';
+import userEdit from './userEdit.vue';
 export default {
-  components: { formTable },
+  components: { formTable, userEdit },
+  mixins: [minxinDiaFn],
   data () {
     return {
       pageOptions: {
@@ -33,8 +42,15 @@ export default {
           {label: '状态', prop: 'status'},
           {label: '是否柜员', prop: 'isSyncUser'}
         ]
-      }
+      },
+      selections: []
     };
+  },
+  methods: {
+    selectionFn (selections) {
+      this.selections = selections;
+      this.userInfo = selections[0];
+    }
   }
 };
 </script>
