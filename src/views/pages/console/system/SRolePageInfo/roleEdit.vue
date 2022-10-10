@@ -8,15 +8,15 @@
       :visible.sync="dialogVisible"
      >
       <yu-xform ref="refForm" label-width="120px"  v-model="formdata">
-        <yu-xform-group column="3">
-          <yu-xform-item label="岗位代码" name="dutyCode" ctype="input" :disabled="pageType=='DETAIL'"></yu-xform-item>
-          <yu-xform-item label="岗位名称" name="dutyName"  ctype="input"  :disabled="pageType=='DETAIL'"></yu-xform-item>
-          <yu-xform-item label="适用机构" name="orgCode"  ctype="input"  :disabled="pageType=='DETAIL'"></yu-xform-item>
-          <yu-xform-item label="排序字段" name="orderId"   ctype="input" :disabled="pageType=='DETAIL'"></yu-xform-item>
-          <yu-xform-item label="状态" name="status" ctype="input"  :disabled="pageType=='DETAIL'"></yu-xform-item>
-          <yu-xform-item label="创建人" name="createUser"  ctype="input"  :disabled="pageType=='DETAIL'"></yu-xform-item>
-          <yu-xform-item label="最后修改人" name="lastUpdateUser"  ctype="input"  :disabled="pageType=='DETAIL'"></yu-xform-item>
-          <yu-xform-item label="最后修改时间" name="lastUpdateTime"  ctype="input"  :disabled="pageType=='DETAIL'"></yu-xform-item>
+        <yu-xform-group column="2">
+          <yu-xform-item label="角色码" name="roleCode" ctype="input" :disabled="pageType=='DETAIL'"></yu-xform-item>
+          <yu-xform-item label="角色名称" name="roleName"  ctype="input"  :disabled="pageType=='DETAIL'"></yu-xform-item>
+          <yu-xform-item label="适用机构" name="orgCode"   ctype="input" :disabled="pageType=='DETAIL'"></yu-xform-item>
+          <yu-xform-item label="备注" name="roleRmk" ctype="input" type="textarea" :disabled="pageType=='DETAIL'"></yu-xform-item>
+          <yu-xform-item label="创建日期" name="createTime"  ctype="input"  :hidden="pageType!=='DETAIL'" :disabled="pageType=='DETAIL'"></yu-xform-item>
+          <yu-xform-item label="创建人" name="createUser"  ctype="input"  :hidden="pageType!=='DETAIL'" :disabled="pageType=='DETAIL'"></yu-xform-item>
+          <yu-xform-item label="最后修改人" name="lastUpdateUser"  ctype="input" :hidden="pageType!=='DETAIL'" :disabled="pageType=='DETAIL'"></yu-xform-item>
+          <yu-xform-item label="最后修改时间" name="lastUpdateTime"  ctype="input" :hidden="pageType!=='DETAIL'"  :disabled="pageType=='DETAIL'"></yu-xform-item>
         </yu-xform-group>
       </yu-xform>
       <div slot="footer" class="dialog-footer">
@@ -34,7 +34,7 @@ export default {
       type: Boolean,
       default: false
     },
-    dutyInfo: {
+    roleInfo: {
       type: Object,
       default: () => {
         return {};
@@ -64,8 +64,8 @@ export default {
     initData () {
       this.$nextTick(() => {
         if (this.pageType !== 'ADD') {
-          this.formdata = this.dutyInfo;
-          this.$refs.refForm.formdata = this.dutyInfo;
+          this.formdata = this.roleInfo;
+          this.$refs.refForm.formdata = this.roleInfo;
         } else if (this.pageType == 'ADD') { // 新增清空表单数据
           this.$refs.refForm.formdata = {};
         }

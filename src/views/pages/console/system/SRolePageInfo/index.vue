@@ -1,17 +1,27 @@
 <template>
   <div>
-    <formTable :pageOptions="pageOptions">
-      <yu-button type="primary" ref="btn_insertFn" v-if="checkCtrl('add')"  @click="customClick('insertFn')">新增</yu-button>
-      <yu-button type="primary" ref="btn_updateFn" v-if="checkCtrl('edit')"  @click="customClick('updateFn')">修改</yu-button>
-      <yu-button type="primary" ref="btn_deleteFn" v-if="checkCtrl('delete')"  @click="customClick('deleteFn')">删除</yu-button>
-      <yu-button type="primary" ref="btn_viewFn" v-if="checkCtrl('view')"  @click="customClick('viewFn')">查看</yu-button>
+    <formTable :pageOptions="pageOptions"  @emitSelection="selectionFn">
+      <yu-button type="primary" ref="btn_insertFn"   @click="openDialog('ADD')">新增</yu-button>
+      <yu-button type="primary" ref="btn_insertFn"   @click="openDialog('EDIT')">修改</yu-button>
+      <yu-button type="primary" ref="btn_deleteFn" @click="openDialog('DETAIL')">查看</yu-button>
     </formTable>
+    <roleEdit
+      ref="refRoleEdit"
+      :dialogVisible.sync="showDialog"
+      :dialogTitle="dialogTitle"
+      :pageType="pageType"
+      :roleInfo="roleInfo">
+    </roleEdit>
   </div>
 </template>
 <script>
 import formTable from '@/views/pages/console/common/formTable.vue';
+import minxinDiaFn from '@/views/pages/console/common/minxin.js';
+import roleEdit from './roleEdit.vue';
+
 export default {
-  components: { formTable },
+  components: { formTable, roleEdit },
+  mixins: [minxinDiaFn],
   data () {
     return {
       pageOptions: {
@@ -26,8 +36,16 @@ export default {
           {label: '角色名称', prop: 'roleName'},
           {label: '角色类型', prop: 'roleType'}
         ]
-      }
+      },
+      selections: [],
+      roleInfo: {}
     };
+  },
+  methods: {
+    selectionFn (selections) {
+      this.selections = selections;
+      this.roleInfo = selections[0];
+    }
   }
 };
 </script>

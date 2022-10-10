@@ -96,9 +96,9 @@ export default {
       this.$nextTick(() => {
         if (this.pageType !== 'ADD') {
           this.formdata = this.orgInfo;
-          this.$refs.refForm.setFormData(this.formdata);
+          this.$refs.refForm.formdata = this.orgInfo;
         } else if (this.pageType == 'ADD') { // 新增清空表单数据
-          this.$refs.refForm.resetFields();
+          this.$refs.refForm.formdata = {};
         }
       });
     },

@@ -2,9 +2,9 @@
   <div>
     <formTable :pageOptions="pageOptions"  @emitSelection="selectionFn">
       <yu-button type="primary" ref="btn_insertFn"   @click="openDialog('ADD')">新增</yu-button>
-        <yu-button type="primary" ref="btn_insertFn"   @click="openDialog('EDIT')">修改</yu-button>
-        <yu-button type="primary" ref="btn_deleteFn" @click="openDialog('DETAIL')">查看</yu-button>
-      </formTable>
+      <yu-button type="primary" ref="btn_insertFn"   @click="openDialog('EDIT')">修改</yu-button>
+      <yu-button type="primary" ref="btn_deleteFn" @click="openDialog('DETAIL')">查看</yu-button>
+    </formTable>
       <dutyEdit
         ref="refDutyEdit"
         :dialogVisible.sync="showDialog"
@@ -17,7 +17,6 @@
 <script>
 import formTable from '@/views/pages/console/common/formTable.vue';
 import minxinDiaFn from '@/views/pages/console/common/minxin.js';
-
 import dutyEdit from './dutyEdit.vue';
 export default {
   components: { formTable, dutyEdit },

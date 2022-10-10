@@ -18,7 +18,7 @@
         </yu-form-item>
         </yu-form>
       </div>
-      <yu-xform ref="refForm" label-width="120px"  v-model="formdata">
+      <yu-xform ref="refForm"  label-width="120px">
         <yu-xform-group column="3">
           <yu-xform-item label="是否柜员"  ctype="yu-xradio" data-code="YESNO"  name="title" :hidden="pageType!=='ADD'"></yu-xform-item>
         </yu-xform-group>
@@ -68,6 +68,7 @@ export default {
   },
   data () {
     return {
+      editUrl: backend.console + '/api/s/user',
       formdata: { }
     };
   },
@@ -89,9 +90,9 @@ export default {
       this.$nextTick(() => {
         if (this.pageType !== 'ADD') {
           this.formdata = this.userInfo;
-          this.$refs.refForm.setFormData(this.formdata);
+          this.$refs.refForm.formdata = this.userInfo;
         } else if (this.pageType == 'ADD') { // 新增清空表单数据
-          this.$refs.refForm.resetFields();
+          this.$refs.refForm.formdata = {};
         }
       });
     },
@@ -99,6 +100,16 @@ export default {
       this.$emit('update:dialogVisible', false);
     },
     comfirmFn () {
+      console.log(this.$refs.refForm.formdata, 'ffff');
+      // this.$request({
+      //   method: 'POST',
+      //   url: this.editUrl,
+      //   data: this.formdata
+      // }).then(res => {
+      //   if (res.code == '0') {
+
+      //   }
+      // });
     }
   }
 };

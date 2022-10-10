@@ -1,7 +1,7 @@
 <template>
   <div>
     <yu-panel :title="pageOptions.title" panel-type="simple">
-      <yu-xform ref="refForm" form-type="search" v-model="searchFormdata" label-width="120px" related-table-name="refTable"  :custom-search-fn="getTableData">
+      <yu-xform ref="refSearchForm" form-type="search" v-model="searchFormdata" label-width="120px" related-table-name="refTable"  :custom-search-fn="getTableData">
         <yu-xform-group :column="3">
           <yu-xform-item v-for="(item,index) in pageOptions.formFileds" :key="index" :label="item.label" :ctype="item.ctype" :placeholder="item.label" :name="item.name"></yu-xform-item>
         </yu-xform-group>

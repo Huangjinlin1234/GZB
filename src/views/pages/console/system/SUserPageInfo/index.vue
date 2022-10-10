@@ -46,10 +46,14 @@ export default {
       selections: []
     };
   },
+  computed: {
+    userInfo () {
+      return this.selections[0];
+    }
+  },
   methods: {
     selectionFn (selections) {
       this.selections = selections;
-      this.userInfo = selections[0];
     }
   }
 };
