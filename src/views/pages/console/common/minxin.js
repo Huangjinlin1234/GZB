@@ -27,7 +27,6 @@ const dialog = {
           data: this.userInfo
         }).then(res => {
           if (res.code === '0') {
-            console.log(res);
           }
         });
       });
