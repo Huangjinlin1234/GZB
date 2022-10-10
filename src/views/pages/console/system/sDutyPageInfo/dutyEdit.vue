@@ -62,11 +62,13 @@ export default {
   },
   methods: {
     initData () {
-      if (this.pageType !== 'ADD') {
-        this.formdata = this.dutyInfo;
-      }
       this.$nextTick(() => {
-        this.$refs.refForm.setFormData(this.formdata);
+        if (this.pageType !== 'ADD') {
+          this.formdata = this.dutyInfo;
+          this.$refs.refForm.setFormData(this.formdata);
+        } else if (this.pageType == 'ADD') { // 新增清空表单数据
+          this.$refs.refForm.resetFields();
+        }
       });
     },
     closeFn () {
