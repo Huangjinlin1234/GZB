@@ -1,13 +1,13 @@
 <template>
   <div>
     <yu-panel :title="pageOptions.title" panel-type="simple">
-      <yu-xform ref="refForm" form-type="search" v-model="searchFormdata" label-width="120px" related-table-name="refTable"  :custom-search-fn="getTableData">
+      <yu-xform ref="refSearchForm" form-type="search" v-model="searchFormdata" label-width="120px" related-table-name="refTable"  :custom-search-fn="getTableData">
         <yu-xform-group :column="3">
           <yu-xform-item v-for="(item,index) in pageOptions.formFileds" :key="index" :label="item.label" :ctype="item.ctype" :placeholder="item.label" :name="item.name"></yu-xform-item>
         </yu-xform-group>
       </yu-xform>
        <slot></slot>
-      <yu-xtable ref="refTable" row-number selection-type="radio"   json-data="rows" request-type="POST"  :data-url="pageOptions.dataUrl">
+      <yu-xtable ref="refTable" row-number selection-type="radio"   json-data="rows" request-type="POST"  :data-url="pageOptions.dataUrl" @row-click="rowClick">
         <yu-xtable-column v-for="(ite,index) in pageOptions.tableFileds" :key="index" :label="ite.label" :prop="ite.prop"></yu-xtable-column>
       </yu-xtable>
     </yu-panel>
@@ -43,6 +43,10 @@ export default {
   created () {
   },
   methods: {
+    rowClick () {
+      let selections = this.$refs.refTable.selections;
+      this.$emit('emitSelection', selections);
+    },
     submitBeforeFn () {
       let _this = this;
       let selections = _this.$refs.refTable.selections;

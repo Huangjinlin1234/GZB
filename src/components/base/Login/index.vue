@@ -88,8 +88,8 @@ export default {
   data: function () {
     return {
       lightModel: false, // 浅色模式开关
-      username: '',
-      password: '',
+      username: 'admin',
+      password: 'admin@111',
       localToken: null,
       message: null,
       borderColor: null,

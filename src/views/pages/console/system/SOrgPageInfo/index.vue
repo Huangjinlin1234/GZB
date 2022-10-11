@@ -1,17 +1,25 @@
 <template>
   <div>
-    <formTable :pageOptions="pageOptions">
-      <yu-button type="primary" ref="btn_insertFn" v-if="checkCtrl('add')"  @click="customClick('insertFn')">新增</yu-button>
-      <yu-button type="primary" ref="btn_updateFn" v-if="checkCtrl('edit')"  @click="customClick('updateFn')">修改</yu-button>
-      <yu-button type="primary" ref="btn_deleteFn" v-if="checkCtrl('delete')"  @click="customClick('deleteFn')">删除</yu-button>
-      <yu-button type="primary" ref="btn_viewFn" v-if="checkCtrl('view')"  @click="customClick('viewFn')">查看</yu-button>
+    <formTable :pageOptions="pageOptions" @emitSelection="selectionFn">
+      <yu-button type="primary" ref="btn_insertFn"   @click="openDialog('ADD')">新增</yu-button>
+      <yu-button type="primary" ref="btn_insertFn"   @click="openDialog('EDIT')">修改</yu-button>
+      <yu-button type="primary" ref="btn_deleteFn" @click="openDialog('DETAIL')">查看</yu-button>
     </formTable>
+    <orgEdit
+      ref="refOrgEdit"
+      :dialogVisible.sync="showDialog"
+      :dialogTitle="dialogTitle"
+      :pageType="pageType"
+      :orgInfo="orgInfo"></orgEdit>
   </div>
 </template>
 <script>
 import formTable from '@/views/pages/console/common/formTable.vue';
+import minxinDiaFn from '@/views/pages/console/common/minxin.js';
+import orgEdit from './orgEdit.vue';
 export default {
-  components: { formTable },
+  components: { formTable, orgEdit },
+  mixins: [minxinDiaFn],
   data () {
     return {
       pageOptions: {
@@ -27,8 +35,16 @@ export default {
           {label: '机构层级', prop: 'orgLvl'},
           {label: '上级机构代码', prop: 'orgParentCode'}
         ]
-      }
+      },
+      selections: [],
+      orgInfo: {}
     };
+  },
+  methods: {
+    selectionFn (selections) {
+      this.selections = selections;
+      this.orgInfo = selections[0];
+    }
   }
 };
 </script>
