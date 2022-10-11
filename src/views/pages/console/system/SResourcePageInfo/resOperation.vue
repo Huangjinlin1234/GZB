@@ -1,6 +1,6 @@
 <template>
   <yu-xdialog :title="$t(`sysUserManager.${pageType}`)+$t('sysUserManager.zyczxx')" :visible.sync="dialogVisible" :before-close="handleClose" v-loading="loading">
-    <yu-xform ref="refForm" form-type="edit" label-width="120px">
+    <yu-xform ref="refForm" v-model="formData" form-type="edit" label-width="120px">
       <yu-xform-group>
         <yu-xform-item v-for="(item,index) in formFileds" :key="index" :label="item.label" :name="item.name" :colspan="item.colspan" :ctype="item.ctype" :disabled="pageType==='ck' || item.disabled || (item.name === 'rescActCode' && pageType==='xg')" :hidden="pageType==='ck'?false:item.hidden" :hidden-del-val="false"></yu-xform-item>
       </yu-xform-group>
@@ -61,21 +61,29 @@ export default {
   },
   methods: {
     handleClose () {
-      this.dialogVisible = false;
+      this.$emit('update:dialog-visible', false);
     },
     addResOperationFn () {
       let flag = false;
       this.$refs.refForm.validate((vali) => {
         flag = vali;
-      }); // 提交 表单 的验证 状态
+      });
       if (!flag) return;
       this.loading = true;
-      addResOperation().then(res => {
+      let rMethod = '';
+      if (this.pageType == 'xg') {
+        rMethod = 'PUT';
+      } else if (this.pageType == 'xz') {
+        rMethod = 'POST';
+      }
+      addResOperation(rMethod, this.$refs.refForm.formdata).then(res => {
         this.loading = false;
-        // 插入节点
-
-
+        this.$message.success('操作成功');
         this.handleClose();
+        this.$emit('update-Table')
+      }).catch(() => {
+        this.loading = false;
+        this.$message.warning('操作失败');
       })
     }
   }

@@ -1,54 +1,55 @@
 <template>
   <div class="resource-container">
     <el-row>
-      <el-col :span="10">
-        <el-button-group>
-          <el-button icon="plus" @click="append">新增</el-button>
-          <el-button :icon="expandAll ? 'yx-menu4' : 'yx-menu3' " @click="transExpand">{{ expandAll ? '收缩所有节点' : '展开所有节点' }} </el-button>
-        </el-button-group>
+      <el-col :span="7">
+        <yu-input v-model="input" placeholder="请输入内容" :limit-char="limitChar"></yu-input>
+        <!-- 角色树 -->
         <div class="tree-content">
-          <yu-tree ref="rescTree" :data="treeData" :props="defaultProps" node-key="rescCode" :render-content="renderContent" @node-click="nodeClickFn">
+          <yu-tree ref="roleTree" :data="roleTreeData" :props="roleProps" node-key="roleCode" @node-click="nodeClickFn">
           </yu-tree>
         </div>
       </el-col>
-      <el-col :span="14">
-        <!-- 展示资源查看 -->
-        <yu-xform ref="refForm" label-width="120px" :hidden-rule="true" :disabled="disabled" v-model="formdata" form-type="edit" hidden-del-val>
-          <yu-xform-group>
-            <yu-xform-item v-for="(item,index) in formFileds" :key="index" :label="item.label" :colspan="item.colspan" :ctype="item.ctype" :name="item.name"></yu-xform-item>
-          </yu-xform-group>
-        </yu-xform>
-        <el-button type="primary" icon="plus" @click="openType('xz')">新增</el-button>
-        <el-button type="primary" icon="edit" @click="openType('xg')">修改</el-button>
-        <el-button type="primary" icon="delete" @click="deleteResOper">删除</el-button>
-        <el-button type="primary" icon="yx-zoom-in" @click="openType('ck')">查看</el-button>
-        <yu-xtable ref="rescActTable" :data-url="dataUrl" :base-params="baseParams" request-type="POST" :defauld-load="false" :pageable="false" json-data="rows">
-          <yu-xtable-column v-for="(item, index) in tableFields" :key="index" :label="item.label" :prop="item.prop"></yu-xtable-column>
-        </yu-xtable>
+      <el-col :span="10">
+        <yu-input v-model="input" placeholder="请输入内容" :limit-char="limitChar"></yu-input>
+        <!-- 资源树 -->
+        <div class="tree-content">
+          <yu-tree ref="rescTree" :data="rescTreeData" :props="rescProps" node-key="rescCode" @node-click="nodeClickFn">
+          </yu-tree>
+        </div>
+      </el-col>
+      <el-col :span="7">
+        <yu-xcheckbox v-model="roleRescRules" style="margin-top: 36px;margin-left: 5px;"></yu-xcheckbox>
+        <div style="margin-top: 36px;margin-left: 5px;text-align: center;">
+          <el-button type="primary" @click="saveRoleRescRule">保存</el-button>
+        </div>
       </el-col>
     </el-row>
-    <add-resource :dialog-visible.sync="isShowResource" :form-data="resource" @update-Tree="getTreeDataFn"></add-resource>
-    <res-operation :dialog-visible.sync="isShowResOper" :page-type="pageType" :form-data="resourceOper" @update-table="getTableDataFn"></res-operation>
   </div>
 </template>
 
 <script>
-import { getTreeData, getRescActs, getResource } from '@/api/systemManage/resource';
-import addResource from './addResource';
-import resOperation from './resOperation'
+import { getResource, getRescActs, getRoles, getResCHNDesc } from '@/api/systemManage/resource';
 export default {
   components: {
-    addResource,
-    resOperation
   },
   data () {
     return {
       expandAll: false,
-      treeData: [],
+      roleTreeData: [],
+      rescTreeData: [],
       defaultProps: {
         children: 'children',
         label: 'rescDesc'
       },
+      roleProps: {
+        children: 'children',
+        label: 'roleName'
+      },
+      rescProps: {
+        children: 'children',
+        label: 'rescDesc'
+      },
+      roleRescRules: '',
       formFileds: [
         { name: 'rescCode', label: '资源代码', disabled: true, rules: [{ required: true, message: '资源代码是必填项', trigger: 'blur' }, { max: 32, message: '最大长度为32' }] },
         { name: 'rescDesc', label: '资源中文描述', rules: [{ required: true, message: '资源中文描述是必填项', trigger: 'blur' }, { max: 80, message: '最大长度为80' }] },
@@ -69,7 +70,7 @@ export default {
       resource: {}, // 资源信息
       resourceOper: {}, // 资源操作信息
       isShowResource: false,
-      isShowResOper: false
+      isShowResOper: false,
     };
   },
   created () {
@@ -108,11 +109,28 @@ export default {
       });
       return treeData;
     },
+    transRoleTree (list, rootValue) {
+      let treeData = [];
+      // list.forEach(item => {
+      // if (!item.rescParentCode) {
+      // treeData.push(item);
+      // }
+      // });
+      return list;
+    },
     getTreeDataFn () {
-      getTreeData({}).then(res => {
+      getRoles({}).then(res => {
         if (res.code === '0') {
+          console.log('res', res)
+          let childrenArr = this.transRoleTree(res.rows, '');
+          this.roleTreeData = childrenArr;
+        }
+      });
+      getResCHNDesc({}).then(res => {
+        if (res.code === '0') {
+          console.log('res', res)
           let childrenArr = this.transTree(res.rows, '');
-          this.treeData = childrenArr;
+          this.rescTreeData = childrenArr;
         }
       });
     },
@@ -120,7 +138,7 @@ export default {
       this.$refs.rescActTable.remoteData();
     },
     nodeClickFn (row) {
-      this.$refs.rescActTable.remoteData(row);
+      // this.$refs.rescActTable.remoteData(row);
       getResource(row.rescCode).then(res => {
         if (res.code === '0') {
           this.$refs.refForm.formdata = res.rows;
@@ -183,18 +201,19 @@ export default {
 
     },
     openType (pageType) {
+      this.pageType = pageType;
       if (pageType === 'xz') {
         this.resourceOper = {}
-      } else {
-        if (!this.$refs.rescActTable.selections.length) {
-          this.$message({ message: '请先选择一条资源操作记录', type: 'warning' });
-          return;
-        }
-        this.resourceOper = this.$refs.rescActTable.selections[0];
-        this.resourceOper.rescDesc = this.$refs.refForm.formdata.rescDesc
+        this.isShowResOper = true;
+        return;
+      }
+      if (!this.$refs.rescActTable.selections.length) {
+        this.$message({ message: '请先选择一条资源操作记录', type: 'warning' });
+        return;
       }
       this.isShowResOper = true;
-      this.pageType = pageType;
+      this.resourceOper = this.$refs.rescActTable.selections[0];
+      this.resourceOper.rescDesc = this.$refs.refForm.formdata.rescDesc
     }
   }
 };

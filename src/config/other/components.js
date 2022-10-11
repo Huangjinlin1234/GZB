@@ -109,13 +109,12 @@ import YuXwydTask from '@/components/widgets/xwidgets/YuXwydTask';
 import YuRetailProduct from '@/components/widgets/xwidgets/YuRetailProduct';
 import YuGuarntr from '@/components/widgets/xwidgets/YuGuarntr';
 import YuGuar from '@/components/widgets/xwidgets/YuGuar';
-import AccEntrustLoan from '@/components/widgets/xwidgets/AccEntrustLoan';//
+import AccEntrustLoan from '@/components/widgets/xwidgets/AccEntrustLoan'; //
 import YuYhlv from '@/components/widgets/xwidgets/YuYhlv';
 import YuGuarBaseInfoRetail from '@/components/widgets/YuGuarBaseInfoRetail';
 import YuXwPvpOrgQf from '@/components/widgets/xwidgets/YuXwPvpOrgQf';
 import YuXwPvpOrgCd from '@/components/widgets/xwidgets/YuXwPvpOrgCd';
 import IqpLoanAppRetail from '@/components/widgets/xwidgets/IqpLoanAppRetail';
-
 
 // 张家港弹出列表
 import YuPvpAccpAppPop from '@/components/widgets/xwidgets/YuPvpAccpAppPop';
@@ -155,11 +154,10 @@ import YuXguarMax from '@/components/widgets/xwidgets/YuXguarMax';
 import YuXguareClost from '@/components/widgets/xwidgets/YuXguareClost';
 import YuXguarCont from '@/components/widgets/xwidgets/YuXguarCont';
 import YuXctrContAspl from '@/components/widgets/xwidgets/YuXctrContAspl'; // 资产池白名单新增客户选取列表
-import YuDgPrdPop from '@/components/widgets/xwidgets/YuDgPrdPop';// 对公产品选取列表
-import YuDgCtrPop from '@/components/widgets/xwidgets/YuDgCtrPop';// 对公产品选取列表
-import YuXuserForDh from '@/components/widgets/xwidgets/YuXuserForDh';// 投贷后责任人选取列表
-import YuXorgForDh from '@/components/widgets/xwidgets/YuXorgForDh';// 投贷后责任机构选取列表
-
+import YuDgPrdPop from '@/components/widgets/xwidgets/YuDgPrdPop'; // 对公产品选取列表
+import YuDgCtrPop from '@/components/widgets/xwidgets/YuDgCtrPop'; // 对公产品选取列表
+import YuXuserForDh from '@/components/widgets/xwidgets/YuXuserForDh'; // 投贷后责任人选取列表
+import YuXorgForDh from '@/components/widgets/xwidgets/YuXorgForDh'; // 投贷后责任机构选取列表
 
 // 树弹出框
 import YuXdicTree from '@/components/widgets/xwidgets/YuXdicTree';
@@ -181,6 +179,9 @@ import YuXcustomRef from '@/components/widgets/xwidgets/YuXcustomRef';
 import YufpCalcformula1 from '@/components/widgets/fincReport/calcFormula1';
 import YufpCalcformula3 from '@/components/widgets/fincReport/calcFormula3';
 import YufpCheckformula from '@/components/widgets/fincReport/checkFormula';
+
+// 广州银行
+import YuOrgList from '@/components/widgets/YuOrgList';
 
 // import YuwpBuiAce from 'yuwp-bui-ace'
 Vue.component(YuToolbar.name, YuToolbar);
@@ -279,12 +280,11 @@ Vue.component(YuXuser3.name, YuXuser3);
 Vue.component(YuXusero.name, YuXusero);
 Vue.component(YuXuserPower.name, YuXuserPower);
 Vue.component(YuXwfIns.name, YuXwfIns);
-Vue.component(AccEntrustLoan.name, AccEntrustLoan);// 委托贷款台账
-Vue.component(YuXuserForDh.name, YuXuserForDh);// 投贷后责任人选取列表
-Vue.component(YuXorgForDh.name, YuXorgForDh);// 投贷后责任机构选取列表
+Vue.component(AccEntrustLoan.name, AccEntrustLoan); // 委托贷款台账
+Vue.component(YuXuserForDh.name, YuXuserForDh); // 投贷后责任人选取列表
+Vue.component(YuXorgForDh.name, YuXorgForDh); // 投贷后责任机构选取列表
 
 Vue.component(YuYhlv.name, YuYhlv);
-
 
 // 张家港列表弹出框
 Vue.component(YuXprdMrgInfo.name, YuXprdMrgInfo);
@@ -340,7 +340,6 @@ Vue.component(YuXwPvpOrgQf.name, YuXwPvpOrgQf);
 Vue.component(YuXwPvpOrgCd.name, YuXwPvpOrgCd);
 Vue.component(IqpLoanAppRetail.name, IqpLoanAppRetail);
 
-
 // 树弹出框
 Vue.component(YuXdicTree.name, YuXdicTree);
 Vue.component(YuXdicTreeAddr.name, YuXdicTreeAddr);
@@ -361,3 +360,6 @@ Vue.component(YuXcustomRef.name, YuXcustomRef);
 Vue.component(YufpCalcformula1.name, YufpCalcformula1);
 Vue.component(YufpCalcformula3.name, YufpCalcformula3);
 Vue.component(YufpCheckformula.name, YufpCheckformula);
+
+// 广州银行
+Vue.component(YuOrgList.name, YuOrgList);

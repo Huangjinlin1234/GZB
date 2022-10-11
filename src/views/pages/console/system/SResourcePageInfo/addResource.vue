@@ -1,6 +1,6 @@
 <template>
   <yu-xdialog title="新增资源" :visible.sync="dialogVisible" :before-close="handleClose" v-loading="loading">
-    <yu-xform ref="refForm" label-width="120px" :hidden-rule="true" v-model="data" form-type="edit" hidden-del-val>
+    <yu-xform ref="refForm" label-width="120px" :hidden-rule="true" form-type="edit" hidden-del-val>
       <yu-xform-group>
         <yu-xform-item v-for="(item,index) in formFileds" :key="index" :label="item.label" :name="item.name" :colspan="item.colspan" :ctype="item.ctype" :disabled="item.disabled"></yu-xform-item>
       </yu-xform-group>
@@ -11,9 +11,8 @@
     </span>
   </yu-xdialog>
 </template>
-
 <script>
-import { addResource } from '@/api/systemManage/resource';
+import { setResource } from '@/api/systemManage/resource';
 export default {
   name: 'addResource',
   props: {
@@ -21,11 +20,9 @@ export default {
       type: Boolean,
       default: false
     },
-    data: {
+    formData: {
       type: Object,
-      default: () => {
-        return {}
-      }
+      default: () => { }
     }
   },
   data () {
@@ -44,25 +41,35 @@ export default {
       ],
     }
   },
+  watch: {
+    dialogVisible () {
+      this.$nextTick(() => {
+        this.$refs.refForm.formdata = this.formData;
+      })
+    }
+  },
   created () {
   },
   methods: {
     handleClose () {
-      this.dialogVisible = false;
+      this.$emit('update:dialog-visible', false);
     },
-    addResource () {
+    addResourceFn () {
       let flag = false;
       this.$refs.refForm.validate((vali) => {
         flag = vali;
-      }); // 提交 表单 的验证 状态
+      });
+      console.log(flag, '==', this.$refs.refForm.formdata)
       if (!flag) return;
       this.loading = true;
-      addResource().then(res => {
+      setResource('POST', this.$refs.refForm.formdata).then(res => {
         this.loading = false;
-        // 插入节点
-
-
+        this.$message.success('操作成功');
         this.handleClose();
+        this.$emit('update-Tree')
+      }).catch(() => {
+        this.loading = false;
+        this.$message.warning('操作失败');
       })
     }
   }
